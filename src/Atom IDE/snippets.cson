@@ -1,0 +1,498 @@
+# Your snippets
+#
+# Atom snippets allow you to enter a simple prefix in the editor and hit tab to
+# expand the prefix into a larger code block with templated values.
+#
+# You can create a new snippet in this file by typing "snip" and then hitting
+# tab.
+#
+# An example CoffeeScript snippet to expand log to console.log:
+#
+# '.source.coffee':
+#   'Console log':
+#     'prefix': 'log'
+#     'body': 'console.log $1'
+#
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+
+
+###    HTML SNIPPETS    ###
+'.text.html.basic':
+
+  'HTML Template':
+    'prefix': 'html'
+    'body': """<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="shortcut icon" href="fave_icon.png">
+    <link rel="stylesheet" href="resources/css/base.css">
+    <link rel="stylesheet" href="resources/css/main.css">
+</head>
+<body>
+
+
+
+
+
+
+    <script src="resources/js/.js" charset="utf-8"></script>
+    <script src="resources/js/.js" charset="utf-8"></script>
+</body>
+</html>
+"""
+
+  'Canvas Tag':
+    'prefix': 'canvas'
+    'body': """<canvas id="canvas" width="800" height="600" style="border:1px solid #c3c3c3;"></canvas>"""
+
+  'Img Tag':
+    'prefix': 'img'
+    'body': """<img class="" src="" alt="" />"""
+
+  'Br Tag':
+    'prefix': 'br'
+    'body': """<br/>"""
+
+  'Hr Tag':
+    'prefix': 'hr'
+    'body': """<hr/>"""
+
+  'Server Side Events':
+    'prefix': 'sse'
+    'body': """// SSE events if supported
+if(typeof(EventSource) !== "undefined") {
+    let source = new EventSource("resources/php/sse.php");
+    source.onmessage = (event) => {
+        if (event.data === "<yourDataStringToLookFor>") {
+            // code here
+        }
+    };
+} else {
+    console.log("SSE Not Supported In Browser...");
+}
+"""
+
+  'AJAX Template Function':
+    'prefix': 'ajax template'
+    'body': """const doAjax = async (actionPath, data) => {
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            if (this.responseText != null) {  // this.responseXML if getting XML fata
+                handleReturnData(JSON.parse(this.responseText));
+            } else {
+                console.log("No content returned. Check the file path.");
+            }
+        }
+    };
+
+    xhttp.open("POST", actionPath, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // Force return to be JSON NOTE: Use application/xml to force XML
+    xhttp.overrideMimeType('application/json');
+    xhttp.send(data);
+}
+"""
+
+  'CSS Message Colors':
+    'prefix': 'css colors'
+    'body': """.error { color: rgb(255, 0, 0); }
+    .warning { color: rgb(255, 168, 0); }
+    .success { color: rgb(136, 204, 39); }
+    """
+
+
+###    JS SNIPPETS    ###
+'.source.js':
+
+  'Server Side Events':
+    'prefix': 'sse'
+    'body': """// SSE events if supported
+if(typeof(EventSource) !== "undefined") {
+    let source = new EventSource("resources/php/sse.php");
+    source.onmessage = (event) => {
+        if (event.data === "<yourDataStringToLookFor>") {
+            // code here
+        }
+    };
+} else {
+    console.log("SSE Not Supported In Browser...");
+}
+"""
+
+  'AJAX Template Function':
+    'prefix': 'ajax template'
+    'body': """const doAjax = async (actionPath, data) => {
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            if (this.responseText != null) {  // this.responseXML if getting XML fata
+                handleReturnData(JSON.parse(this.responseText));
+            } else {
+                console.log("No content returned. Check the file path.");
+            }
+        }
+    };
+
+    xhttp.open("POST", actionPath, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // Force return to be JSON NOTE: Use application/xml to force XML
+    xhttp.overrideMimeType('application/json');
+    xhttp.send(data);
+}
+"""
+
+  'SE6 Function':
+    'prefix': 'function se6'
+    'body': """const funcName = (arg = "") => {
+
+    }
+"""
+
+###    CSS SNIPPETS    ###
+'.source.css':
+
+  'CSS Message Colors':
+    'prefix': 'css colors'
+    'body': """.error { color: rgb(255, 0, 0); }
+    .warning { color: rgb(255, 168, 0); }
+    .success { color: rgb(136, 204, 39); }
+    """
+
+###    PHP SNIPPETS    ###
+'.text.html.php':
+
+  'SSE PHP':
+    'prefix': 'sse php'
+    'body': """<?php
+    // Start the session
+    session_start();
+
+    header('Content-Type: text/event-stream');
+    header('Cache-Control: no-cache');
+
+    echo "data:dataToReturn\\\\n\\\\n";
+
+    flush();
+    ?>
+    """
+
+  'PHP Template':
+    'prefix': 'php'
+    'body': """<?php
+// Start the session
+session_start();
+
+
+// Determin action
+chdir("../../");  // Note: If in resources/php/
+if (isset($_POST['yourPostID'])) {
+    // code here
+} else {
+    $message = "Server: [Error] --> Illegal Access Method!";
+    serverMessage("error", $message);
+}
+?>
+"""
+  'HTML Template':
+    'prefix': 'html'
+    'body': """<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="shortcut icon" href="fave_icon.png">
+    <link rel="stylesheet" href="resources/css/base.css">
+    <link rel="stylesheet" href="resources/css/main.css">
+</head>
+<body>
+
+
+
+
+
+
+    <script src="resources/js/.js" charset="utf-8"></script>
+    <script src="resources/js/.js" charset="utf-8"></script>
+</body>
+</html>
+"""
+
+
+###    BASH SNIPPETS    ###
+'.source.shell':
+
+  'Bash or Shell Template':
+    'prefix': 'bash template'
+    'body': """#!/bin/bash
+
+# . CONFIG.sh
+
+# set -o xtrace       ## To debug scripts
+# set -o errexit      ## To exit on error
+# set -o errunset     ## To exit if a variable is referenced but not set
+
+
+function main() {
+    SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+    cd "${SCRIPTPATH}"
+    echo "Working Dir: " $(pwd)
+
+}
+main $@;
+    """
+
+
+  'Bash or Shell Config':
+    'prefix': 'bash config'
+    'body': """#!/bin/bash
+
+    shopt -s expand_aliases
+
+    alias echo="echo -e"
+    """
+
+
+###    PYTHON SNIPPETS    ###
+'.source.python':
+
+
+  'Glade __main__ Class Template':
+    'prefix': 'glade __main__ class'
+    'body': """#!/usr/bin/python3
+
+
+# Python imports
+import argparse
+from setproctitle import setproctitle
+
+# Gtk imports
+import gi, faulthandler, signal
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
+from gi.repository import GLib
+
+# Application imports
+from __init__ import Main
+
+
+if __name__ == "__main__":
+    try:
+        setproctitle('<replace this>')
+        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, gtk.main_quit)
+        faulthandler.enable()  # For better debug info
+        parser = argparse.ArgumentParser()
+        # Add long and short arguments
+        parser.add_argument("--file", "-f", default="default", help="JUST SOME FILE ARG.")
+
+        # Read arguments (If any...)
+        args = parser.parse_args()
+        main = Main(args)
+        gtk.main()
+    except Exception as e:
+        print( repr(e) )
+
+    """
+
+  'Glade _init_ Class Template':
+    'prefix': 'glade __init__ class'
+    'body': """# Python imports
+import inspect
+
+
+# Gtk imports
+
+
+# Application imports
+from utils import Settings
+from signal_classes import CrossClassSignals
+
+
+class Main:
+    def __init__(self, args):
+        settings = Settings()
+        builder  = settings.returnBuilder()
+
+        # Gets the methods from the classes and sets to handler.
+        # Then, builder connects to any signals it needs.
+        classes  = [CrossClassSignals(settings)]
+
+        handlers = {}
+        for c in classes:
+            methods = inspect.getmembers(c, predicate=inspect.ismethod)
+            handlers.update(methods)
+
+        builder.connect_signals(handlers)
+        window = settings.createWindow()
+        window.show()
+
+    """
+
+  'Class Method':
+    'prefix': 'def1'
+    'body': """
+    def fname(self):
+        pass
+        """
+
+  'Gtk Class Method':
+    'prefix': 'def2'
+    'body': """
+    def fname(self, widget, eve):
+        pass
+        """
+
+
+  'Python Glade Settings Template':
+    'prefix': 'glade settings class'
+    'body': """# Python imports
+    import os
+
+    # Gtk imports
+    import gi, cairo
+    gi.require_version('Gtk', '3.0')
+    gi.require_version('Gdk', '3.0')
+
+    from gi.repository import Gtk as gtk
+    from gi.repository import Gdk as gdk
+
+
+    # Application imports
+
+
+    class Settings:
+        def __init__(self):
+            self.SCRIPT_PTH = os.path.dirname(os.path.realpath(__file__)) + "/"
+            self.builder = gtk.Builder()
+            self.builder.add_from_file(self.SCRIPT_PTH + "../resources/Main_Window.glade")
+
+            # 'Filters'
+            self.office = ('.doc', '.docx', '.xls', '.xlsx', '.xlt', '.xltx', '.xlm',
+                                    '.ppt', 'pptx', '.pps', '.ppsx', '.odt', '.rtf')
+            self.vids   = ('.mkv', '.avi', '.flv', '.mov', '.m4v', '.mpg', '.wmv',
+                                                        '.mpeg', '.mp4', '.webm')
+            self.txt    = ('.txt', '.text', '.sh', '.cfg', '.conf')
+            self.music  = ('.psf', '.mp3', '.ogg' , '.flac')
+            self.images = ('.png', '.jpg', '.jpeg', '.gif')
+            self.pdf    = ('.pdf')
+
+
+        def createWindow(self):
+            # Get window and connect signals
+            window = self.builder.get_object("Main_Window")
+            window.connect("delete-event", gtk.main_quit)
+            self.setWindowData(window, False)
+            return window
+
+        def setWindowData(self, window, paintable):
+            screen = window.get_screen()
+            visual = screen.get_rgba_visual()
+
+            if visual != None and screen.is_composited():
+                window.set_visual(visual)
+
+            # bind css file
+            cssProvider  = gtk.CssProvider()
+            cssProvider.load_from_path(self.SCRIPT_PTH + '../resources/stylesheet.css')
+            screen       = gdk.Screen.get_default()
+            styleContext = gtk.StyleContext()
+            styleContext.add_provider_for_screen(screen, cssProvider, gtk.STYLE_PROVIDER_PRIORITY_USER)
+
+            window.set_app_paintable(paintable)
+            if paintable:
+                window.connect("draw", self.area_draw)
+
+        def getMonitorData(self):
+            screen = self.builder.get_object("Main_Window").get_screen()
+            monitors = []
+            for m in range(screen.get_n_monitors()):
+                monitors.append(screen.get_monitor_geometry(m))
+
+            for monitor in monitors:
+                print(str(monitor.width) + "x" + str(monitor.height) + "+" + str(monitor.x) + "+" + str(monitor.y))
+
+            return monitors
+
+        def area_draw(self, widget, cr):
+            cr.set_source_rgba(0, 0, 0, 0.54)
+            cr.set_operator(cairo.OPERATOR_SOURCE)
+            cr.paint()
+            cr.set_operator(cairo.OPERATOR_OVER)
+
+
+        def returnBuilder(self):             return self.builder
+
+        # Filter returns
+        def returnOfficeFilter(self):        return self.office
+        def returnVidsFilter(self):          return self.vids
+        def returnTextFilter(self):          return self.txt
+        def returnMusicFilter(self):         return self.music
+        def returnImagesFilter(self):        return self.images
+        def returnPdfFilter(self):           return self.pdf
+
+    """
+
+  'Python Glade CrossClassSignals Template':
+    'prefix': 'glade crossClassSignals class'
+    'body': """# Python imports
+    import threading, subprocess, os
+
+    # Gtk imports
+
+    # Application imports
+
+    def threaded(fn):
+        def wrapper(*args, **kwargs):
+            threading.Thread(target=fn, args=args, kwargs=kwargs).start()
+
+        return wrapper
+
+
+    class CrossClassSignals:
+        def __init__(self, settings):
+            self.settings       = settings
+            self.builder        = self.settings.returnBuilder()
+
+
+        def getClipboardData(self):
+            proc    = subprocess.Popen(['xclip','-selection', 'clipboard', '-o'], stdout=subprocess.PIPE)
+            retcode = proc.wait()
+            data    = proc.stdout.read()
+            return data.decode("utf-8").strip()
+
+        def setClipboardData(self, data):
+            proc = subprocess.Popen(['xclip','-selection','clipboard'], stdin=subprocess.PIPE)
+            proc.stdin.write(data)
+            proc.stdin.close()
+            retcode = proc.wait()
+
+    """
+
+  'Python Glade Generic Template':
+    'prefix': 'glade generic class'
+    'body': """# Python imports
+
+    # Gtk imports
+
+    # Application imports
+
+
+    class CrossClassSignals:
+        def __init__(self, settings):
+            self.settings     = settings
+            self.builder      = self.settings.returnBuilder()
+
+
+        def tempMethod(self, widget, data=None):
+            pass
+
+    """
