@@ -1,0 +1,1 @@
+sudo apt-get -y install python3 pygobject3-devel webkitgtk3-devel ubuntu-restricted-extras gstreamer1.0-gtk3 

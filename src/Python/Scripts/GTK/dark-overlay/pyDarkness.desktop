@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=pyDarkness
+GenericName=Darken a region or add highlighting over an area.
+Comment=Darken a region or add highlighting over an area.
+Exec=/home/abaddon/Portable_Apps/local_bin/DarkOverlay/src/darkness
+Icon=/home/abaddon/Portable_Apps/local_bin/DarkOverlay/src/resources/darkness.png
+Type=Application
+StartupNotify=true
+Categories=Utility;
+MimeType=text/plain;
+Terminal=false
