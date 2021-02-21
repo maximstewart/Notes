@@ -1,0 +1,40 @@
+Overview:
+    -- HTTPS Is Not Enough!
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  HTTPS Is Not Enough!  ::
+--  Tool(s)  --
+
+If https responses are cacheable.
+What if password reset is cached and header has the info?
+Security is bypassed....
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+    about:cache  <-- firefox
+
+HTTPS: secure communication channel
+
+Sensitive data returned in HTTPS response (e.g. password)
+                     +
+Cacheable HTTPS response (e.g. Cache-control/Pragma headers not implemented)
+                     =
+Password cached in plaintext
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Don't return sensative data in HTTPS responses.
+Set proper caching headers like cache control and pragma...
+
+    Cache-control: no-store
+    Pragma: no-cache

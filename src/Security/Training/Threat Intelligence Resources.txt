@@ -1,0 +1,54 @@
+Cyber-attacks become less effective when they are well-known, so new threats and exploits appear all the time.
+To keep up to date, you should monitor websites and newsgroups.
+Some examples of threat intelligence feed providers and sources for threat reports, alerts, and newsletters include:
+
+    Alien Vault (https://www.alienvault.com/solutions/threat-intelligence)
+    SecureWorks (https://www.secureworks.com/capabilities/counter-threat-unit)
+    FireEye (https://www.fireeye.com/solutions/cyber-threat-intelligence-subscriptions.html)
+    Symantec (http://symantec.com/security-intelligence)
+    Microsoft (https://www.microsoft.com/en-us/wdsi)
+    DarkReading (https://www.darkreading.com)
+    SANS (https://www.sans.org/newsletters)
+
+
+
+Metagoofil  --  Application that scans meta information about a network.
+
+
+
+
+
+Packet Injection
+
+Some attacks depend on sending forged or spoofed network traffic. Often network sniffing software libraries allow
+frames to be inserted (or injected) into the network stream. There are also tools that allow for different kinds
+of packets to be crafted and manipulated. Well-known tools used for packet injection include Dsniff (https://monkey
+org/~dugsong/dsniff/), Ettercap (http://www.ettercap-project.org/ettercap), hping (http://hping.org),
+Nemesis (http://nemesis.sourceforge.net), and Scapy (http://scapy.net/).
+
+
+
+
+Vulnerability Scanner Types
+
+A vulnerability scanner can be implemented purely as software or as a security appliance, connected to the network.
+One of the best known software scanners is Tenable Nessus (https://www.tenable.com/products/nessus/nessus-professional).
+As a previously open source program, Nessus also provides the source code for many other scanners.
+Greenbone OpenVAS (http://www.openvas.org) is open source software, originally developed from the Nessus codebase at the
+point where Nessus became commercial software. It is available in a Community Edition VM, as an enterprise product called
+Greenbone Security Manager (https://www.greenbone.net), and as source code or pre-compiled packages for installation under
+Linux. Some other vulnerability scanners include SAINT (https://www.saintcorporation.com/security-suite),
+BeyondTrust Retina (https://www.beyondtrust.com/resources/datasheets/retina-network-security-scanner), and
+Rapid7 NeXpose (https://www.rapid7.com/products/nexpose).
+
+Another class of scanner aims to identify web application vulnerabilities specifically. Tools such as
+Nikto (https://cirt.net/Nikto2) look for known software exploits, such as SQL injection and XSS, and may also analyze source code
+and database security to detect unsecure programming practices.
+
+
+
+
+The best-known exploit framework is Metasploit (https://www.metasploit.com). The platform is open source software, now maintained
+by Rapid7. There is a free framework (command-line) community edition with installation packages for Linux and Windows.
+Rapid7 produces pro and express commercial editions of the framework and it can be closely integrated with the Nexpose vulnerability scanner.
+

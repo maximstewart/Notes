@@ -1,0 +1,84 @@
+Overview:
+    -- README
+    -- Attack Chains
+    -- Client Interaction
+    -- Getting the Gould
+
+
+
+
+::  README  ::
+--  Tool(s)  --
+
+PTES:    Section 6.1
+
+NEED Kali Linux
+
+-- Welcome to External Footprinting  (Non-technical opportunities)
+-- Passive Reconnaissance  (Hunting Quietly)
+-- Active Reconnaissance  (Gathering the goods)
+-- Prioritizing External Targets  (Feel the heat)
+-- Countermeasures and Reporting  (Active defense, fun!)
+
+
+
+::  Attack Chains  ::
+--  Tool(s)  --
+
+Attempt:
+Identify unmaintained site
+Identify SQL injection after login
+Replay new credentials on main website
+
+Result:
+Gain access to an account
+Dump the database, passwords stored in cleartext
+Gain domain access
+
+
+
+
+::  Client Interaction  ::
+--  Tool(s)  --
+
+Statement of Work (SOW):  Legally binding document
+    Target list:
+        -- Explicit host or IP list
+            *10.0.0.0/24
+            host.company.com
+        -- Implicit
+            "Acme HR Application"
+    Scope of Work:
+        -- Web application assessment (min/max components)
+        -- odd requests such as off hour testing
+
+Kickoff Call:
+    Ownership of hosts:
+        If for instance on AWS need permission to test that
+    Overview of targets:
+    Discuss defensive countermeasures
+        WAF (Web Application Firewall)?
+
+Ask questions! Maintain goals
+
+
+
+
+::  Getting the Gould  ::
+--  Tool(s)  --
+Virtual Hosts:  Multiple domain names map to single IP. Valuable in that when
+                one app is insecure it can undermine the other apps security
+
+*** When looking for domain names, it's really common to find copied development
+    versions of a website on the internet.
+Ex:  staging.customer.com  (most common target b/c of less defenses.)
+     dev.customer.com
+     dev2.customer.com
+
+Note:  Defense might be to map against external vs internal IP. IE, using company or VPN IP
+
+
+---   TESTING FACEBOOK   ---
+Hostenames, IPs, reconnaisance
+Must Read:
+    https://www.facebook.com/whitehat

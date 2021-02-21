@@ -1,0 +1,24 @@
+Overview:
+    -- Caching of Data Entered by the User
+    -- Demo
+    -- Fixing the Problem
+
+
+
+
+::  Caching of Data Entered by the User  ::  && ::  Demo  ::
+--  Tool(s)  --
+
+Sensitive data entered by user.
+autocomplete="off" not used in form fields...
+Stores credit card info in plain text from cache.
+*** What's really bad is that companies are more
+    and more geared to check the validity of the card
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+autocomplete="off" for every input field that takes sensitive data

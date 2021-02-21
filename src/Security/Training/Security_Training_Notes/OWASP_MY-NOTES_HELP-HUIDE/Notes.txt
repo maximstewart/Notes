@@ -1,0 +1,118 @@
+http://127.0.0.1:3000/
+
+http://127.0.0.1:3000/#/score-board
+
+http://127.0.0.1:3000/#/administration
+
+http://127.0.0.1:3000/ftp/
+
+http://127.0.0.1:3000/file-upload
+
+
+::::    OBSERVATIONS / QUESTIONS    ::::
+
+http://127.0.0.1:3000/ftp/order_551a-7d1a43db7b0e3e8e.pdf    <-- ??FTP?? XD
+    Also...can access when not logged in.... O.O
+
+
+http://127.0.0.1:3000/ftp/  <-- Has interesting files....
+    Get 403 forbidden on all but md and pdf files.  Can I overwrite/trick into downloading them?
+    Maybe trick the "filter engine"??
+    incident-support.kdbx  can be downloaded. Is keypass db... Requires master password
+
+
+Can't upload photos of broken purchases. "Only order confirmation PDFs"
+
+ORDER PDF collects/generates date, order number, email, item count, bonus points, price
+
+Can leave comment review when NOT logged in.  All Products Seletion Page > Eye > Comment Box
+    Is there a rate limit on this?
+
+Can I change the links through an attack??
+
+All Products Seletion Page
+    How does "Next Page" work n get data?
+
+A Product stated:   OWASP SSL Advanced Forensic Tool (O-Saft)
+    O-Saft is an easy to use tool to show information about SSL certificate and tests the SSL connection
+    according given list of ciphers and various SSL configurations
+
+Customer Feedback -- no character limits?
+
+
+
+::::    POINTS OF INTERACTION AND DATA INPUT    ::::
+Login Page
+Forgot Password
+Create Account
+Customer Feedback [NOT LOGGED IN]
+Contact US
+Search Field
+2 Fac Auth
+Change Password
+Requet Data Export
+All Products Seletion Page
+All Products Seletion Page > Eye > Comment Box
+
+
+
+::::    USERS    ::::
+admin@juice-sh.op
+jim@juice-sh.op
+bender@juice-sh.op
+bjoern.kimminich@googlemail.com
+ciso@juice-sh.op
+support@juice-sh.op
+morty@juice-sh.op
+mc.safesearch@juice-sh.op
+J12934@juice-sh.op
+wurstbrot@juice-sh.op
+amy@juice-sh.op
+bjoern@juice-sh.op
+bjoern@owasp.org
+gamer1119@gmail.com
+test@test.com
+admin@admin.com
+admin2@admin.com
+master@admin.com
+
+
+
+
+::;:    BASIC INFO    ::::
+
+Examples of Cookies we use:
+
+    Session Cookies. We use Session Cookies to operate our Service.
+    Preference Cookies. We use Preference Cookies to remember your preferences and various settings.
+    Security Cookies. We use Security Cookies for security purposes.
+
+
+OWASP Juice Shop uses the collected data for various purposes:
+
+    To provide and maintain the Service
+    To notify you about changes to our Service
+    To allow you to participate in interactive features of our Service when you choose to do so
+    To provide customer care and support
+    To provide analysis or valuable information so that we can improve the Service
+    To monitor the usage of the Service
+    To detect, prevent and address technical issues
+
+
+
+Service Providers
+
+We may employ third party companies and individuals to facilitate our Service ("Service Providers"),
+to provide the Service on our behalf, to perform Service-related services or to assist us in analyzing
+how our Service is used. These third parties have access to your Personal Data only to perform these
+tasks on our behalf and are obligated not to disclose or use it for any other purpose.
+
+
+Contact Us
+
+If you have any questions about this Privacy Policy, please contact us:
+    By email: donotreply@owasp-juice.shop
+
+
+
+

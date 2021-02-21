@@ -1,0 +1,44 @@
+Overview:
+    -- Importance of Regeneration
+    -- Demo
+    -- Server-side Invalidation
+    -- Demo
+
+
+
+::  Importance of Regeneration  ::
+--  Tool(s)  --
+
+
+1. User is logged out: SID=abc
+2. Attacker learns user's SID
+3. User logs in: SID=abc
+4. Attacker can impersonate user
+
+Fix Make sure to regenerate SID periodically.
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Nothing new shown...
+
+
+
+
+::  Server-side Invalidation  ::
+--  Tool(s)  --
+
+Options:
+    Log users out and clear cookiesl; clear IDs server side too!
+    Change IDs periodically and invalidate the others.
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Nothing new shown...
+Basically shows that the server also needs to invalidate IDs

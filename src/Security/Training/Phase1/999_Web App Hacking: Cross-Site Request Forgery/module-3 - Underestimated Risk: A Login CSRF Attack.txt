@@ -1,0 +1,41 @@
+Overview:
+    -- Understanding a Login CSRF Attack
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  Understanding a Login CSRF Attack  ::
+--  Tool(s)  --
+
+A login CSRF attack is about switching a user to the attacker’s account
+By switching them, they enter sensitive information that the attacker can see...
+    Through proxying? Through the saved data?
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+
+User is logged in (example.com)
+    V
+User visits an attacker’s domain
+(hacking-web-applications.com)
+    V
+Attacker tricks the user’s browser into sending a
+login request (with the attacker’s email and password)
+    V
+The user is switched to the attacker’s account
+    V
+User enters credit card data to the attacker’s account
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Use anti-CSRF token... Well no shit, lol. -.- OK dide.
+Oh, nd don't forget to check server side, lol

@@ -1,0 +1,51 @@
+Get src files: 
+--   wget http://dl.winehq.org/wine/source/1.7/wine-1.7.55.tar.bz2
+
+Extract to downloads.
+Get needed compile programs.
+This is designed for 64bit OSs but should work fine on 32bit ones.
+
+--   sudo apt-get install gcc-multilib g++-multilib bison libx11-dev:i386 
+
+     ## causes issues with install for i386 freetype. Move or remove it.
+--   sudo rm /usr/share/man/man1/freetype-config.1.gz  
+--   sudo apt-get install libfreetype6:i386 libfreetype6-dev:i386
+
+Get patch file & copy contents from link to swbf2.patch
+-- Link: https://bugs.winehq.org/attachment.cgi?id=52963&action=diff&context=patch&collapsed=&headers=1&format=raw
+
+Run from wine source dir:
+--   patch -p1 < swbf2.patch
+--   mkdir build
+--   cd build
+--   ../configure --enable-hybrid-sync
+--   make
+--   sudo make install
+--   wine --version
+
+### Alternate Metod ###
+
+Add -- >  deb-src http://ppa.launchpad.net/ubuntu-wine/ppa/ubuntu/ vivid main
+--   sudo nano /etc/apt/sources.list
+--   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F9CB8DB0
+--   sudo apt-get install gcc-multilib g++-multilib bison libx11-dev:i386 
+
+     ## causes issues with install for i386 freetype. Move or remove it.
+--   sudo rm /usr/share/man/man1/freetype-config.1.gz  
+--   sudo apt-get install libfreetype6:i386 libfreetype6-dev:i386
+
+--   sudo apt-get update
+--   mkdir ~/Downloads/Wine
+     cd ~/Downloads/Wine
+--   sudo apt-get -y build-dep wine1.7
+--   apt-get source wine
+--   cd wine1.7-1.7.55/
+
+Get patch file & copy contents from link to swbf2.patch
+-- Link: https://bugs.winehq.org/attachment.cgi?id=52963&action=diff&context=patch&collapsed=&headers=1&format=raw
+Run from wine source dir:
+--   patch -p1 < swbf2.patch
+
+--   sudo dpkg-buildpackage -rfakeroot -b
+--   cd ..
+--   sudo dpkg -i *.deb

@@ -1,0 +1,9 @@
+Concepts:
+    ...
+
+Overview:
+    -- Leakage of Cookie with Sensitive Data
+    -- Cookie Hijacking
+    -- Weaknesses in Cookie Lifecycle
+    -- Underestimated Risk: XSS via Cookie
+    -- Remote Cookie Tampering

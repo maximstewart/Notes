@@ -1,0 +1,36 @@
+Overview:
+    -- How to Find Sensitive Files
+    -- How to Read the Content of Sensitive Files
+    -- Demo
+
+
+
+::  How to Find Sensitive Files  ::
+-- Tool(s)  --
+
+Method:
+    robots.txt  (Boy aint that the truth. WPScan showed me this. XD)
+        Fix:  Setup internal routs and responses.
+              Use maybe internal IP as validation for access/VPN?
+
+
+
+
+::  How to Read the Content of Sensitive Files  ::
+-- Tool(s)  --
+
+Explains a scenario where the robots file shows a PHP file and a config file.
+PHP gets processed but config returns data b/c it's a non-standard file.
+The config file has db creds in plain text...
+    Fix: Use PHP file to setup connection since PHP is processed.
+         Encrypt the user and password too... <-- This doesn't fix it per-say but makes things harder to exploit.
+
+
+
+::  Demo  ::
+-- Tool(s)  --
+
+
+Directory listing is enabled.
+User can access the config path and see the two files.
+Thus, can open the config file.

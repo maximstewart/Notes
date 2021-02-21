@@ -1,0 +1,54 @@
+Overview:
+    -- Circumvention of Workflow
+    -- Beating Limits
+    -- Process Timing
+    -- Spilling the Secrets
+    -- Parameter Manipulation
+
+
+
+::  Circumvention of Workflow  ::
+Breaking logic/algorithms
+Ex 1:
+See  module-7-image-1  image
+
+Ex 2:
+See  module-7-image-2  image
+
+Ex 3:
+See  module-7-image-3  image
+
+Ex 4:
+See  module-7-image-4  image
+
+
+
+
+::  Beating Limits  ::
+min/max checks?
+Less than 0?
+
+
+
+
+::  Process Timing  ::
+Time of day?
+Time to process?
+Time limits?
+
+Success vs error processing?
+
+
+
+
+::  Spilling the Secrets  ::
+Correlation checks
+Does one process decrypt data that another process could use to decrypt other data?
+
+
+
+
+::  Parameter Manipulation  ::
+Site map changes:  See  module-7-image-5  image
+Click and observe
+Understand what COULD be done?

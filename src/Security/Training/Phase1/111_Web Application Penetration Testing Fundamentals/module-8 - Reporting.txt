@@ -1,0 +1,39 @@
+Overview:
+    -- Layout
+    -- Scoring
+
+
+
+::  Layout  ::
+What does it mean in terms of time, cost, threat, etc?
+How does it work?
+How do you remediate it?
+
+Explain according to user. IE, who is reading it technical or non-technical?
+
+Summery:
+    High
+    Medium
+    Low
+
+Scope of work:
+    Targets
+    Limits
+    Schedule
+    Summary of findings
+
+Findings:
+    Description of issue
+    Location
+    Severity rating
+    Screenshot
+    Remediation advice
+
+
+
+
+::  Scoring  ::
+Vulnerability Severities Metric:
+    (FIRST CVSS) --> Forum of Incident Response and Security Teams Common Vulnerability Scoring System.
+    https://www.first.org/cvss/
+    ** "For web application pentesting, I usually don't go beyond the base scoring system."

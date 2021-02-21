@@ -1,0 +1,22 @@
+Overview:
+    -- CSRF Attack: A Case Study
+
+
+
+::  CSRF Attack: A Case Study  ::
+--  Tool(s)  --
+
+
+D-Link DIR-600 router
+(hardware version: Bx ; firmware version: 2.16)
+
+Unauthorized admin access to the web administration panel of this router (CSRF attack)
+Attacker can trick the router administrator’s browser into sending three requests:
+
+1st request adds a new admin account (R/W access)
+2nd request enables remote management of the router
+3rd request causes a ping message to be sent from the
+    router to the attacker’s controlled machine
+
+From CSRF to Unauthorized Remote Admin Access
+    resources.infosecinstitute.com/csrf-unauthorized-remote-admin-access

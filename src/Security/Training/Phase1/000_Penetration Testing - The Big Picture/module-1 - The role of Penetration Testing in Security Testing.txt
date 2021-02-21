@@ -1,0 +1,124 @@
+Overview:
+    -- Information Security Management
+    -- Risk Management
+    -- Security Controls
+    -- Penetration Testing
+
+
+
+
+
+::    Information Security Management    ::
+
+--  (Security Principles)  --
+[  CIA or Security Triad  ]
+
+Confidentiality -->  Only authorized systems, processes, and individuals should have access when needed.
+                Note:  Pretty straightforward but can affect integrity if not maintained...
+
+  Integrity     -->  Information should be protected from intentional, unauthorized, or accidental changes.
+                Note:  Deleted information is bad; but, what if we lose trust in the validity of that
+                       information? Integrity isn't just protection against loss but destructive edits, etc.
+
+ Availability   -->  That information should be available to authorized individuals when needed.
+                Note:  Basically up time. Security is also assurance that one can have near 24/7
+                access for authed users.
+                       This is very important for timely processes such as billing,
+                       business competition, governmental actions militarily or otherwise.
+
+[  Governance  ]:       Leadership and oversight
+[  Guidance  ]:         Policies, plans, standards, guidelines, and procedures
+...geared around...
+[  Risk Management  ]:  (paraphrased)  value/asset identification and risks against them.
+...combined with...
+[  Ethics  ]:           (paraphrased)  promotion of moral guidelines against amoral actions/actors
+                        Note:  This is the- what is the red line concept? We can't ident. or protect
+                        without knowing WHAT we need to prevent and detect against.
+... which improves...
+[  Org. Behavior  ]:    (paraphrased)  improves training, awareness, and org. structure to comply with
+                        business goals and laws.
+
+
+
+
+::    Risk Management    ::
+(Penetration testing is just one tool of many to identify risks to the security of the org.)
+
+[  Establish Risk Context  ]:  Environment in which decisions on risk are made. (Risk Management Strategy)
+
+[  Assess Risks  ]:            (paraphrased)  Who, what, when, where, why (This looks at the org.'s over
+                                                                           all posture and Risk Management
+                                                                           Strategy)
+
+[  Respond to Risks  ]:         Evaluating, developing, and implementing response to reduce/limit risk.
+
+[  Monitor Risks  ]:            (paraphrased)  adapting to changes of threats or changes of value targets
+                                to re-posture security and the aforementioned systems.
+
+
+--  (Principles)  --
+[  Avoidance  ]:     (paraphrased)  Don't do stupid shit that you know exposes oneself to threats.
+                     IE, bad practices and policies
+
+[  Transference  ]:  Sharing risk (often linked with insurance) is only part of the picture. *(legal responsibility is not transferred)
+                     If using cloud, the responsibility is shared between you and the provider.
+
+[  Mitigation  ]:    security controls, counter-measures, monitoring tools
+
+[  Acceptance  ]:    willing to take the punch if loss occurs. Basically, not much of a defense or barely mitigateable.
+                     Note: likelihood is low
+
+
+::    Security Controls    :: (Establish boundaries)
+
+--  Control Mechanisms  --
+[  Detective  ]:    Discover when policies have been violated   (Intrusion detection system, IDS)
+[  Preventive  ]:   Inhibit actions that violate policies    (firewalls)
+[  Corrective  ]:   Use violations or exceptions to counteract the violation   (configuration management)
+[  Deterrent  ]:    Discourage aberrant actions/violations    (User accounts)
+[  Recovery  ]:     Flow control to normal state  (system backups)
+
+--  Control Types  --
+[  Administrative  ]:     define and manage access to information   (background checks)
+[  Technical  ]:          logical controls in systems that determine access to info n' services   (patching systems and app)
+[  Physical  ]:           mechanisms that protect access to physical spaces and devices.  (cameras)
+
+
+--  Testing Controls  --
+"Box" Testing
+
+[  White Box  ]:  aka, Crystal box testing, has complete information about, and access to the system being tested.
+                  (user accounts, admin access, documentation, source code, test suits and frameworks, test cases, algorithm descriptions, etc.)
+
+[  Grey Box  ]:   some info is available but not complete
+                  (source code but no user accounts or admin access. Api calls anyone??)
+
+[  Black Box  ]:  no information or access. Purely blind except for what is publicly accessible.
+                  (crafting inputs and observing responses)
+
+
+
+
+::    Penetration Testing    ::
+
+Determine effectiveness of real world attacks.
+Determine the level of skill required.
+Ident. needed security  controls.
+Evaluate response to the attack.
+
+--  Tools, Techniques, and Procedures  --
+
+Exploit known vulnerabilities.
+Find new vulnerabilities
+Use existing tools
+Create new tools
+Social engineering
+
+--  Colloquialisms and Terms  --
+
+"Pen Test"    == Penetration testing
+"Pen"         == Even shorter- "How is the pen going?"
+"Red Team"    == From military and intelligence groups meaning "The attackers"
+"Blue Team"   == The defenders
+"Purple Team" == a combo of red n blue teams, in an exercise to test specific
+                 controls and skill sets

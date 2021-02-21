@@ -1,0 +1,368 @@
+<HTML
+><HEAD
+><TITLE
+>Determining Interesting Functions</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+TITLE="Determining Program Behavior"
+HREF="x79.htm"/><LINK
+REL="NEXT"
+TITLE="Understanding Assembly"
+HREF="x177.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x79.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x177.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN125"/>5. Determining Interesting Functions</H1
+><P
+>&#13;     Clearly without source code, we can't possibly hope to understand all
+     of sections of an entire program. So we have to use various methods and
+     guess work to narrow down our search to a couple of key functions.
+    </P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN128"/>5.1. Reconstructing function &amp; control information</H2
+><P
+>&#13;       The problem is that first, we must determine what portions of the code
+       are actually functions. This can be difficult without debugging dymbols.
+       Fortunately, there are a couple of utilities that make our lives easier.
+      </P
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN131"/>5.1.1. objdump</H3
+><P
+>Objdump's most useful purpose is to disassemble a program with the -d
+         switch. Lacking symbols, this output is a bit more cryptic. The -j option
+         is used to specify a segment to disassemble. Most likely we will want
+         .text, which is where all the program code lies.
+	</P
+><P
+>Note that the leftmost column of objdump contains a hex number. This
+         is in fact the actual address in memory where that
+         instruction is located. Its binary value is given in the next column, followed by
+         its mnemonic.
+	</P
+><P
+>objdump -T will give us a listing of all library functions this program
+         calls.
+	</P
+></DIV
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN136"/>5.1.2. disasm.pl</H3
+><P
+>Steve Barker wrote a <A
+HREF="code/disasm.pl.txt"
+TARGET="_top"
+> neat little
+	 perl script </A
+> that makes objdump much more legible in the 
+	 event that symbols are not included. The script has since been extended and 
+	 improved by myself and Nasko Oskov. It now makes 3 passes through the output. 
+	 The first pass builds a symbol table of called and jumped-to locations. 
+	 The second pass finds areas between two rets, and inserts them into the symbol 
+	 table as "unused" functions. The third pass prints out the nicely labeled 
+	 output, and prints out a function call tree. Usage:
+	</P
+><PRE
+CLASS="synopsis"
+>./disasm /path/to/binary &gt; binary.asminfo</PRE
+><P
+>There are/will be few command line options to the utility. Now
+		--graph is supported. It will generate a file called call_graph that
+		contains defitinition that can be used with a program called <A
+HREF="http://www.research.att.com/sw/tools/graphviz/"
+TARGET="_top"
+>dot</A
+> to
+		generate visual representation of the call graph.
+		</P
+><P
+>Note: Unused functions just mean that that function wasn't called
+         DIRECTLY. It is still possible that a function was called through a
+         function pointer (ie, main is called this way)
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN144"/>5.2. Consider the objective</H2
+><P
+>&#13;       Ok, so now we're getting ready to get really down and dirty. The first
+       step to finding what you are looking for is to know what you are
+       looking for. Which functions are 'interesting' is entirely dependent on your point
+       of view. Are you looking for copy protection? How do you suspect it is
+       done. When in the program execution does it show up? Are you looking
+       to do a security audit of the program? Is there any sloppy string usage?
+       Which functions use strcmp, sprintf, etc? Which use malloc? Is there a
+       possibility of improper memory allocation?
+      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN147"/>5.3. Finding key functions</H2
+><P
+>&#13;       If we can narrow down our search to just a few functions that are
+       relevant to our objective, our lives should be much easier.
+      </P
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN150"/>5.3.1. Finding main()</H3
+><P
+>&#13;         Regardless of our objective, it is almost always helpful to know where
+         main() lies. Unforuntely, when debugging symbols are removed, this is
+         not always easy.
+        </P
+><P
+>&#13;         In Linux, program execution actually begins at the location defined by
+         the _start symbol, which is provided by gcc in the crt0 libraries (check
+         gcc -v for location). Execution then continues to __libc_start_main(),
+         which calls _init() for each library in the program space. Each _init() then
+         calls any global constructors you may
+         have in that particular library. Global constructors can be created by
+         making global instances of C++
+         classes with a constructor, or by specifying
+         __attribute__((constructor)) after a function prototype. After this,
+         execution is finally transferred to main.
+        </P
+><P
+>&#13;         The easiest technique is to try to use our friends ltrace and gdb
+         together with our disassembled output. Checking the return address of
+         the first few functions of ltrace -i, and cross refrencing that to our
+         assembly output and function call tree should give us a pretty good idea
+         where main is. We may have to try to trick the program into exiting
+         early, or printout out an error message before it gets too deep into its
+         call stack.
+        </P
+><P
+>&#13;         Other techniques exist. For example, we can LD_PRELOAD a <A
+HREF="code/constructor.c"
+TARGET="_top"
+> .c file </A
+> with a 
+         constructor function in it. We can then set a breakpoint to a libc
+         function that it calls that is also in the main executable, and
+         <TT
+CLASS="function"
+>finish</TT
+> and <TT
+CLASS="function"
+>stepi</TT
+> 
+	 until we are satisfied that we have found main.
+        </P
+><P
+>&#13;	 Even better, we could just set a breakpoint in the function
+	 __libc_start_main (which is a libc function, and thus we will always
+	 have a symbol for it), and do the same technique of finishing and
+	 stepiing until we reach what looks like main to us.
+	</P
+><P
+>&#13;         At worst, even without a frame pointer, we should be able to get the
+         address of a function early enough in the execution chain for us to
+         consider it to be main.
+        </P
+></DIV
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN161"/>5.3.2. Finding other interesting functions</H3
+><P
+>&#13;         Its probably a good idea to make a list of all functions that call exit.
+         These may be of use to us. 
+         Other techniques for tracking down interesting functions include:
+         <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Checking for which functions call obscure gui construction
+           widgets used in a dialog box asking for a product serial number
+		   </P
+></LI
+><LI
+><P
+> Checking the string references to find out which
+           functions reference strings that we are interested in.  For
+           example, if a program outputs the text "Already registered."
+           knowing what function outputs this string is helpful in figuring
+           out the protection this particular program uses.
+		  </P
+></LI
+><LI
+><P
+>Running a program in gdb, then hitting control C when it begins
+           to perform some interesting operation. using stepi N should slow things
+           down and allow you to be more accurate. Sometimes this is too slow
+           however. Find a commonly called function, set a breakpoint, and try
+           doing cont N.</P
+></LI
+><LI
+><P
+>&#13;	   Checking which functions call functions in the BSD socket layer
+	  </P
+></LI
+></OL
+>
+        </P
+></DIV
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN173"/>5.4. Plotting out program flow</H2
+><P
+>&#13;       Plot out execution paths into a tree from main, especially to your
+       function(s) of interest. You can use disasm.pl to generate call graphs
+		with the --graph option. Using it enables the script to generate file
+		called call_graph. It contains definition of the call graph in a
+		format used by a popular graphing tool called dot. Feeding this
+		definition file in dot will give you a nice (probably pretty huge)
+		graphics file with visual representation of the call graph. It is
+		pretty amazing. Definitely try it with some small program.
+      </P
+><P
+>&#13;       Further analysis will have to hold off until we understand some assembly.
+      </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x79.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x177.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Determining Program Behavior</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Understanding Assembly</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

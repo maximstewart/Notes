@@ -1,0 +1,35 @@
+Overview:
+    -- Proxies
+    -- Vehicles of Data Transfer
+    -- Input Validation
+
+
+::  Proxies  ::
+--  Tool(s)  --
+    ZAP  "Lets us view data between the app n server"
+
+
+::  Vehicles of Data Transfer  ::
+GET/POST parameters & response
+Headers
+Coolies
+
+Forms:
+    -- Text
+    -- Hidden fields  [In BURP:  Proxy > Options > Response Modification (Section) > Unhide Hidden Form Fields]
+
+Buttons
+
+Submits
+
+Scripting languages  (JS)
+
+
+
+
+::  Input Validation  ::
+All input is evil. ~sMichael Howard  XD lololololol
+
+TNO: Trust No One
+
+Length, data types, empty or not, etc...

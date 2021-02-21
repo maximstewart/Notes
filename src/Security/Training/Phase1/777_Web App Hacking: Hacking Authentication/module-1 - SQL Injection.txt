@@ -1,0 +1,32 @@
+Overview:
+    -- Understanding SQL Injection
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  Understanding SQL Injection  ::
+--  Tool(s)  --
+
+Inserting text that get processed by a processor
+when not properly filtered out.
+
+Ex:
+    SELECT * FROM uers WHERE email = 'ex@email.com'' and password = 'xyz'
+        'ex@email.com''      <-- gets processed and generates invalid sql.
+    SELECT * FROM uers WHERE email = 'ex@email.com' -- ' and password = 'xyz'
+        'ex@email.com' -- '  <-- Whatever is written after --<space>
+                                 comments out password verification
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Parameterize the query

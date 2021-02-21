@@ -1,0 +1,193 @@
+import javafx.fxml.FXML;  // fxml stuff
+import javafx.scene.control.Button;  // a button
+import javafx.scene.control.ToggleButton;  // a toggl button
+import javafx.scene.layout.AnchorPane;  // an anchor pane
+import javafx.scene.layout.VBox;    // a virticle box; ie stacking ontop
+import javafx.scene.layout.HBox;    // a horizontal box; ie stacking side-to-side
+import javafx.scene.image.Image;    // path to an image
+import javafx.scene.image.ImageView;  //  image window port/view area
+import javafx.scene.control.Label;    // a label area for text
+import javafx.scene.control.Tooltip;  // tooltips
+import javafx.event.ActionEvent;     // for event handling
+import java.io.File;                // dealing with files and dirs
+import javafx.scene.input.KeyEvent;  // just determins if a key is pressed
+import javafx.scene.input.KeyCode;  // Get keys entered
+import javafx.scene.input.MouseEvent;  // mouse clicks
+import javafx.scene.control.TextField;    // Input field
+import javafx.event.ActionEvent;          // fxml event setOnAction
+import javafx.scene.Scene;             //  the area of the play.  ;p
+import javafx.scene.layout.Pane;        // like anchor pane but less cool
+import javafx.stage.Stage;              //  stage windows
+import javafx.stage.StageStyle;        // assigning a style of css parts
+import javafx.scene.control.TextArea;  // large ammounts of text
+import javafx.scene.control.TreeView;  // tree view area
+import javafx.scene.control.TreeItem;  // a branch of a tree... kinda....
+import javafx.beans.property.StringProperty;  // String stuff
+import javafx.beans.property.SimpleStringProperty;  // String stuff
+import javafx.scene.layout.TilePane;   // Like gridview but easyer
+import javafx.concurrent.Task;        // A thread seperate from javafx's main thread
+import javafx.application.Platform;    // Usually IN a task thread but lazy loads stuff
+import java.lang.Runtime;          // A process runner
+import javafx.stage.FileChooser;  // a file chooser window
+import javafx.stage.DirectoryChooser; // a folder chooser window
+import javafx.scene.input.MouseEvent;  // mouse click detection
+import javafx.event.EventHandler;    // Event handling
+import javafx.scene.Cursor;         // courser stuff
+import java.util.concurrent.atomic.AtomicLong;  // gui update timing
+import javafx.application.Platform;  // part of application
+import javafx.scene.input.Clipboard;  // clipboard mngmnt
+import javafx.scene.input.ClipboardContent;  // handles clipboard stuff
+import javafx.scene.control.TablePosition;  // handle table positioning stuff
+
+
+
+iconList.length  // iconList is an array. this gives its size
+System.getProperty("user.home")    // Get user Home dir   NOTE: There is NO trailing / or \
+desktopDir.listFiles();  // desktopDir is a File path and listFiles lists the dir contents if any.
+
+
+
+NOTE:  private not always needed
+
+
+// draging an item  // icon is a vbox element here. Can use other stuff
+        icon.addEventFilter(MouseEvent.MOUSE_PRESSED,
+            new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent click) {
+                if (click.getClickCount() == 2) {
+                    click.consume();
+                    try {
+                        pb = Runtime.getRuntime().exec("xdg-open " + path);
+                    } catch(Throwable imgIOErr) {
+                        System.out.println(imgIOErr);
+                    }
+                } else {
+                    orgSceneX = click.getSceneX();
+                    orgSceneY = click.getSceneY();
+                    orgTranslateX = desktopArea.getLeftAnchor(icon);
+                    orgTranslateY = desktopArea.getTopAnchor(icon);
+                }
+            }
+        });
+
+        icon.addEventFilter(MouseEvent.MOUSE_DRAGGED,
+            new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent clck) {
+                double offsetX = clck.getSceneX() - orgSceneX;
+                double offsetY = clck.getSceneY() - orgSceneY;
+                double newTranslateX = orgTranslateX + offsetX;
+                double newTranslateY = orgTranslateY + offsetY;
+                desktopArea.setLeftAnchor(icon, newTranslateX);
+                desktopArea.setTopAnchor(icon, newTranslateY);
+            }
+        });
+
+
+
+// mouse event
+    pane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+         @Override
+         public void handle(MouseEvent event) {
+             event.consume();
+                try {
+                    pb = Runtime.getRuntime().exec("xdg-open " + path);
+                } catch(Throwable imgIOErr) {
+                    System.out.println(imgIOErr);
+                }
+         }
+    });
+
+
+
+// Run a system command
+    private Process pb;    // Process runner
+    try {
+        pb = Runtime.getRuntime().exec(movieImg);
+        pb.waitFor();
+    } catch(Throwable imgIOErr) {
+        System.out.println(imgIOErr);
+    }
+
+
+
+// Directory chooser
+import javafx.stage.DirectoryChooser;
+
+
+// Key event
+    @FXML void onEnter(KeyEvent event) {  // if tied to an fxml file and the controller is called
+        if (event.getCode().equals(KeyCode.ENTER)) {  // checks what has been entered then does something.
+        }
+
+
+// Task, a seperate thread
+        Task getDir = new Task<Void>() {        // getdir is just tags name/caller
+            @Override public Void call() {
+                //  enter wahat is to be run
+            return null;
+            }};
+        new Thread(getDir).start();
+
+//  Platform lazy loads stuff to javafx thread from a seperate THREAD!!
+// Need to be from a Task thread
+     Platform.runLater(new Runnable() {
+         @Override public void run() {
+             view.setImage(pth);
+         }
+     });
+
+
+
+//  Ge images in java
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+    private ImageView imgView;
+
+
+    imgView.setImage(img);      // img is likely an Image img = new Image();
+    imgView.setFitWidth(100);   // Set width
+    imgView.setFitHeight(100);  // Set Height
+
+
+//  Set tooltips
+import javafx.scene.control.Tooltip;
+    private Tooltip tooltip;
+
+    tooltip = new Tooltip("What to display on hover");
+    tooltip.minHeight(800);
+    tooltip.minWidth(800);
+    Tooltip.install(icon, tooltip);    // icon is the thing we are setting this to.
+                                       // icon could be a Label, Image, Button, etc.
+                                       // tooltip is the displayed message/tooltip
+
+
+// anchor pane properties
+import javafx.scene.layout.AnchorPane;
+                            // icon is the thing being setup. IE, button, label, etc
+   anchorPane.setLeftAnchor(icon, 100.0);  // Must be a double!!
+   anchorPane.setRightAnchor(icon, 100.0);
+   anchorPane.setTopAnchor(icon, 100.0);
+
+
+// Tree view awesomeness!!!
+// This is more a class file but can be converted to non class bits.
+    private TreeItem<String> trunk = new TreeItem<String> ("UMSL HR Site Scan");
+    private TreeItem<String> branch = new TreeItem<> ("------------------------");
+    private TreeItem<String> leaf = new TreeItem<String> ();
+    private TreeView<String> treeOutput = new TreeView<String> (trunk);
+
+    public void setExpandSetting() {
+        trunk.setExpanded(true);
+    }
+
+    public void newBranch(String in) {
+        trunk.getChildren().add(branch);
+        branch = new TreeItem<String> (in);
+    }
+
+    public void addLeaf(String in) {
+        leaf = new TreeItem<String> (in);
+        branch.getChildren().add(leaf);
+    }
+
+    public TreeView getOutputArea() { return treeOutput; }

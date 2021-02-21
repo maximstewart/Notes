@@ -1,0 +1,14 @@
+Overview:
+    -- USB Compromise with Rubber Ducky
+    -- WiFi Hijacking with the WiFi Pineapple
+
+
+
+::  USB Compromise with Rubber Ducky  ::
+Don't use unknown usbs, lol
+Could change host files; could add reverse shell; could take pictures from cam, etc.
+
+
+
+::  WiFi Hijacking with the WiFi Pineapple  ::
+SEO bump by Google when HTTPS

@@ -1,0 +1,95 @@
+Overview:
+    -- Methodology of Attack
+    -- Structure of Web Applications
+    -- Cookies and Sessions
+    -- Lab Details
+
+
+::  Methodology of Attack  ::
+[  Poke at the Pillars  ]
+   -- Authentication
+   -- Authorization
+   -- Confidentiality
+   -- Integrity
+   -- Availability
+
+(  Map Content  )
+    -- Visible
+    -- Hidden [robots.txt, forced browse]
+    -- Analyze
+
+
+(  User Controls  )
+    -- Authentication
+    -- Access Controls
+    -- Session
+
+(  Attack Inputs  )
+    -- Form Input
+    -- Header
+    -- URL
+    -- Cookies
+    -- Hidden fields
+    -- XSS / Injection
+
+(  Site Logic  )
+    -- Positive security model
+    -- Fail securely
+    -- Principles of least privilege
+    -- Security by obscurity
+    -- Client trust
+    -- Information leakage
+
+
+
+
+::  Structure of Web Applications  ::
+
+(  HTTP Request Headers  )
+       verb       URI        Version
+Ex:    GET   /order/12345    HTTP/1.1
+
+       User-Agent                           Cookies              Referrer
+Ex:    Mozilla/5.0 (Windows NT 6.1; WOW64)  id=klkjuhyjhuty67uy  https://www.google.com
+
+
+(  HTTP Response Headers  )
+
+[  Status Code  ]
+    -- 100 - informational
+    -- 200 - Success
+    -- 300 - Redirection
+    -- 400 - Something wrong (user)
+    -- 500 - Something wrong (server)
+
+      Status Code       Server
+Ex:   HTTP/1.1 200 OK   Apache/2.4.6 (Red Hat Enterprise Linux) OpenSSL/1.9.1f
+
+
+(  Structure of URL  )
+<protocol>//<domain name>/:<port if any>?<parameters>a=123Z&b=me
+
+? = parameters
+& = separate parameters
++ or %20 = spaces
+
+(  Symbol Encoding  )
+See  module-1-image-1  image
+
+[  Other  ]
+    -- Unicode
+    -- Hex Encoding
+    -- Base64 Encoding
+
+
+::  Cookies and Sessions  ::
+Cookies store session keys
+Flags:
+    httponly
+    secure
+
+Session data is server side.
+
+
+::  Lab Details  ::
+See  module-1-image-2  image

@@ -1,0 +1,17 @@
+Wine Versions and their Dependant Game(s)
+
+SOFTWARE
+  VideoConverterFactoryPro = 1.6.2 <-- not dependent/ functions with version
+
+
+GAMES
+
+  FullFunctioningSteamUI = 1.7.53-steam_crossoverhack
+  Tomb Raider (3013) = 1.7.46
+  SW: Battlefront 2 = 1.7.37   <-- "Presumably works faster with STAGING_SHARED_MEMORY=1 /opt/wine-staging/bin/wine <GameFile>.exe"
+                                   "still slow though. may need actual install disks and not through steam"
+  Skyrim = 1.7.36
+  PathofExile = 1.7.27-PathOfExile-1.7.27
+  SW: The Old Republic = 1.7.53
+  PlanetSide2 = In PoL installer section.
+  W: Force Unleashed - Ultimate Sith Edition = 1.7.17

@@ -1,0 +1,22 @@
+Overview:
+    -- Overview
+    -- Stealing the SecretAccessKey of the Application Hosted on AWS
+
+
+
+
+::  Stealing the SecretAccessKey of the Application Hosted on AWS  ::
+--  Tool(s)  --
+
+*** XML externl entaties can point to URLs
+
+Example of sensitive resource in Amazon Web Services:
+http://169.254.169.254/latest/meta-data/liam/security-credentials/s3access
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Skipped since same as module 1's

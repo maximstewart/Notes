@@ -1,0 +1,32 @@
+Overview:
+    -- XSS via Cookie
+    -- Cross-origin Exploitation
+    -- Demo
+    -- Fixing the Problem
+
+
+
+
+::  XSS via Cookie  ::  &&  ::  Cross-origin Exploitation  ::
+--  Tool(s)  --
+
+Script is ran via a cookie.
+An attacker can set the cookie remotely.
+When the domain is visited by the user, XSS via cookie is automatically executed.
+
+Ex:
+    1. Attacker found no exploits in the domain  a.example.com (XSS via cookie).
+    2. b.example.com (XSS)  <-- Attacker can set cookie from here.
+    3. Attacker sets the cookie with  domain=.example.com from b server
+    4. Cookie is appended to outgoing request to server a
+    5. Contents are reflected back to browser from server a b/c of aoppended cookie.
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+    OWASP Sanitizer
+
+Sanitize return data.
+Insert messages from user into a <noscript> tag too.

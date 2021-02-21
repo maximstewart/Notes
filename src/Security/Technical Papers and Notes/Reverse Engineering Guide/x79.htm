@@ -1,0 +1,272 @@
+<HTML
+><HEAD
+><TITLE
+>Determining Program Behavior</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+TITLE="Gathering Info"
+HREF="x47.htm"/><LINK
+REL="NEXT"
+TITLE="Determining Interesting Functions"
+HREF="x125.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x47.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x125.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN79"/>4. Determining Program Behavior</H1
+><P
+>&#13;    There are a couple of tools that allow us to look into program
+    behavior at a more closer level. Lets look at some of these:
+    </P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN82"/>4.1. strace/truss(Solaris)</H2
+><P
+>&#13;      These programs trace system calls a program makes as it makes them.
+     </P
+><P
+>Useful options:
+      <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>-f (follow fork)</P
+></LI
+><LI
+><P
+>-ffo filename (output trace to filename.pid for
+       forking)</P
+></LI
+><LI
+><P
+>-i (Print instruction pointer for each system
+       call)</P
+></LI
+></OL
+>
+     </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN93"/>4.2. ltrace</H2
+><P
+>&#13;      This utility is extremely useful. It traces ALL library calls made by a
+      program.
+     </P
+><P
+>Useful options:
+      <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>-S (display syscalls too)</P
+></LI
+><LI
+><P
+>-f (follow fork)</P
+></LI
+><LI
+><P
+>-o filename (output trace to filename)</P
+></LI
+><LI
+><P
+>-C (demangle C++ function call names)</P
+></LI
+><LI
+><P
+>-n 2 (indent each nested call 2 spaces)</P
+></LI
+><LI
+><P
+>-i (prints instruction pointer of caller)</P
+></LI
+><LI
+><P
+>-p pid (attaches to specified pid)</P
+></LI
+></OL
+>
+     </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN112"/>4.3. LD_PRELOAD</H2
+><P
+>&#13;       This is an environment variable that allows us to add a library to the
+       execution of a particular program. Any functions in this library
+       automatically override standard library functions. Sorry, you can't use
+       this with suid programs.
+      </P
+><P
+>Example:</P
+><P
+>% gcc -o preload.so -shared <A
+HREF="code/preload.c"
+TARGET="_top"
+>preload.c</A
+> -ldl</P
+><P
+>% LD_PRELOAD=preload.so ssh students.uiuc.edu</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN119"/>4.4. gdb</H2
+><P
+>&#13;       gdb is the GNU debugger. It is very intimidating to most people, but
+       there really is no reason for it to be. It is very well done for a
+       command line debugger. There is a nice GUI front end to it known as
+       <A
+HREF="http://www.gnu.org/software/ddd/"
+TARGET="_top"
+>DDD</A
+>,
+       but our purposes will require a closer relationship with the command
+       line.
+      </P
+><P
+>&#13;       gdb has a nice built-in help system organized by topic. typing help will
+       show you the catagories. The main commands we will be interested in are
+       run, break, cont, stepi, finish, disassemble, bt, info [registers/frame], and x.
+       Every command in gdb can be followed by a number N, which means repeat N
+       times. For example, stepi 1000 will step over 1000 assembly instructions.
+      </P
+><P
+>&#13;       -&gt; Example using gdb to set breakpoints in functions with and without
+       debugging symbols.
+      </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x47.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x125.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Gathering Info</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Determining Interesting Functions</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

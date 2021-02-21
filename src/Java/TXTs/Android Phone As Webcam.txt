@@ -1,0 +1,43 @@
+----    Desktop Client Side    ----
+First: Install v4l2loopback from https://github.com/umlaeute/v4l2loopback
+    # Note:  You MUST have installed kernel headers; they MUST match the active kernel version BEFORE
+            *  make
+            *  make && sudo make install
+
+Second: If you haven't after install done the following, do:
+    sudo modprobe v4l2loopback
+
+Third: Test a loopback device with the following command:
+        * ffmpeg -f x11grab -r 15 -s 1280x720 -i :0.0+0,0 \
+        *     -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0
+        # Note:  You MIGHT need to add -vf hflip OR -vf vflip OR both to get the image oriented correctly.
+
+Fourth: Setup server to receive client camera stream from android phone.
+
+Fifth: Pipe the stream to a v4l2loopback device. (Usually /dev/video0)
+
+Sixth: Get Skype, OBS, or other apps to point to the device.
+
+
+[  Client Processing  ]
+Remote (Phone)
+v4l2-ctl --set-parm=30;v4l2-ctl --set-fmt-video=width=640,height=480,pixelformat=JPEG --stream-mmap --stream-count=-1 --stream-to=- 2>/dev/null | gst-play-1.0 "fd://0"
+
+
+Local (PC)
+-i needs to point to a stream from the phone...
+mp4 and webm seems like good streaming codecs <-- you know what i mean. =P
+
+
+ffmpeg -re -i https://github.com/STMicroelectronics/meta-st-openstlinux/blob/thud/recipes-samples/demo/demo-launcher/media/ST2297_visionv3.webm?raw=true \
+-vcodec rawvideo -pix_fmt yuv420p -threads 0 \
+-f v4l2 /dev/video0
+
+
+
+
+
+
+----    Android Phone Side    ----
+
+Need to make an app....

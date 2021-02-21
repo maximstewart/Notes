@@ -1,0 +1,44 @@
+Overview:
+    -- Google Indexing and Caching
+    -- How to Find Sensitive Data in Google
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  Google Indexing and Caching  ::
+--  Tool(s)  --
+
+Google be god and library of secrets.
+
+
+
+
+::  How to Find Sensitive Data in Google  ::
+--  Tool(s)  --
+
+See if a users password reset link has been cache...
+See if token is still valid.
+
+In google search try the following:
+
+    site:example.com
+    inurl: token  <-- where token is a string to search for
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Skipped...
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Don't store sensitive data in urls.
+Add to sensitive pages:
+    <meta name="robots" content="noindex,nofollow">

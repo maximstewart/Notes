@@ -1,0 +1,44 @@
+Overview:
+    -- Black Box / Grey Box / White Box
+    -- Rules of Engagement
+    -- Scoping
+
+
+
+::  Black Box / Grey Box / White Box  ::
+
+"Box" Testing
+
+[  Black Box  ]:  no information or access. Purely blind except for what is publicly accessible.
+                  (crafting inputs and observing responses)
+
+[  White Box  ]:  aka, Crystal box testing, has complete information about, and access to the system being tested.
+                  (user accounts, admin access, documentation, source code, test suits and frameworks, test cases, algorithm descriptions, etc.)
+
+[  Grey Box  ]:   some info is available but not complete
+                  (source code but no user accounts or admin access. Api calls anyone??)
+
+
+
+
+::  Scoping  ::
+(  All about permission  )
+
+Reason for test??
+Applications and IP in scope??
+Applications and IP NOT in scope??
+Live or test environment??
+3rd parties evolved??
+Techniques allowed??
+
+
+
+
+::  Rules of Engagement  ::
+Contact info is important
+Start / end Time
+Whitelist / blacklist
+Blocked
+Test type?
+Test Credentials
+Access to data??

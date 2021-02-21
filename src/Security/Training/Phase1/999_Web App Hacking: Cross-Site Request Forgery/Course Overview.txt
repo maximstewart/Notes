@@ -1,0 +1,15 @@
+Concepts:
+    -- Understanding a CSRF Attack
+    -- Validation of and Anti-CSRF token
+    -- Underestimated risk: A login CSRF Attack
+
+
+Overview:
+    -- Understanding a CSRF Attack
+    -- Validation of an Anti-CSRF Token
+    -- Underestimated Risk: A Login CSRF Attack
+    -- Regeneration of an Anti-CSRF Token
+    -- CSRF Attack: A Case Study
+
+
+*** A CSRF attack changes the integrity of the User's information.

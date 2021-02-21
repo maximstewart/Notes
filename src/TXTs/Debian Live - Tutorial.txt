@@ -1,0 +1,36 @@
+Downloading and installing Live-Helper:
+
+1. Open a terminal and type sudo gedit /etc/apt/sources.list
+
+    Add deb http://live.debian.net/debian/ etch main to the list and save the file.
+
+2. Back at the terminal, type sudo apt-get update
+3. Type sudo apt-get install debian-unofficial-archive-keyring
+4. Type sudo apt-get install live-helper
+
+Configuring the settings for your Debian based Live CD:
+
+1. Login as root and open a terminal (must be done as root user)
+2. From the terminal, type lh_config
+
+Now we can edit the configuration files that have been created in (root's Home) debian-live/config/ directory
+
+    Open debian-live/config/chroot, Set the interactive parameter LIVE_INTERACTIVE="enabled" (this allows you to chroot to the filesystem and make changes before it is compressed)
+    You should also set the live package to install. For example: LIVE_PACKAGES_LISTS="gnome" (will install the gnome desktop)
+    Save changes and close the chroot file
+
+Note: To create a USB Image instead of an ISO, open debian-live/config/binary and change the image type parameter from iso to usb-hdd LIVE_BINARY_IMAGES="usb-hdd"
+
+Building the Debian based Live Linux ISO or IMG:
+
+Now that we have made a couple of basic configuration changes we can proceed with the build process.
+
+1. Back at the terminal type cd debian-live (moves us to debian-live, where our live distro is going to be built)
+2. Type lh_build (starts the build process based on our live configuration settings)
+
+During the build process, live-helper will create a directory named chroot containing the Linux filesystem that will later be compressed. Once live-helper has finished installing the core components, it will start an interactive shell (change root directory to chroot) pausing the build and allow you to install additional packages and make changes or adjustments before it compresses the filesystem and builds the final Live Linux ISO.
+
+3. At the terminal, when the script responds with the following:
+Pausing build: starting interactive shell…
+
+    make your changes, if any and then type exit to allow live-helper to continue.

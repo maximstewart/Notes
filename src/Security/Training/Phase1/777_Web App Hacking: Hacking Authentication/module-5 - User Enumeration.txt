@@ -1,0 +1,25 @@
+Overview:
+    -- Understanding User Enumeration
+    -- Demo
+    -- Fixing the Problem
+
+
+
+
+
+::  Understanding User Enumeration  ::
+--  Tool(s)  --
+
+Skipped...
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Skipped...
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Return a generic response than which part failed

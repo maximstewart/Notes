@@ -1,0 +1,37 @@
+Overview:
+    -- Metadata
+    -- How to Extract Metadata
+    -- Demo
+
+
+
+::  Metadata  ::
+("Hidden" data on file)
+--  Tool(s)  --
+
+Info to be found:
+    Comments
+    History of changes
+    GPS coordinates
+    Name
+    Dates edited
+    etc.
+
+
+
+::  How to Extract Metadata  ::
+--  Tool(s)  --
+    Exiftool
+        exiftool -a <your file>
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Used exif tool on a msword file.
+Metadata had comments that gave a link with user and password to a documents archive.
+
+    Fix:  Scrub all metadata out... (But then how are comments preserved?)
+          Better internal policy about information transfer.
+          Maybe give link but no password n user?

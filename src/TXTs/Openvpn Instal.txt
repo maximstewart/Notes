@@ -1,0 +1,11 @@
+sudo apt-get install openvpn openvpn-systemd-resolved resolvconf
+
+
+Add after comp-lzo of *.ovpn configs
+    script-security 2
+    up /etc/openvpn/update-systemd-resolved
+    down /etc/openvpn/update-systemd-resolved
+    down-pre
+
+Add to END of file:
+    dhcp-option DOMAIN-ROUTE .

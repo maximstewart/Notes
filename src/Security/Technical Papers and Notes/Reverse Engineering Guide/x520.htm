@@ -1,0 +1,320 @@
+<HTML
+><HEAD
+><TITLE
+>TODO (Contribute!)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+TITLE="Buffer Overflows"
+HREF="x499.htm"/><LINK
+REL="NEXT"
+TITLE="Extra Resources"
+HREF="x578.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x499.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x578.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN520"/>12. TODO (Contribute!)</H1
+><P
+>&#13;     Things that need to get done to this document. Note, none of these things
+     are going to be particularly easy. But then again, neither was writing up
+     the rest of this tutorial.
+    </P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN523"/>12.1. Write assembly tutorial section</H2
+><P
+>&#13;      This needs to be written for AT&amp;T syntax and as.
+      </P
+><P
+>Topics:
+      <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Asm Basics:</P
+><P
+></P
+><OL
+TYPE="a"
+><LI
+><P
+>Common asm instructions and their
+	side-effects</P
+></LI
+><LI
+><P
+>Link to a more complete and comprehensive opcode
+	description page</P
+></LI
+></OL
+></LI
+><LI
+><P
+>Parts of a program</P
+></LI
+><LI
+><P
+>Declairing variables</P
+></LI
+><LI
+><P
+>Writing functions</P
+></LI
+><LI
+><P
+>Calling functions in libc</P
+></LI
+><LI
+><P
+>Calling syscalls</P
+></LI
+><LI
+><P
+>Linking against libc</P
+></LI
+></OL
+>
+      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN547"/>12.2. Create Diagrams &amp; example outputs</H2
+><P
+>&#13;      We need someone to run through the tools showcased here and
+      generate some sample output files for the more complicated ones.
+      Also, diagrams for the stack section are needed, as well as the array
+      section.
+      </P
+><P
+>Target programs:
+      <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>opera</P
+></LI
+><LI
+><P
+>vmware</P
+></LI
+><LI
+><P
+>crossover</P
+></LI
+><LI
+><P
+>IDA</P
+></LI
+></OL
+>
+      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN560"/>12.3. More detail</H2
+><P
+>More detail is needed in some places, especially in the area of
+      widget interception. (describing the event loop and suggesting good
+      breakpoint places for GTK, Qt might be nice)</P
+><P
+>Add resources and links section for each chapter (where
+      applicable)</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN564"/>12.4. Update disasm.pl</H2
+><P
+>&#13;      The simpler things to do to this script would be to clean up the
+      FIXME's, and add options to it (such as --no-show-raw-insn)
+      Also, making an attempt at derefrencing pointers
+      based on some heuristic would be nice. Check out <A
+HREF="http://hcunix.org/hcunix/siulinux.htm"
+TARGET="_top"
+>this perl
+      disassembler</A
+> for ideas (not too many ideas.. its output format
+      sucks).
+      </P
+><P
+>&#13;      If anyone is feeling extremely hardcore and wants to help modify Steve and
+      Nasko's perl script to make the output more intuitive, feel free. A
+      directed graph would be fantastic, automatic determination of main
+      would also be great (use graph theory on your directed graph). There
+      is also a utility called ptrace that is part of the LDasm project.
+      Interfacting it (or gdb) with disasm.pl script to set a break
+      point for each function would be a heroic task as well (because this
+      would be the equivalent of ltrace, except for ALL functions in a program,
+      not just the libs).
+      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN569"/>12.5. Do this for windows</H2
+><P
+>&#13;      If any of the dual booters in the crowd want to create a similar
+      document for windows and/or give a talk, submissions are encouraged.
+      Do note that in the meantime, all of these utils exist for windows as
+      well, thanks to the cygwin project. (LINK). They should work the same
+      there.
+      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN572"/>12.6. Do this for protocols</H2
+><P
+>Protocol reverse engineering is a bit different than software
+      engineering, tho many of the tools are the same. A tutorial on "reverse
+      engineering" network protocols and data formats would also be helpful.
+      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN575"/>12.7. Do this for hardware</H2
+><P
+>&#13;      If anyone wants to present tactics for reverse engineering device
+      drivers or electronic equipment, submissions are also welcome.
+      </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x499.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x578.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Buffer Overflows</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Extra Resources</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

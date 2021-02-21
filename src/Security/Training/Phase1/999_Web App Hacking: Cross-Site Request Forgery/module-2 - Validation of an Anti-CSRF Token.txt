@@ -1,0 +1,19 @@
+Overview:
+    -- Insecure Processing of the Anti-CSRF Token
+    -- Demo
+
+
+
+::  Insecure Processing of the Anti-CSRF Token  ::
+--  Tool(s)  --
+
+*** This involves intercepting requests with the anti-CSRF token.
+    It's then removed and not validated server side.... >.> What? Why?
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Skipped...

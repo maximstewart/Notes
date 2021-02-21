@@ -1,0 +1,25 @@
+Overview:
+    -- HTTP vs. HTTPS
+    -- Secure Attribute
+    -- Demo
+
+
+
+::  HTTP vs. HTTPS  ::
+--  Tool(s)  --
+
+HTTP:  Insecure
+HTTPS: Secure
+
+
+
+
+::  Secure Attribute  ::
+--  Tool(s)  --
+
+Enforcers cookie transfer only over HTTPS through secure attribute.
+
+
+::  Demo  ::
+--  Tool(s)  --
+Skipped

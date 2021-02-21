@@ -1,0 +1,12 @@
+Insert into link field of StreamIO plugin section to install plugins.
+
+
+// huan carlos
+https://jct.best4stremio.space/stremio/v1
+
+// Popcorn Time:  YTS and EZTV plugin
+https://pct.best4stremio.space/stremioget/stremio/v1
+
+
+// Plugin thread
+https://www.reddit.com/r/Stremio/comments/60agw8/new_juan_carlos_popcorn_time_addon_endpoints/

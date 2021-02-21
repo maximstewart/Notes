@@ -1,0 +1,121 @@
+Overview:
+    -- Port Scanning
+    -- Nmap Scripting Engine (NSE)
+    -- Screenshooting
+    -- DNS Bruteforcing
+    -- NTP
+    -- SNMP
+
+
+
+::  Port Scanning  ::
+--  Tool(s)  --
+    Nmap
+    Metasploit:  Can "store" data and handle many formats... Postgress SQL as backend
+
+
+Bad Habits:
+Avoid "Kitchen Sink" syndrome! Be precise and DON'T firehose scan everything!
+    It's loud and makes for easy detection.
+    It's extremely slow.
+    Can be greatly misleading given it can be destructive by taking down services.
+
+Good Habits:
+    Perform multiple scans
+    Slow down service scans and target a few at a time.
+    Store scan data effectively
+
+
+Some common NMAP flags used:  See  module-3-image-1  image
+*** Check his notes for common service ports!
+
+
+
+
+::  Nmap Scripting Engine (NSE)  ::
+--  Tool(s)  --
+    Nmap Scanning Engine (NSE):
+        Supports most Nmap protocols
+        Massively parallel
+        Kali ships with 515 NSE scripts
+    Masscan:
+        Scan entire Internet in 6 minutes
+    ZMap:
+        Perform checks similar to NSE
+
+
+
+
+
+::  Screenshooting  ::
+--  Tool(s)  --
+    EyeWitness:  A python script to take snapshots
+                 python EyeWitness.py --headless -x <scan_list>.xml
+
+Scan results or IP with Nmap and then screenshoot.
+
+
+
+
+::  DNS Bruteforcing  ::
+--  Tool(s)  --
+    dig: DNS requests tool
+    dnsrecon: Python script for dns zone transfer checking
+
+In this instance we use company's Domain server instead of 8.8.8.8 or other non related DNS server.
+Remember, in passive scan we NEVER touch anything related to company!! In active scanning,
+we do touch company servers/services...
+
+Active vs. Passive DNS Bruteforcing:
+    See  module-3-image-2  image
+
+
+
+
+::  NTP  ::
+(Network Time Protocol)
+** Time syncing protocol
+
+--  Tool(s)  --
+    Nmap NSE:  ntp-monlist -->  nmap --script ntp-monlist $IP
+    NTP tools:  apt-get install ntp
+
+
+NTPd = daemon
+
+They store devices that have communicated with it.
+If missconfigured, while rare, it can expose those addresses and hostenames
+
+Getting IPs from NTP
+See  module-3-image-3  image
+
+*** mrulist command in pic is most likely to work but no DoS risk
+
+
+
+
+::  SNMP  ::
+(Simple Network Management Protocol)
+*** Manages or monitors devices
+*** Usually for switches and routers but can have Printers and VOIP Phones over internet
+
+--  Tool(s)  --
+
+
+Network Monitoring System (NMS) collects information
+SNOM agent has the actual info to be collected
+
+Spoofing as NMS to try and collect information about network.
+
+Can reveal:
+    Version info, network routing inf, usernames, process IDs, and more
+
+*** If you can modify the device it's an instant critical finding
+   Networking device modification would mean changing internet firewall rules
+   or, with the right device, permanent compromise of the system.
+
+Security of SNPM:
+    3 versions -->  See  module-3-image-4  image
+
+Potential attacks:
+    See  module-3-image-5  image

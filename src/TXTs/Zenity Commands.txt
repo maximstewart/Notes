@@ -1,0 +1,12 @@
+zenity --info --text=""
+zenity --warnning --text=""
+save="Save"	DntSave="Do Not Save"
+
+saver=$(zenity --list --text "" --radiolist/ --checklist 
+--column "Select" 
+--column "Options" 
+TRUE "Save" FALSE "Do Not Save" --height 175);
+
+$(zenity --file-selection --filename ./)
+
+$(zenity --entry --text "" --entry-text "" );

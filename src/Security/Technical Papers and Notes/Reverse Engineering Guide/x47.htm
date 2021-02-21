@@ -1,0 +1,388 @@
+<HTML
+><HEAD
+><TITLE
+>Gathering Info</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+TITLE="The Linux Compilation Process"
+HREF="x24.htm"/><LINK
+REL="NEXT"
+TITLE="Determining Program Behavior"
+HREF="x79.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x24.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x79.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN47"/>3. Gathering Info</H1
+><P
+>Now the fun stuff begins. The first step to figuring out what is going on 
+      in our target program is to gather as much information as we can. Several 
+      tools on Linux allow us to do this. Let's take a look at them.
+     </P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN50"/>3.1. ldd</H2
+><P
+>&#13;        ldd is a basic utility that shows us what libraries a program is linked
+        against, or if its statically linked. It also gives us the addresses that
+        these libraries are mapped into the program's execution space, which can
+        be handy for following function calls in disassembled output (which we
+        will get to shortly).
+       </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN53"/>3.2. nm</H2
+><P
+>&#13;        nm lists all of the local and library functions, global variables, and
+        their addresses in the binary. However, it will not work on binaries that
+        have been stripped with strip.
+       </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN56"/>3.3. /proc</H2
+><P
+>&#13;        The Linux /proc filesystem contains all sorts of interesting information,
+        from where libraries and other sections of the code are mapped, to which
+        files and sockets are open where.  The /proc filesystem contains
+        a directory for each currently running process.  So, if you started a
+        process whose pid was 3137, you could enter the directory /proc/3137/ to find
+        out almost anything about this currently running process.  You can
+        only view process information for processes which you own.
+        </P
+><P
+>&#13;        The files in this directory change with each OS.  The interesting ones in Linux are:
+        cmdline -- lists the command line parameters passed to the process
+        cwd -- a link to the current working directory of the process
+        environ -- a list of the environment variables for the process
+        exe -- the link to the process executable
+        fd -- a list of the file descriptors being used by the process
+        maps -- VERY USEFUL.  Lists the memory locations in use by this
+        process.  These can be viewed directly with gdb to find out various
+        useful things.
+        </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN60"/>3.4. netstat</H2
+><P
+>&#13;	netstat is handy little tool that is present on all modern operating
+	systems. It is used to display network connections, routing tables,
+	interface statistics, and more.
+       </P
+><P
+>&#13;        How can netstat be useful? Let's say we are trying to reverse engineer
+	a program that uses some network communication. A quick look at what
+	netstat displays can give us clues where the program connects and
+	after some investigation maybe why it connects to this host.
+	netstat does not only show TCP/IP connections, but also UNIX domain
+	socket connections which are used in interprocess communication in
+	lots of programs.
+	Here is an example output of it:
+       <PRE
+CLASS="screen"
+>&#13;Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 slack.localnet:58705    egon.acm.uiuc.edu:ssh   ESTABLISHED
+tcp        0      0 slack.localnet:51766    gw.localnet:ssh         ESTABLISHED
+tcp        0      0 slack.localnet:51765    gw.localnet:ssh         ESTABLISHED
+tcp        0      0 slack.localnet:38980    clortho.acm.uiuc.ed:ssh ESTABLISHED
+tcp        0      0 slack.localnet:58510    students-slb.cso.ui:ssh ESTABLISHED
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags       Type       State         I-Node Path
+unix  5      [ ]         DGRAM                    68     /dev/log
+unix  3      [ ]         STREAM     CONNECTED     572608 /tmp/.ICE-unix/794
+unix  3      [ ]         STREAM     CONNECTED     572607
+unix  3      [ ]         STREAM     CONNECTED     572604 /tmp/.X11-unix/X0
+unix  3      [ ]         STREAM     CONNECTED     572603
+unix  2      [ ]         STREAM                   572488
+       </PRE
+>
+        As you can see there is great deal of info shown by netstat. But what
+	is the meaning of it?
+	The output is divided in two parts - Internet connections and UNIX
+	domain sockets as mentioned above. Here is breifly what the Internet
+	portion of netstat output means. The first column shows the protocol
+	being used (tcp, udp, unix) in the particular connection. Receiving
+	and sending queues for it are displayed in the next two columns,
+	followed by the information identifying the connection - source host
+	and port, destination host and port. The last column of the output
+	shows the state of the connection. Since there are several stages in
+	opening and closing TCP connections, this field was included to show
+	if the connection is ESTABLISHED or in some of the other available
+	states. SYN_SENT, TIME_WAIT, LISTEN are the most often seen ones. To
+	see complete list of the available states look in the man page for
+	netstat. FIXME: Describe these states.
+       </P
+><P
+>&#13;        Depending on the options being passed to netstat, it is possible to
+	display more info. In particular interesting for us is the -p option
+	(not available on all UNIX systems). This will show us the program
+	that uses the connection shown, which may help us determine the
+	behaviour of our target.
+	Another use of this options is in tracking down spyware programs that
+	may be installed on your system. Showing all the network connection
+	and looking for unknown entries is invaluable tool in discovering
+	programs that you are unaware of that send information to the network.
+	This can be combined with the -a option to show all connections. By
+	default listening sockets are not displayed in netstat. Using the -a
+	we force all to be shown. -n shows numerical IP addesses instead of
+	hostnames.
+       <PRE
+CLASS="screen"
+>&#13;        <B
+CLASS="command"
+>&#13;netstat -p as normal user</B
+>
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 slack.localnet:58705    egon.acm.uiuc.edu:ssh   ESTABLISHED -
+tcp        0      0 slack.localnet:58766    winston.acm.uiuc.ed:www ESTABLISHED 5587/mozilla-bin
+       </PRE
+>
+       <PRE
+CLASS="screen"
+>&#13;        <B
+CLASS="command"
+>&#13;netstat -npa as root user</B
+>
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN      390/smbd
+tcp        0      0 0.0.0.0:6000            0.0.0.0:*               LISTEN      737/X
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      78/sshd
+tcp        0      0 10.0.0.3:58705          128.174.252.100:22      ESTABLISHED 13761/ssh
+tcp        0      0 10.0.0.3:51766          10.0.0.1:22             ESTABLISHED 897/ssh
+tcp        0      0 10.0.0.3:51765          10.0.0.1:22             ESTABLISHED 896/ssh
+tcp        0      0 10.0.0.3:38980          128.174.252.105:22      ESTABLISHED 8272/ssh
+tcp        0      0 10.0.0.3:58510          128.174.5.39:22         ESTABLISHED 13716/ssh
+       </PRE
+>
+	So this output shows that mozilla has established a connection with
+	winston.acm.uiuc.edu for HTTP traffic (since port is www(80)). In the
+	second output we see that the SMB daemon, X server, and ssh daemon
+	listen for incomming connections.
+       </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN70"/>3.5. lsof</H2
+><P
+>&#13;        lsof is a program that lists all open files by the processes running
+	on a system. An open file may be a regular file, a directory, a	block
+	special file, a character special file, an executing text reference, 
+	a library, a stream or a network file (Internet socket, NFS file or 
+	UNIX domain socket). It has plenty of options, but in its default mode
+	it gives an extensive listing of the opened files. lsof does not come
+	installed by default with most of the flavors of Linux/UNIX, so you
+	may need to install it by yourself. On some distributions lsof
+	installs in /usr/sbin which by default is not in your path and you
+	will have to add it.
+	An example output would be: <PRE
+CLASS="screen"
+>&#13;COMMAND     PID  USER   FD   TYPE     DEVICE     SIZE       NODE NAME
+bash        101 nasko  cwd    DIR        3,2     4096    1172699 /home/nasko
+bash        101 nasko  rtd    DIR        3,2     4096          2 /
+bash        101 nasko  txt    REG        3,2   518140    1204132 /bin/bash
+bash        101 nasko  mem    REG        3,2   432647     748736 /lib/ld-2.2.3.so
+bash        101 nasko  mem    REG        3,2    14831    1399832 /lib/libtermcap.so.2.0.8
+bash        101 nasko  mem    REG        3,2    72701     748743 /lib/libdl-2.2.3.so
+bash        101 nasko  mem    REG        3,2  4783716     748741 /lib/libc-2.2.3.so
+bash        101 nasko  mem    REG        3,2   249120     748742 /lib/libnss_compat-2.2.3.so
+bash        101 nasko  mem    REG        3,2   357644     748746 /lib/libnsl-2.2.3.so
+bash        101 nasko    0u   CHR        4,5              260596 /dev/tty5
+bash        101 nasko    1u   CHR        4,5              260596 /dev/tty5
+bash        101 nasko    2u   CHR        4,5              260596 /dev/tty5
+bash        101 nasko  255u   CHR        4,5              260596 /dev/tty5
+screen      379 nasko  cwd    DIR        3,2     4096    1172699 /home/nasko
+screen      379 nasko  rtd    DIR        3,2     4096          2 /
+screen      379 nasko  txt    REG        3,2   250336     358394 /usr/bin/screen-3.9.9
+screen      379 nasko  mem    REG        3,2   432647     748736 /lib/ld-2.2.3.so
+screen      379 nasko  mem    REG        3,2   357644     748746 /lib/libnsl-2.2.3.so
+screen      379 nasko    0r   CHR        1,3              260468 /dev/null
+screen      379 nasko    1w   CHR        1,3              260468 /dev/null
+screen      379 nasko    2w   CHR        1,3              260468 /dev/null
+screen      379 nasko    3r  FIFO        3,2             1334324 /home/nasko/.screen/379.pts-6.slack
+startx      729 nasko  cwd    DIR        3,2     4096    1172699 /home/nasko
+startx      729 nasko  rtd    DIR        3,2     4096          2 /
+startx      729 nasko  txt    REG        3,2   518140    1204132 /bin/bash
+ksmserver   794 nasko    3u  unix 0xc8d36580              346900 socket
+ksmserver   794 nasko    4r  FIFO        0,6              346902 pipe
+ksmserver   794 nasko    5w  FIFO        0,6              346902 pipe
+ksmserver   794 nasko    6u  unix 0xd4c83200              346903 socket
+ksmserver   794 nasko    7u  unix 0xd4c83540              346905 /tmp/.ICE-unix/794
+mozilla-b  5594 nasko  144u  sock        0,0              639105 can't identify protocol
+mozilla-b  5594 nasko  146u  unix 0xd18ec3e0              639134 socket
+mozilla-b  5594 nasko  147u  sock        0,0              639135 can't identify protocol
+mozilla-b  5594 nasko  150u  unix 0xd18ed420              639151 socket
+       </PRE
+> Here is brief explanation of some of the abbreviations lsof uses in
+	its output: <PRE
+CLASS="programlisting"
+>&#13;   cwd  current working directory
+   mem  memory-mapped file
+   pd   parent directory
+   rtd  root directory
+   txt  program text (code and data)
+   CHR  for a character special file
+   sock for a socket of unknown domain
+   unix for a UNIX domain socket
+   DIR  for a directory
+   FIFO for a FIFO special file
+	</PRE
+>
+        </P
+><P
+> It is pretty handy tool when it comes to investigating program
+	behavior. lsof reveals plenty of information about what the process is
+	doing under the surface.
+       </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN76"/>3.6. fuser</H2
+><P
+>&#13;     A command closely related to lsof is fuser.  fuser accepts as a
+     command-line parameter the name of a file or socket.  It will return the
+     pid of the process accessing that file or socket.
+     </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x24.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x79.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The Linux Compilation Process</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Determining Program Behavior</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

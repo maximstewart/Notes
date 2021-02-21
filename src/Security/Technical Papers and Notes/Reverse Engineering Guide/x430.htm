@@ -1,0 +1,333 @@
+<HTML
+><HEAD
+><TITLE
+>Working with the ELF Program Format</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+TITLE="Writing Standalone Assembly"
+HREF="x407.htm"/><LINK
+REL="NEXT"
+TITLE="Understanding Copy Protection"
+HREF="x467.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x407.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x467.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN430"/>8. Working with the ELF Program Format</H1
+><P
+>So at this point we now know how to write our programs on an extremely
+    low level, and thus produce an executable file that very closely matches
+    what we want. But the question is, how is our program code now actually
+    stored on disk?</P
+><P
+>Well, recall that when a program runs, we start at the _start function,
+    and move on from there to __libc_start_main, and eventually to main, which
+    is our code. So somehow the operating system is gathering together a whole
+    lot of code from various places, and loading it into memory and then
+    running it. How does it know what code goes where?</P
+><P
+>The answer on Linux and UNIX is the <A
+HREF="http://www.skyfree.org/linux/references/ELF_Format.pdf"
+TARGET="_top"
+>&#13;     ELF binary specification.</A
+> ELF specifies a standard format for
+     mapping your code on disk to a complete executable image in
+     memory that consists of your code, a stack, a heap (for malloc), and all
+     the libraries you link against.</P
+><P
+>So lets provide an overview of the information needed for our purposes
+     here, and refer the user to the ELF spec to fill in the details if they
+     wish. We'll start from the beginning of a typical executable and work our
+     way down.</P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN437"/>8.1. ELF Layout</H2
+><P
+>There are three header areas in an ELF file: The main ELF file header,
+     the program headers, and then the section headers. The program code lies
+     inbetween the program headers and the section headers.</P
+><P
+>TODO: Insert figure here to show a typical ELF layout.</P
+><P
+>NOTE: ELF is extremely flexible. Many of these sections can be shunk,
+     expanded, removed, etc. In fact, it is not outside the realm of
+     possibility that some programs may deliberately make abnormal, yet valid
+     ELF headers and files to try to make reverse engineering difficult
+     (vmware does this, for example).</P
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN442"/>8.1.1. The Main ELF File Header</H3
+><P
+>The main elf header basically tells us where everything is located in
+      the file. It comes at the very beginning of the executable, and can be
+      read directly from the first e_ehsize (default: 52) bytes of the file
+      into this structure.</P
+><PRE
+CLASS="screen"
+>&#13;/* ELF File Header */
+typedef struct
+{
+  unsigned char e_ident[EI_NIDENT];     /* Magic number and other info */
+  Elf32_Half    e_type;                 /* Object file type */
+  Elf32_Half    e_machine;              /* Architecture */
+  Elf32_Word    e_version;              /* Object file version */
+  Elf32_Addr    e_entry;                /* Entry point virtual address */
+  Elf32_Off     e_phoff;                /* Program header table file offset */
+  Elf32_Off     e_shoff;                /* Section header table file offset */
+  Elf32_Word    e_flags;                /* Processor-specific flags */
+  Elf32_Half    e_ehsize;               /* ELF header size in bytes */
+  Elf32_Half    e_phentsize;            /* Program header table entry size */
+  Elf32_Half    e_phnum;                /* Program header table entry count */
+  Elf32_Half    e_shentsize;            /* Section header table entry size */
+  Elf32_Half    e_shnum;                /* Section header table entry count */
+  Elf32_Half    e_shstrndx;             /* Section header string table index */
+} Elf32_Ehdr;
+</PRE
+><P
+>&#13;      The fields of interest to us are e_entry, e_phoff, e_shoff, and the
+      sizes given. e_entry specifies the location of _start, e_phoff shows us
+      where the array of program headers lies in relation to the start of the
+      executable, and e_shoff shows us the same
+      for the section headers.</P
+></DIV
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN447"/>8.1.2. The Program Headers</H3
+><P
+>&#13;      The next portion of the program are the ELF program headers. These
+      describe the sections of the program that contain executable program
+      code to get mapped into the program address space as it loads.</P
+><PRE
+CLASS="screen"
+>&#13;/* Program segment header.  */
+
+typedef struct
+{
+  Elf32_Word    p_type;                 /* Segment type */
+  Elf32_Off     p_offset;               /* Segment file offset */
+  Elf32_Addr    p_vaddr;                /* Segment virtual address */
+  Elf32_Addr    p_paddr;                /* Segment physical address */
+  Elf32_Word    p_filesz;               /* Segment size in file */
+  Elf32_Word    p_memsz;                /* Segment size in memory */
+  Elf32_Word    p_flags;                /* Segment flags */
+  Elf32_Word    p_align;                /* Segment alignment */
+} Elf32_Phdr;
+</PRE
+><P
+>Keep in mind that there are going to a few of these (usually 2)
+      end-to-end (ie forming an array of structs) in a typical ELF executable.
+      The interesting fields in this structure are
+      p_offset, p_filesz, and p_memsz, all of which we will need to make use of in the
+      code modification chapter.</P
+></DIV
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN452"/>8.1.3. The ELF Body</H3
+><P
+>The meat of the ELF file comes next. The actual locations and sizes
+      of portions of the body are described by the
+      program headers above, and contain the executable instructions from our
+      assembly file, as well as string constants and global variable
+      declairations. This will become important in the next chapter, program
+      modification. (TODO: How to link to other chapters)</P
+></DIV
+><DIV
+CLASS="sect3"
+><H3
+CLASS="sect3"
+><A
+NAME="AEN455"/>8.1.4. ELF Section Headers</H3
+><P
+>&#13;      The ELF section headers describe various named sections in an executable
+      file. Each section has an entry in the section headers array, which is
+      found at the bottom of the executable and has the following
+      format:</P
+><PRE
+CLASS="screen"
+>&#13;/* Section header.  */
+
+typedef struct
+{
+  Elf32_Word    sh_name;                /* Section name (string tbl index) */
+  Elf32_Word    sh_type;                /* Section type */
+  Elf32_Word    sh_flags;               /* Section flags */
+  Elf32_Addr    sh_addr;                /* Section virtual addr at execution */
+  Elf32_Off     sh_offset;              /* Section file offset */
+  Elf32_Word    sh_size;                /* Section size in bytes */
+  Elf32_Word    sh_link;                /* Link to another section */
+  Elf32_Word    sh_info;                /* Additional section information */
+  Elf32_Word    sh_addralign;           /* Section alignment */
+  Elf32_Word    sh_entsize;             /* Entry size if section holds table */
+} Elf32_Shdr;
+
+
+</PRE
+><P
+>The section headers are entirely optional, however. A list of
+      common sections can be found on page 20 of the <A
+HREF="http://www.skyfree.org/linux/references/ELF_Format.pdf"
+TARGET="_top"
+>ELF Spec
+      PDF</A
+></P
+></DIV
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN461"/>8.2. Editing ELF</H2
+><P
+>Editing ELF is often desired during reverse engineering, especially
+     when we want to insert bodies of code, or if we want to reverse engineer
+     binaries with deliberately corrupted ELF headers.</P
+><P
+>Now you could edit these headers by hand using the &lt;elf.h&gt; header
+     file and those above structures, but luckily there is already a nice
+     editor called <A
+HREF="http://hte.sourceforge.net/"
+TARGET="_top"
+> HT Editor</A
+> 
+     that allows you to examine and modify
+     all sections of an ELF program, from ELF header to actual
+     instructions.
+      (TODO: instructions, screenshots of HTE)
+     </P
+><P
+>Do note that changing the size of various program sections in the ELF
+     headers will most likely break things. We will get into how to edit ELF
+     in more detail when we are talking about actual code insertion, which is
+     the next chapter.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x407.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x467.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Writing Standalone Assembly</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Understanding Copy Protection</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,80 @@
+FindIcon(icon, size) {
+  theme = user selected theme
+  do {
+    filename = LookupIcon (icon, size, theme)
+    if filename != none
+      return filename
+    theme = theme.parentTheme()
+  } while (theme)
+  return LookupFallbackIcon (iconname)
+}
+     
+
+With the following helper functions:
+
+LookupIcon (iconname, size, theme) {
+  for each subdir in $(theme subdir list) {
+    for each directory in $(basename list) {
+      for extension in ("png", "svg", "xpm") {
+        if DirectoryMatchesSize(subdir, size) {
+          filename = directory/$(themename)/subdir/iconname.extension
+          if exist filename
+	    return filename
+        }
+      }
+    }
+  }
+  minimal_size = MAXINT
+  for each subdir in $(theme subdir list) {
+    for each directory in $(basename list) {
+      for extension in ("png", "svg", "xpm") {
+        filename = directory/$(themename)/subdir/iconname.extension
+        if exist filename and DirectorySizeDistance(subdir, size) < minimal_size {
+	   closest_filename = filename
+	   minimal_size = DirectorySizeDistance(subdir, size)
+        }
+      }
+    }
+  }
+  if closest_filename set
+     return closest_filename
+  return none
+}
+
+LookupFallbackIcon (iconname) {
+  for each directory in $(basename list) {
+    for extension in ("png", "svg", "xpm") {
+      if exists directory/iconname.extension
+        return directory/iconname.extension
+    }
+  }
+  return none
+}
+
+DirectoryMatchesSize(subdir, iconsize) {
+  read Type and size data from subdir
+  if Type is Fixed
+    return Size == iconsize
+  if Type is Scaled
+    return MinSize <= iconsize <= MaxSize
+  if Type is Threshold
+    return Size - Threshold <= iconsize <= Size + Threshold
+}
+
+DirectorySizeDistance(subdir, size) {
+  read Type and size data from subdir
+  if Type is Fixed
+    return abs(Size - iconsize)
+  if Type is Scaled
+    if iconsize < MinSize
+        return MinSize - iconsize
+    if iconsize > MaxSize
+        return iconsize - MaxSize
+    return 0
+  if Type is Threshold
+    if iconsize < Size - Threshold
+        return MinSize - iconsize
+    if iconsize > Size + Threshold
+        return iconsize - MaxSize
+    return 0
+}

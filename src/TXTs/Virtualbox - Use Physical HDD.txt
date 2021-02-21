@@ -1,0 +1,17 @@
+Might need to do:
+    sudo apt-get install virtualbox virtualbox-dkms
+    sudo usermod -a -G disk $USER
+
+Then Get Windows Partition info and drive letter
+
+
+// Sudo seems to cause issues with below command and reg users then accessing it.
+Then Insert Info from above to below:
+    VBoxManage internalcommands createrawvmdk \
+    -filename "/path/to/win8.vmdk" -rawdisk /dev/sda \
+    -partitions 1,4,5
+
+Launch VBox and create an image but select the created VMDK.
+
+Finally, have fun!!
+

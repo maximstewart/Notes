@@ -1,0 +1,146 @@
+Note:   This phase listing is based off of my programming background,
+        what I did with Juice Shop, and Fedlearn classes.
+
+Note 2:
+        Free Time at Work phase covers stuff that doesn't fit nicely in the other phases.
+
+Note 3: OWASP Juice Shop:  16% completed.
+        ( Most of 1 stars, a quarter of 2 stars, one or two of the 3 stars, and one 5 or 6 stars )
+
+
+Goals:
+2-3 hours per weekend! (
+                        1 hour per day of video then try and apply concepts.
+                        Application happens either on the day of video or all on Sunday.
+                        )
+
+
+--  Certificates  --
+    Security+
+        Training:    https://store.comptia.org/p/SEC-005-CMLR-2019   ($499.00 at 12 months access)
+        Certificate: https://store.comptia.org/p/CompTIAS            ($499.00 with 1x retake option)
+    CISSP
+        Training:    https://www.isc2.org/Training/Online-Self-Paced ($2,795.00 at 120 day access)
+        Certificate: https://www.isc2.org/Certifications/CISSP       (~$699.00)
+
+
+
+
+::  Phase1:  This phase is a broad rundown of things to look at when doing application hacking.  ::
+
+This is the big picture section of what can be drilled down into. Most of the lessons will be structured to
+fill these knowledge sets. I get a few introduction classes discussing broad topics and then a play by play
+to see the concepts in action.
+
+I then start off proper by getting an introduction into reconnaissance and footprinting the app, network, etc.
+From there, pretty much after reconnaissance, it comes down to a wide array of potential threat vectors.
+I cover the fundamentals with the below topics while re-enforcing what I studied from Fedlearn.
+
+
+
+/**********************************    COMPLETED    **********************************\
+(08/16)  Beginner      2h 22m   by Keith Watson      Penetration Testing: The Big Picture
+(08/16)  Intermediate  2h 38m   by Mike Woolard      Web Application Penetration Testing Fundamentals
+(08/16)  Beginner      1h 2m    by Troy Hunt         Play by Play: Ethical Hacking with Troy Hunt
+
+(08/23)  Intermediate  1h 21m  by Will Vandeva       External Footprinting: Reconnaissance and Mapping
+
+(08/30)  Beginner      1h 14m  by Dawid Czagan       Web App Hacking: Sensitive Data Exposure
+(08/30)  Beginner      1h 2m   by Dawid Czagan       Web App Hacking: Cookie Attacks
+(08/30)  Beginner      1h 0m   by Dawid Czagan       Web App Hacking: Hacking Authentication
+(08/30)  Beginner      49m     by Dawid Czagan       Web App Hacking: Hacking Password Reset Functionality
+
+(09/06)  Beginner      51m     by Dawid Czagan       Web App Hacking: Cross-Site Request Forgery (CSRF)
+(09/06)  Beginner      45m     by Dawid Czagan       Web App Hacking: Caching Problems
+(09/06)  Beginner      50m     by Dawid Czagan       Web App Hacking: Hacking XML Processing
+
+
+/**********************************      TO-DO    **********************************\
+
+... COMPLETED ALL IN THIS PHASE ...
+
+
+::  Phase2:  This phase is to really flesh out the intro phase of 1.  ::
+
+/**********************************    COMPLETED    **********************************\
+
+
+
+/**********************************      TO-DO    **********************************\
+(09/13, 20)
+         Beginner      7h 24m   by Dale Meredith     Performing and Analyzing Network Reconnaissance
+
+(09/27)  Beginner      3h 0m    by Troy Hunt         Ethical Hacking: Evading IDS, Firewalls, and Honeypots
+(10/04)  Beginner      2h 25m   by Troy Hunt         Ethical Hacking: Hacking Web Servers
+(10/11)  Beginner      3h 27m   by Troy Hunt         Ethical Hacking: Session Hijacking
+(10/18)  Beginner      2h 49m   by Troy Hunt         Ethical Hacking: Denial of Service
+(10/25, 11/01)
+         Beginner      5h 25m   by Troy Hunt         Ethical Hacking: SQL Injection
+(11/08, 15)
+         Beginner      4h 49m   by Troy Hunt         Ethical Hacking: Hacking Web Applications
+(11/22, 29)
+         Beginner      4h 56m   by Dale Meredith     Ethical Hacking: Hacking Mobile Platforms
+
+
+(12/06)  Intermediate  1h 56m   by Gus Khawaja       Penetration Testing Automation Using Python and Kali Linux
+(12/06)  Intermediate  3h 32m   by Liam Cleary       Penetration Testing SharePoint
+(12/13)  Intermediate  1h 31m   by Daniel Teixeira   Penetration Testing in Action
+
+
+(12/20, 27)
+         Intermediate  5h 12m   by Jerod Brennen     Performing OSINT Gathering on Corporate Targets
+(01/03)  Intermediate  3h 52m   by Chad Russell      Exploitation: Evading Detection and Bypassing Countermeasures
+(01/10)  Beginner      1h 23m   by Gus Khawaja       Network Penetration Testing Using Python and Kali Linux
+(01/17)  Intermediate  4h 7m    by Troy Hunt         Hack Your API First
+(01/24, 31)
+         Intermediate  9h 25m   by Troy Hunt         Hack Yourself First: How to go on the Cyber-Offense
+(02/07)  Intermediate  1h 57m   by Peter Mosm        OPSEC for Penetration Testers
+
+
+
+
+::  Phase3:  More advanced stuff that looks to bring it all together. ::
+/**********************************    COMPLETED    **********************************\
+
+
+/**********************************      TO-DO    **********************************\
+(02/14)  Intermediate  2h 1m   by Clark Voss         Web Application Penetration Testing: Session Management Testing
+(02/14)  Intermediate  2h 14m  by Sunny Wear         Web Application Penetration Testing with Burp Suite
+
+
+(02/21)  Advanced      1h 15m  by Sunny Wear         Advanced Web Application Penetration Testing with Burp Suite
+(02/28)  Advanced      2h 48m  by Sunny Wear         Writing Burp Suite Macros and Plugins
+(03/06, 13)
+         Advanced      6h 3m   by Gus Khawaja        Penetration Testing and Ethical Hacking with Kali Linux
+
+
+
+
+::  Phase4:  This is for the not so fun part of app pentesting- reports.  ::
+/**********************************    COMPLETED    **********************************\
+
+
+/**********************************      TO-DO    **********************************\
+Intermediate  2h 0m    by Will Vandeva      Writing Penetration Testing Reports
+Beginner      4h 47m   by Ben Sullins       Data Analysis Fundamentals with Tableau
+Intermediate  1h 36m   by Ben Sullins       Enterprise Business Intelligence with Tableau Server
+Intermediate  3h 44m   by Ben Sullins       Big Data Analytics with Tableau
+Intermediate  1h 47m   by Robert Horvick    Data Visualizations Using Tableau Public
+
+
+
+
+::  Free Time at Work  ::
+/**********************************    COMPLETED    **********************************\
+
+
+/**********************************      TO-DO    **********************************\
+Beginner      1h 17m   by Mark Minasi       The Case for PowerShell
+Beginner      6h 19m   by Robert Cain       Beginning PowerShell Scripting for Developers
+Beginner      2h 41m   by Robert Cain       Introduction to PowerShell
+Intermediate  2h 23m   by Mike Thomas       Pivot Tables for Excel 2016
+Intermediate  3h 18m   by Diane McSor       Excel 2016 for Power Users
+
+
+Intermediate  2h 27m   by Troy Hunt         AngularJS Security Fundamentals
+Beginner      1h 38m   by Troy Hunt         Getting Started with Cloudflare Security

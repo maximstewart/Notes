@@ -1,0 +1,63 @@
+Overview:
+    -- Spider Application
+    -- Discover Server Information
+    -- Discover Hidden Content
+    -- Automated Scans
+    -- Analyze Results
+
+
+
+::  Spider Application  ::
+
+[  OWASP Zed Attack Proxy (ZAP)  ]
+
+Add site to context
+1. r-click root of context and "Attack" > "Spider" it.
+2. You can force scan additional hidden pages by r-click and "Attack" > "Forced Browse" the directory and children
+
+
+
+
+::  Discover Server Information  ::
+-- Tool(s) --
+    HTTP Print
+    Wappalyzer (FF plugin)  [Helps get technology stack info.]
+
+Can use browser response header info too.
+Information leakage can help too. IE, plugins that display version info, etc
+
+See  module-3-image-1  image for app types
+
+
+
+
+::  Discover Hidden Content  ::
+
+--  Tool(s)  --
+    Foca  (Google foo)
+
+Robots.text
+Forced Browsing:       Common files and folders that are popular for private information  (BURP: Content Discovery)
+Public Information     "Google Hacking"
+Comments               Comments sitting in code  (BURP Suit has a find comments in page feature)
+
+
+
+
+::  Automated Scans  ::
+
+--  Tool(s)  --
+See  module-3-image-2  image
+CMSmap:    attack and review WordPress, Joomla, and Drupal.
+WPScan:    Wordpress
+Joomscan:  Joomla
+SQLmap:    injection tool
+
+SSLlabs:   https://www.ssllabs.com/ssltest/
+SSLscan:   Kali linux tool
+
+
+
+
+::  Analyze Results  ::
+Getting all the data together and reviewing...

@@ -1,0 +1,30 @@
+#
+# By Maxim F. Stewart
+# Contact: [maxim2131@gmail.com] OR [gamer1119@gmail.com]
+#
+# Copyright 2013 Maxim F. Stewart
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+Disclaimer!!
+DiamondCool was made by editing a previous skin till it suited my needs.
+
+-Install-
+To set up this config just mv 
+DiamondCool.ini to /usr/share/mc/skins/
+
+Also edit in ~/.config/mc/ini
+the line that says skin=default to skin=DiamondCool
+or copy the present ini file to $HOME/.config/mc/

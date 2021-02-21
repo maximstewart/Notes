@@ -1,0 +1,100 @@
+Overview:
+    -- Banner Grabbing
+    -- Hunting Weak Web Applications
+    -- SMTP Bounceback
+    -- SMTP Enumeration
+    -- Username Enumeration - Error Messaging
+    -- Username Enumeration - Timing Attacks
+
+*** Drilling down in prioritized service list
+
+
+
+::  Banner Grabbing  ::
+*** tend to get best results with internal assessments.
+
+--  Tool(s)  --
+
+Automate connections to the servers and scope and pull back the response banner.
+Can sometimes pull back MySQL banner which could give version info.
+
+
+
+
+::  Hunting Weak Web Applications  ::
+--  Tool(s)  --
+    Nmap:  http-enums script (has big dictionary of common pages)
+           *** Look for things like phpMyAdmin pages
+           Can pickup Wordpress versions
+    whatweb: good plugins
+            Can find interesting headers
+    wpscan:  Wordpress scan
+            Enumerate users and plugins
+
+
+
+Look for OTS (Off the Shelf) software
+Pre-packaged install
+Supports plugins
+Open source vs. Vendor specific (Enterprise)...
+Custom developed pages
+
+Talk with customer about patching cycle. Is it under 2 hours?
+Look to Drupal case study where vulnerability left all instances
+not patched within 7 hours as infected.
+
+
+
+
+::  SMTP Bounceback  ::
+*** Sends email to non-existent addess to target email server
+    Target sends a bounceback stating address doesn't exist. (DoS/DDoS threat too?)
+    can view details from the response for useful information
+
+*** Limited effect but can be useful.
+
+--  Tool(s)  --
+
+
+
+
+::  SMTP Enumeration  ::
+*** Can get enterprise or domain accounts
+
+--  Tool(s)  --
+
+SMTP User Enumeration:
+    See  module-4-image-1  image
+
+Can use Metasploit module smtp_enum, included with Kali to automate this process
+
+Defences:
+    White listing, reputation of connecting IPs, disallowing multiple
+    receipt-to attempts and SPF or its counterpart DKIM, which are aimed at preventing spoofed email.
+
+
+
+
+::  Username Enumeration - Error Messaging  ::
+*** Basically, see what error messages give. Does username or password not exist?
+
+--  Tool(s)  --
+
+
+Account Lockouts:
+    Lockout threshold and timeout
+    Lack of lockout is/really/bad
+
+Single password bruteforce
+
+Case Study:
+    See  module-4-image-2  image
+
+
+
+
+::  Username Enumeration - Timing Attacks  ::
+--  Tool(s)  --
+
+Timing Attack Baseline:
+    See  module-4-image-3  image

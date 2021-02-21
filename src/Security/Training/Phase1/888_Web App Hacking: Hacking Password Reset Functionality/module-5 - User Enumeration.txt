@@ -1,0 +1,26 @@
+Overview:
+    -- User Enumeration and Password Resetting
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  User Enumeration and Password Resetting  ::
+--  Tool(s)  --
+
+Reset link sends two responses indicating what failed.
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+No notes...
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Just say: "You should see an emai to reset your password soon."

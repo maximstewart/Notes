@@ -1,0 +1,51 @@
+Overview:
+    -- Reflected Cross-site Scripting
+    -- How Can Users and Developers Mitigate Reflected XSS Risks?
+    -- Persistent Cross-site Scripting
+    -- How Can Users and Developers Combat Persistent XSS?
+
+
+
+::  Reflected Cross-site Scripting  ::
+Uses a link with an image that has a src attrib set to the website he owns.
+He also uses JS to access the cookies and steal the session id and pass that
+to the site called. This is predicated on the user also having set the
+"remember me" functionality which further exacerbated the issue b/c the serer
+sent back OTHER cookies that turned out to be the username and password in
+base64 encoding...
+
+
+
+::  How Can Users and Developers Mitigate Reflected XSS Risks?  ::
+
+Users:
+Pretty much user side the only mitigation is having a unique password.
+
+
+Admins:
+Encode Output
+Auth cookie needs to be set to httponly (IE, NO JS should access it.)
+CORS
+
+
+
+
+::  Persistent Cross-site Scripting  ::
+Embedded XSS in the db
+--  Tool(s)  --
+    BeEF
+
+Used phishing page in this example to escalate attack
+
+
+
+
+::  How Can Users and Developers Combat Persistent XSS?  ::
+
+Users:
+Look at urls and keylock as needed.
+2-Fac auth
+
+Admins:
+Sanitize data before adding to db
+HTTPS

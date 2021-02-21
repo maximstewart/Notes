@@ -1,0 +1,57 @@
+Overview:
+    -- HTTP vs. HTTPS
+    -- Demo: HTTP vs. HTTPS
+    -- HTTPS
+    -- Problems with Transport Layer Protection
+    -- Demo: Problems with Transport Layer Protection
+
+
+
+
+::  HTTP vs. HTTPS  ::
+--  Tool(s)  --
+
+Http is insecure
+Https is secure
+Data is exposed...yada yada yada
+
+
+::  Demo: HTTP vs. HTTPS  ::
+--  Tool(s)  --
+
+Uses proxy to view data from http site and user creds
+
+
+
+
+::  HTTPS  ::
+--  Tool(s)  --
+XD Sorry, duh stuff at this point...
+
+
+
+::  Problems with Transport Layer Protection  ::
+(Basically, could be using poor encryption standards... Thanks NSA)
+--  Tool(s)  --
+    Scanner For Transport Layer Protection
+        https://www.ssllabs.com/ssltest/
+
+Insecure protocols
+    SSL3  <-- Vulnerable against POODLE attack  <-- This guy fucking with me? XD
+
+Insecure ciphers
+    TLS_RSA_WITH_RC4_128_SHA
+
+Vulnerable libraries
+    Heartbleed
+
+
+
+
+::  Demo: Problems with Transport Layer Protection  ::
+--  Tool(s)  --
+
+He uses  https://www.ssllabs.com/ssltest/  scanner to check his vulnerable site.
+He uses suggest documents to mitigate potential threats through its instructions.
+
+One could likely use https://www.exploit-db.com  to Find and download exploit...

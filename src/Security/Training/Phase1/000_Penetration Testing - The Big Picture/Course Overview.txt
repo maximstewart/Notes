@@ -1,0 +1,11 @@
+Penetration Testing:
+    -- Demonstrate weaknesses through simulated attacks
+    -- Determine an orgs. resistance to attacks
+    -- Report on security posture and provide recommendations
+
+
+Overview:
+    -- Role of penetration testing in information security
+    -- Penetration tests
+    -- Penetration Testing Execution Standard (PTES)
+    -- Pen testers and their tools

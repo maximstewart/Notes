@@ -1,0 +1,40 @@
+Overview:
+    -- Understanding Insecure Direct Object Reference
+    -- Unauthorized Access to User's Account
+    -- Demo
+    -- Fixing the Problem
+
+
+::  Understanding Insecure Direct Object Reference  ::
+--  Tool(s)  --
+
+Basically, when there is no validation that you are who
+you are and get direct access to an account.
+
+https://example.com/account.php?user!ID=153
+V
+https://example.com/account.php?userl|D=154  <-- can access another user account...
+
+
+
+
+::  Unauthorized Access to User's Account  ::
+--  Tool(s)  --
+
+No notes...
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Skipped...
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Don't have user id in link or reset process.
+Only use a token that directly links one to one to an account.

@@ -1,0 +1,65 @@
+// Optional  --   sudo apt-get install alsa-base alsa-tools alsa-tools-gui alsa-utils alsa-oss 
+
+1.  wget https://dl.winehq.org/wine-builds/Release.key
+    sudo apt-key add Release.key
+    sudo apt-add-repository 'https://dl.winehq.org/wine-builds/ubuntu/'
+                        OR
+    Make sure to add or uncomment the sources URIs in /etc/apt/sources.list
+
+
+2.  sudo apt-get update
+
+
+                    [  64BIT  ]
+3.  sudo apt-get install flex bison gcc-multilib g++-multilib wine-devel \
+                                libx11-dev libfreetype6-dev libasound2-dev
+
+                        OR
+
+                    [  32BIT  ]
+    sudo apt-get install flex bison gcc-multilib g++-multilib wine-devel \
+                 libx11-dev:i386 libfreetype6-dev:i386 libasound2-dev:i386
+
+4.  git clone https://github.com/daniel-santos/wine
+5.  cd /the/location/of/wineBuildDir/
+6.  mkdir -p bin/{wine32,wine64}
+7.  git checkout hybrid-sync
+
+
+IF above is done already, to update code do...
+git fetch
+git reset --hard origin/hybrid-sync
+
+
+8.
+---   Out of tree build   ---
+//  Building out-of-tree simply involves invoking configure
+//  from an empty directory other than the top of the source tree.
+//  Notes:
+//      The project must be enabled for out-of-tree builds, typically with the user of VPATH if using make
+//      The source tree should be clean (i.e. no build should be done in the original source directory),
+//      otherwise it will confuse make
+
+[  32BIT OR 64BIT BUILD  ]
+cd <wineBuildDir>/build//wine32
+cd <wineBuildDir>/build/wine64
+
+CFLAGS="-m32 -O2" ../../configure    // Note: -02 means use compiler optimize
+                                     // level 2 && -00 means no optimization
+                                     // -03 I think is the highest.
+                                     // --with-wine64=../64 (any other arguments)
+                                     // -m32 means do 32bit build
+
+
+
+9. make -j<number of CPU cores + 1>     // Hyperthreading doubles your core count so take note.
+
+
+10. cd loader/
+
+
+11.  make install    // Optional since we can run from the build dir.
+
+Examples for 32bit & 64bit launch:
+WINEDEBUG=fixme-all STAGING_SHARED_MEMORY=1 STAGING_SHM_SYNC=1 WINEPREFIX="/home/abaddon/.wine"  ./wine "C:\Program Files (x86)\Steam\Steam.exe" -no-cef-sandbox
+WINEDEBUG=fixme-all STAGING_SHARED_MEMORY=1 STAGING_SHM_SYNC=1 WINEPREFIX="/home/abaddon/.wine"  ./wine64 "C:\Program Files (x86)\Steam\Steam.exe" -no-cef-sandbox

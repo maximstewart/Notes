@@ -1,0 +1,71 @@
+0.) For creating functions do:
+	def fun():
+	def main():
+	def start(): etc...
+to pass variables to another function do:
+	def part1(x):
+	  print "Hi %d" %x <-- number/digit 
+				NOTE: A String can not use %d
+			              unless it's a number: 1, 2, etc!
+	  print "Hi %s" %x <-- String
+	  def main():
+	  x=3
+	part1(x)  <-- calls part1 function with x being passed to it.
+NOTE: You can pass many values through.
+	def part1(x,y,z):
+	  print "Hi %d %d %d" %(x,y,z)  <-- numbers/digits
+					NOTE: Strings can not use %d
+					unless it's a number: 1, 2, etc!
+	  print "Hi %s %s %s" %(x,y,z) <-- Strings
+	def main():
+	  x=1
+	  y=2
+	  z=3
+	  part1(x,y,z)	
+1.) For intager input do:
+	input("Type your number here fool!!")
+to tack it on to a variable do:
+	x= input("Type your number here fool!!")
+2.) For string input do:
+	raw_input("Type your name here fool!!")
+to tack it on to a variable do:
+	x= raw_input("Type your name here fool!!")
+3.) To print out in a terminal do:
+	print "Your message in these parenthasies"
+4.) If statements are as is:
+	if x == 1:
+	print "Blah"
+OR
+	if x == 1:
+	print "Blah"
+	elif x== 2:
+	print "Blah2"
+	else
+	print "Damn you dumb!!"
+5.) To do and or or statement do:
+	x=1
+	y=2
+	z=3
+	if x == y and x == z :
+		print "Huh?"
+OR for or do:
+	x=1
+	y=2
+	z=3
+	if x == y or x == z :
+		print "Huh?"
+6.) For string comparisons do :
+	x="Fucker"
+	z="Hi"
+	if x != y :
+		print "Yup, correct."
+7.) To pass variables into print do:
+	x="Fucker"
+	z="Hi"
+	varb=(x,y)
+	if x != y :
+		print "Yup, correct. %S is not the same as %S" % varb
+	elif x == y :
+		print "Yup, correct. %S is the same as %S" % varb
+NOTE: This passes the variables in order as they appear. The % before varb 
+means pass these two variables, in order of apperance to the %s's

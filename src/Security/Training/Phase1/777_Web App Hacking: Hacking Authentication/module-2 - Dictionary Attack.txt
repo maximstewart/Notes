@@ -1,0 +1,43 @@
+Overview:
+    -- Understanding Dictionary Attack
+    -- Hydra
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  Understanding Dictionary Attack  ::
+--  Tool(s)  --
+
+List of commonly used passwords are used against a user account.
+*** This pretty much requires user enumeration to work...
+
+
+
+::  Hydra  ::
+--  Tool(s)  --
+    Hydra from Kali Linux
+
+Automated password guessing attack
+
+Ex Usage:
+    hydra example.com -L emails.txt -P passwords.txt http-post-form
+    "/login.php :email=*USER“&password=PASS‘ : Invalid password" -S
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Just used the above command n waited...
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Use CAPTCHAs
+Create lockouts that slow the attacker.
+Force strong passwords from the user.
+Make generic message for failure to login.

@@ -1,0 +1,58 @@
+Overview:
+    -- User Impersonation
+    -- Demo: User Impersonation
+    -- Session Expiration Problem
+    -- Demo: Session Expiration Problem
+
+
+
+
+::  User Impersonation  ::
+--  Tool(s)  --
+
+Story:
+
+    1. User is logged out
+    2. Attacker learns user’s session ID (non-authenticated )
+    3. https://example.com/reset.php?token=38d527c93b748a2
+         V
+         User changes his password
+    4. Redirection to user's account: the same session ID (authenticated)
+
+
+
+
+::  Demo: User Impersonation  ::
+--  Tool(s)  --
+
+Skipped...
+
+
+
+
+::  Session Expiration Problem  ::
+--  Tool(s)  --
+
+Story:
+    1. Attacker learned user’s password
+    2. Attacker logs in (user’s account) > session ID
+    3. https://example.com/reset.php?token=38d527c93b748a2
+         V
+        User changes his password
+    4. Session ID related to old user’s password has not been invalidated
+
+Session Expiration Problem
+    Attacker still has access to user’s account
+    Invalidate session ID related to old user’s password
+
+
+
+
+::  Demo: Session Expiration Problem  ::
+--  Tool(s)  --
+
+Skipped...
+
+
+FIX:
+Reset session tokens every login...

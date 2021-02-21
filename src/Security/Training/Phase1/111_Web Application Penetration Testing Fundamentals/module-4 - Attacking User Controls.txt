@@ -1,0 +1,47 @@
+Overview:
+    -- Authentication
+    -- Session
+    -- Access Controls
+
+
+::  Authentication  ::
+
+POST over HTTPS:  Ensure can't get to HTTP side
+
+Pretty much covers standard policies such as Lockout policies, password lengths and strength,
+whether over https with post (the best correct way) and whether any other (the worst wrong way)
+
+Password reset links should be tokenized and live for 5, 10, to 20 minutes. If still alive past 24 hours it's a finding.
+Obviously limit previous password usage to some degree (60 rounds before reuse)
+
+Security question /answer:  Is it limited or infinite in nature?
+
+What is your favorite NBA team?  == about 30 total. Will it let me try all
+thirty or lock out and request I call help line?
+
+
+
+::  Session  ::
+Is the session token meaningful or completely random?? NEVER base64 shit into it!!!
+Determine if content encode.
+
+Try generating multiple tokens. See if any repetition.
+Create multiple accounts.
+Compare tokens against access levels guest/admin
+
+
+--  Predictability and Randomization  --
+See  module-4-image-1  image
+
+
+Protect in transit
+No URL
+Expire
+
+
+
+
+::  Access Controls  ::
+Insecure direct object reference
+NEVER security through obscurity!!
+Unprotected API calls

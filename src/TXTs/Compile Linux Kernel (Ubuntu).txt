@@ -1,0 +1,19 @@
+apt-get install kernel-package libncurses5-dev fakeroot wget bzip2 build-essential
+ 
+#make sure you have plenty of room on you drive
+#get the kernel from http://kernel.org
+wget “https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.11.4.tar.xz” -O linux.tar.xz
+tar -xJvf linux.tar.xz
+ 
+cd linux
+make clean && make mrproper
+cp /boot/config-`uname -r` ./.config
+make menuconfig
+#choose “LOAD” and “.config” then exit and save
+ 
+#This will take a while
+make-kpkg clean
+fakeroot make-kpkg --initrd --append-to-version=-custom kernel_image kernel_headers
+ 
+#this creates two .deb files in the current dir
+#install them

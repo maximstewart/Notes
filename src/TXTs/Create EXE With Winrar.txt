@@ -1,0 +1,26 @@
+GENERAL Tab:
+  C:\Program Files\
+
+ADVANCED Tab: --> Add shortcut:
+SRC File Name--
+    C:\Program Files\MAXIMUSInstallerv1.02\MAXIMUS Installer.hta
+Shortcut Name--
+    MAXIMUS Installer
+ShortcutIcon--    
+    C:\Program Files\MAXIMUSInstallerv1.02\resources\other\favicon.ico
+
+MODULE Tab: 
+  allows for setting 32 or 64bit exe self extractors.
+
+LICENSE Tab:
+Title of License Window:
+  MI License
+License Window:
+  ADD license from txt file in other folder of src folder
+
+TEXT and ICON Tab:
+Title of SFX Window:
+  MAXIMUS Installer!
+Text to display in SFX Window:
+  MAXIMUS Installer! The Chocolatey GUI For All!
+Add ico & bmp files here too to set extractor and installer images!

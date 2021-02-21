@@ -1,0 +1,12 @@
+Concepts:
+    -- Collect domain names & IP addresses
+    -- Passive and Active Reconnaissance
+    -- Hunting Weak Web Applications
+    -- Mapping your hosts
+
+Overview:
+    -- Welcome to External Footprinting  (Non-technical opportunities)
+    -- Passive Reconnaissance  (Hunting Quietly)
+    -- Active Reconnaissance  (Gathering the goods)
+    -- Prioritizing External Targets  (Feel the heat)
+    -- Countermeasures and Reporting  (Active defense, fun!)

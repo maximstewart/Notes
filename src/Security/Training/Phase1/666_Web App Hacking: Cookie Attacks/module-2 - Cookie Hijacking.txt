@@ -1,0 +1,49 @@
+Overview:
+    -- Introduction to XSS Attack
+    -- HttpOnly Attribute
+    -- Demo
+
+
+
+::  Introduction to XSS Attack  ::
+--  Tool(s)  --
+
+Reflected Attack
+    User could be prompted by malicious link.
+    Link runs script which pulls all cookies
+    and sends to offload site.
+
+
+
+
+::  HttpOnly Attribute  ::
+--  Tool(s)  --
+
+Prevents JS from having access to the cookie.
+The cookie can still be sent via headers.
+Still need secure argument for transferring
+across only HTTPS
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Shows XSS works
+Can send link to victim with malicious search which reflects
+a script back to the page. The script tag has a script written that requests
+the cookies.
+
+NOTE: This was done through URL parameters
+      Session ID was NOT set to httponly!!
+
+
+Fixes:
+    1. Use httponly attribute on sensitive data!
+        (This doesn't fix the XSS though! It just prevents certain losses.)
+    2. Proper sanitized return data!
+        The script got embedded to the page b/c the page
+        presents a message of what was queried.
+        Do generic responses than taking users input.
+        Simpler than worrying about proper sanitation...

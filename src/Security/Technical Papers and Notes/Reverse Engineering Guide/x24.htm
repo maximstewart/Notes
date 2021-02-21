@@ -1,0 +1,234 @@
+<HTML
+><HEAD
+><TITLE
+>The Linux Compilation Process</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+HREF="t1.htm"/><LINK
+REL="NEXT"
+TITLE="Gathering Info"
+HREF="x47.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="t1.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x47.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN24"/>2. The Linux Compilation Process</H1
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN26"/>2.1. Intro</H2
+><P
+>&#13;         Compilation in general is split into roughly 5 stages: Preprocessing,
+         Parsing, Translation, Assembling, and Linking. All 5 stages are
+         implemented by one program in UNIX, namely cc, or in our case, gcc.
+         The general order of things goes gcc -&gt; gcc -E -&gt; gcc -S -&gt; as -&gt; ld.
+        </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN29"/>2.2. gcc</H2
+><P
+>&#13;         gcc is the C compiler of choice for most UNIX. The program gcc itself is
+         actually just a front end that executes various other programs
+         corresponding to each stage in the compilation process. To get it to
+         print out the commands it executes at each step, use gcc -v.
+        </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN32"/>2.3. gcc -E (Preprocessor Stage)</H2
+><P
+>&#13;         gcc -E runs only the preprocessor stage. This places all include files
+         into your .c file, and also translates all macros into inline C code.
+        </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN35"/>2.4. gcc -S (Parsing+Translation Stages)</H2
+><P
+>&#13;         gcc -S will take .c files as input and output .s assembly files in
+         AT&amp;T syntax.
+        </P
+><P
+>&#13;         gcc can be called with various optimization options that can do
+         interesting things to the outputted assembly code. There are between 4
+         and 7 general optimization classes that can be specified with a -ON,
+         where 0 &lt;= N &lt;= 6. 0 is no optimization (default), and 6 is maximum.
+        </P
+><P
+>&#13;         There are also several fine-grained assembly options that are specified
+         with the -f flag. The most interesting are -funroll-loops,
+         -finline-functions, and -fomit-frame-pointer. Loop unrolling means to
+         expand a loop out so that there are n copies of the code for n 
+         iterations of the loop (ie no jmp statements to the top of the loop). 
+         On modern
+         processors, this optimization is negligible. Inlining functions means to
+         effectively convert all functions in a file to macros, and place copies
+         of their code directly in line in the calling function (like the
+         C++ inline keyword). This only applies for functions called in the same
+         C file as their definition. It is also a relatively small optimization.
+         Omitting the frame pointer (aka the base pointer) frees up an extra register for use in your
+         program. If you have more than 4 heavily used local variables, this may
+         be rather large advantage, otherwise it is just a nuisance (and makes
+         debugging much more difficult).
+        </P
+><P
+>&#13;         Since some of these get turned on by default in the higher optimization
+         classes, it is useful to know that despite the fact that the manual page
+         does not mention it explicitly, all of the -f options have -fno
+         equivalents. So -fnoinline-functions prevents function inlining,
+         regardless of the -O option. (I think it happens at -O3 by default).
+        </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN41"/>2.5. as (Assembly Stage)</H2
+><P
+>&#13;         as is the GNU assembler. It takes input as AT&amp;T syntax asm files and
+         generates a .o object file.
+        </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN44"/>2.6. ld/collect2 (Linking Stage)</H2
+><P
+>&#13;         ld is the GNU linker. It will generate a valid executable file. If you
+         link against shared libraries, you will want to actually use what gcc
+         calls, which is collect2. Watch gcc -v for flags
+       </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x47.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Gathering Info</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

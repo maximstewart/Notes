@@ -1,0 +1,18 @@
+Overview:
+    -- Strong Password Policy
+    -- Two-factor Authentication
+
+
+
+::  Strong Password Policy  ::
+--  Tool(s)  --
+
+At least 8 characters long with:
+    alpha, special, numeric with 2 minimum each
+
+
+
+::  Two-factor Authentication  ::
+--  Tool(s)  --
+
+What user KNOWS + what user HAS

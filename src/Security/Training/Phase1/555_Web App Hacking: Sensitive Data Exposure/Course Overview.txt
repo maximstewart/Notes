@@ -1,0 +1,11 @@
+Concepts:
+    ...
+
+Overview:
+    -- Insecure Error Handling
+    -- Disclosure of Sensitive Files
+    -- Information Disclosure via Metadata
+    -- Underestimated Risk: Disclosure of Software Version
+    -- Insecure Communication Channel
+    -- Leakage of Cookie with Sensitive Data
+    -- Leakage of Sensitive Data via Referer Header

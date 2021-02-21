@@ -1,0 +1,49 @@
+Overview:
+    -- Password Reset Link
+    -- Leakage via Referer Header
+    -- Demo
+    -- Fixing the Problem
+
+
+
+::  Password Reset Link  ::
+--  Tool(s)  --
+
+Common Link Structures:
+    <domain>/reset.php?token=kj5h9gf7ed8rf89tjhg
+    "BAD":
+        <domain>/reset.php?userID=3451&token=kj5h9gf7ed8rf89tjhg
+        Token should be unique to userID and id shouldn't be used.
+
+
+
+
+::  Leakage via Referer Header  ::
+--  Tool(s)  --
+
+When browser fetching say an image, it makes a call to the link.
+Users password reset link is transferred to external domain
+The referer domain leaks the link. But, if it had the ID too
+then a hacker could use that too.
+
+Fix: Change the referer domain? Expire reset links in a timly manner...
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+--  Link(s)  --
+    https://silesiasecuritylab.com/
+
+
+Looks at referer info from image call.
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Don't fetch the content from an external domain.
+Host it yourself. At least on the reset link and login links...

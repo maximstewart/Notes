@@ -1,0 +1,82 @@
+# REFERENCE
+# MAIN:  https://davidyat.es/2016/09/08/gpu-passthrough/
+# More for Mint:  https://forums.linuxmint.com/viewtopic.php?f=231&t=212692
+# >> = Terminal commands : DON"T ADD
+
+
+1.)
+    # Set BIOS to use AMD(SVM/IOMMU/Virtualization) Intell(VT-d/AMD-Vi)
+
+
+2.)
+    >> sudo apt-get update && sudo apt-get upgrade
+    >> sudo apt-get install qemu-kvm seabios qemu-utils hugepages bridge-utils ovmf virt-manager libvirt-bin
+
+    # Check kvm is happy
+    >> kvm-ok
+    >> lsmod | grep kvm
+
+    # Download Win10 or try Win7
+    https://www.microsoft.com/en-gb/software-download/windows10ISO
+
+
+    >> lspci | grep VGA
+    >> lspci -nn | grep 02:00.  # Or the number associated with your desired card
+         -- Take note of PCI IDs for later -- Example: (10de:...)
+
+
+3.)
+    # Upgrade the kernel to >=4.8
+    >> cd /tmp; wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-headers-4.8.0-040800_4.8.0-040800.201610022031_all.deb http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-headers-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-image-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb; sudo dpkg -i *.deb
+    >> sudo update-grub
+
+    REBOOT
+
+    # uname -r to see if kernel is used.
+
+
+4.)
+    # Need to see an output -->> Maybe?
+    >> find /sys/kernel/iommu_groups/ -type l
+
+
+5.)
+    # Set pcie-stub ids to the noted id from step 2
+    >> sudo nano /etc/default/grub
+         -- Insert:  GRUB_CMDLINE_LINUX_DEFAULT="pcie_acs_override=downstream amd_iommu=on pci-stub.ids=10de:1380,10de:0fbc modprobe.blacklist=nouveau"
+    >> sudo nano /etc/initramfs-tools/modules
+         -- Insert to end:  pci-stub
+    >> sudo update-initramfs -u
+
+6.)
+    ----  Optional  ----
+    # Set hugepages -- Should REALLY have A LOT of RAM.  >=16GB preferred.
+    # amount_of_RAM / hugepagesize + small_buffer = vm.nr_hugepages
+    #                     8192M / 2048k + 7.5% = 4300
+
+    >> hugeadm --explain
+    >> sudo nano /etc/default/qemu-kvm
+        -- Insert:  KVM_HUGEPAGES=1
+    >> sudo nano /etc/sysctl.conf
+        -- Insert:  vm.nr_hugepages = 4300  # Edit number acordingly
+    >> hugeadm --explain
+        # Check if user in proper group and add :
+    >> sudo nano /etc/sysctl.conf
+        -- Insert:  kernel.shmmax = 9437184000  # Edit number acordingly to what hugeadm --explain says.
+
+    ----  Optional  ----
+    # Add user to hugepages group     usermod -a -G <groupname> username
+    >> sudo usermod -a -G hugetlb_shm_group <username>
+
+
+    REBOOT
+12288
+
+7.)
+----  QEMU  ----
+    >> virt-manager
+        # Follow:  https://davidyat.es/2016/09/08/gpu-passthrough/
+
+----  VirtualBox  ----
+    Attach:  VBoxManage modifyvm "win7Light Clone" --pciattach 02:00.0
+    Detach:  VBoxManage modifyvm "win7Light Clone" --pcidetach 02:00.0

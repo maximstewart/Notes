@@ -1,0 +1,42 @@
+Overview:
+    -- Importance of Secure Cookie Processing
+    -- Cookie Processing Fundamentals
+    -- Secure Attribute
+    -- Demo
+
+
+
+::  Importance of Secure Cookie Processing  ::
+--  Tool(s)  --
+Leakage of session ID through cookie leads to user impersonation
+Two-fac does not protect against session ID loss/leak
+
+
+
+
+::  Cookie Processing Fundamentals  ::
+--  Tool(s)  --
+
+Set-Cookie  <-- Header from server which creates cookie
+Format:
+    Name
+    Value
+    Optional Attributes
+
+
+
+::  Secure Attribute  ::
+--  Tool(s)  --
+
+Set-Cookie:  name=value  <-- sent over HTTP and HTTPS
+Set-Cookie:  name=value;secure  <-- sent ONLY over HTTPS
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Uses test app and looks at cookies info. Sees httponly and secure are unset.
+Gets redirected from http to https. The cookie was set and disclosed b4 redirect.
+He sets the secure attribute through his browser for example but the sessionid is undesclosed.

@@ -1,0 +1,18 @@
+Overview:
+    -- Anti-CSRF Token: The Importance of Regeneration
+    -- Demo
+
+
+
+
+::  Anti-CSRF Token: The Importance of Regeneration  ::
+--  Tool(s)  --
+
+Skipped... EXACTLY like his other regeneration steps.
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Skipped... EXACTLY like his other regeneration steps.

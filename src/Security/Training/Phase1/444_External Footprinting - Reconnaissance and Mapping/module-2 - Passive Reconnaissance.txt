@@ -1,0 +1,130 @@
+Overview:
+    -- WHOIS
+    -- BGP
+    -- Internet Scanning Projects
+    -- DNS Bruteforcing
+    -- Digging Deep on Third Party Servers
+    -- Source Code Services
+
+    ---   TESTING FACEBOOK   ---
+    Hostenames, IPs, reconnaisance
+    Must Read:
+        https://www.facebook.com/whitehat
+
+
+*** Collecting information about the company without communicating with any of their systems.
+
+[  Challenge  ]:
+    --  Tool(s)  --
+        Kali Linux
+
+    Start with:
+        -- facebook.com
+    End with:
+        -- +100,000 IPv4
+        -- +100 IPv6 Ranges
+        -- More than 5k hostnames
+
+
+
+::  WHOIS  ::
+--  Tool(s)  --
+    dmitry: Demographic Information Gathering Tool  -- See  module-2-image-1  image
+    whois:  Gets the company info
+    nslookup:   DNS lookup
+    ARIN Site
+
+
+Is a protocol that translates URL to company information
+Go from a URL to list of IP addresses.
+Associated anonymous system information (ASN Info)
+*** Can use IPs to bypass some information hiding services against WHOIS lookups (see nslookup to get ip/domain)
+
+
+seed URL:         facebook.com
+WHOIS lookups:
+                  +100,000 IPv4
+                  +100 IPv6 Ranges
+
+
+
+
+::  BGP  ::  (Border Gateway Protocal)
+*** Exchanges antonymous system network routing information
+    (Ie, creates A PATH BETWEEN THESE SYSTEMS)
+    Routing decisions on core internet
+*** AS (antonymous system) is associated with network ranges
+
+--  Tool(s)  --
+    See  module-2-image-2  image
+
+
+
+
+::  Internet Scanning Projects  ::
+*** Internet scanning projects perform TCP and UDP port scans across the entire internet on a daily or weekly basis.
+    The data is then made publicly available and the goal is to provide the public with the data for analysis.
+    IE, great for gathering info/reconnaissance
+
+--  Tool(s)  --
+    scans.io : Hosted and maintained by University of Michigan
+               censys.io  allows for interactive querying against data
+        Relevant to Footprinting:
+            DNSs:              Virtual Hosts
+            SSL Certificates:  Subject alternative names (another list of hostnames)
+            Live Services
+    commoncrawl.org:  crawl of the internet itself. (Kinda like backend of Google)
+    www.shodan.io
+    crt.sh:  Comodo Certificate sdearch
+    pigz:  parallel decompression of tar,gzip files
+
+
+
+
+::  DNS Bruteforcing  ::
+--  Tool(s)  --
+    DNSRecon on Kali:  dnsrecon -d <your domain> -t <types: brt for bruteforce> -n 8.8.8.8 -D <dictionary> -c <store results path file> -f <if dns wildcard in place>
+    Fierce on Kali
+
+Advanced Tactics:
+    Recursive Bruteforce
+    Use organization  specific patterns.
+    Ask someone
+
+
+
+
+::  Digging Deep on Third Party Servers  ::
+(Think like an attacker)
+(Think like an employee)
+
+*** Think of the two sites as philosophy than actual steps.
+    Does it make sense to check these basically?
+
+--  Tool(s)  --
+    virustotal.com :  Might list domains checked by users. (When OK they are acrtual domains of company)
+    threatcrowd.org : Malware threat information
+
+
+Think about 3rd party services.
+Think about mergers and acquisitions.
+Think about presentation sharing sites such as slideshare.net or prezi.com
+Industry blog posts
+Conference videos
+
+Other Courses:
+    Reconnaissance/Footprinting by Dale Meredith
+
+
+
+
+::  Source Code Services  ::
+--  Tool(s)  --
+    Gitrob
+    Gumbler
+
+--  Group(s)  --
+    Github
+    Bitbucket
+    SourceForge
+    Googlecode (Now defunct)

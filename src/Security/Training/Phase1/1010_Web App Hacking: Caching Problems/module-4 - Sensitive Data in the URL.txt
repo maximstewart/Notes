@@ -1,0 +1,30 @@
+Overview:
+    -- URL and Sensitive Data
+    -- Demo
+    -- Fixing the Problem
+
+
+
+
+::  URL and Sensitive Data  ::
+--  Tool(s)  --
+
+GET post?? Yup...
+Don't.
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Shows server logs containing the password.
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Use POST for sensitive data transfer including things
+like no-cache in cache-control and pragma plus autocomplete="off"
+in form fields.

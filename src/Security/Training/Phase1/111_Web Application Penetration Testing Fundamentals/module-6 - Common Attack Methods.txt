@@ -1,0 +1,53 @@
+Overview:
+    -- Fuzzing
+    -- XSS - Cross-site Scripting
+    -- Injection
+    -- Insecure Direct Object Reference
+    -- Request Forgery
+
+
+
+::  Fuzzing  ::
+--  Tool(s)  --
+    Burp
+    ZAP
+
+
+Unexpected Data
+Abnormal Behavior
+
+Upper bounds
+Letter
+Negative number
+XSS -> <script>alert(1)</script>
+
+
+
+
+::  XSS - Cross-site Scripting   ::
+
+Reflected XSS:  Getting data returned from a submission onto a page somewhere like a rely structure
+Stored XSS:     Set data into db to be returned later
+DOM XSS:        Stays client side and based on JS processing
+
+
+
+
+::  Injection  ::
+--  Tool(s)  --
+    -- OWASP:  Security Shepherd
+
+Parameterize! Nuf said
+
+
+
+
+::  Insecure Direct Object Reference  ::
+Basically, can I get to the data directly and bypass page logic??
+
+
+
+
+::  Request Forgery  ::
+CSRF:  Basically, trying to run command from another "site/location" while user is authenticated in the system.
+Instead of being requested from your site and the user directly it can be masked from another site if not checked against

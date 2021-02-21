@@ -1,0 +1,63 @@
+Overview:
+    -- Countermeasures
+    -- Active Defense
+    -- OPSec
+    -- Reporting
+
+
+
+::  Countermeasures  ::
+--  Tool(s)  --
+
+What is your customer's security posture/maturity?
+What hosts are around? Can it be reduced?
+Perimeter hygiene?
+You vs. You? How would you fight you?
+
+
+
+::  Active Defense  ::
+*** DO NOT HACK BACK! It's illegal. Onlty on your network.
+
+--  Tool(s)  --
+    Portspoof
+    CNAME roulette
+    Canarytokens (Thinkst)
+
+
+Make it annoying/hard against attackers.
+The defense needs to make sense and hide in plain sight.
+
+Some Ablative Techniques:
+    See  module-5-image-1  image
+
+
+
+
+::  OPSec  ::
+*** Protecting info that can be used against you
+
+--  Tool(s)  --
+
+
+Reasonable Paranoia:
+    See  module-5-image-2  image
+
+
+
+
+::  Reporting  ::
+*** The "story" of your pen test
+
+--  Tool(s)  --
+
+People:
+    Executive -->
+    Managers  -->
+    Trenches  -->
+
+Scope
+    Summary findings related to footprinting
+    Technical findings related to footprinting
+    Appendix of all hosts and IPs discovered
+    Whether too many outdated services

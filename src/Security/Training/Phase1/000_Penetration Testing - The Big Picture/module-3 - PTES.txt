@@ -1,0 +1,148 @@
+Overview:
+    -- Use of the PTES
+    -- Pre-engagement Interactions
+    -- Intelligence Gathering
+    -- Threat Modeling
+    -- Vulnerability Analysis
+    -- Exploitation
+    -- Post Exploitation
+    -- Reporting
+
+
+
+::  Use of the PTES  ::
+
+http://www.pentest-standard.org/index.php/Main_Page
+
+
+
+
+::  Pre-engagement Interactions  ::
+[  Project scoping  ]:  Defining effort, size of tests, time of work, scope creep mitigation
+
+[  Information Gathering  ]:  See module-3-image-1 in this dir. (Not exhaustive list)
+
+[  Defining Goals  ]:  No dih side
+
+[  Emergency Contacts  ]:  Systems could go down, vulnerability found, etc.
+                           Get:  Full name, Title and operational responsibility,
+                                 Authorization to discuss testing activities
+                                 Two 24/7 contact numbers
+                                 A method of secure information exchange
+
+
+[  Rules of Engagement  ]:   HOW will things be tested? Time lines, locations, evidence handling,
+                             status updates, testing times, permission to test documents, etc.
+
+
+
+
+::  Intelligence Gathering  ::
+Target selection
+Identification and Naming
+OSINT - Open Source Intelligence: See module-3-image-2 for more info in a broad
+        setup / or look through documentation at the link above
+
+Footprinting:  DNS, DHCP, BGP, Whois databases, and even packet sniffing
+
+
+
+
+::  Threat Modeling  ::  (Included in report to client...)
+Business Asset Analysis
+
+[  Business Process Analysis  ]:   Technical infrastructure
+                                   Information Assets
+                                   Human Assets
+                                   Third Party Integration
+
+[  Threat Agents / Community Analysis  ]:  see module-3-image-3 image for quick rundown...
+
+[  Threat Capability Analysis  ]:    Analyzing tools used buy threats, availability of tools and exploits,
+                                     comms mechanisms, accessibility
+
+[  Motivation Modeling  ]:     Money, fame/fun, hacktivism, grudge, nation state threats?
+
+
+
+
+::  Vulnerability Analysis  ::
+[  Active  ]:      Interaction with system (network scanners, app scanners,
+                   protocol specific scanners, manual/direct scans)
+
+[  Passive  ]:     Metadata analysis, traffic monitoring
+
+[  Validation  ]:  Confirming results through correlation and manual testing. Attack trees and attack avenues
+
+[  Research  ]:     Public knowledge/portals/vendors, exploit DBs, common passwords,
+                    hardening guides for understanding weaknesses, disassembly and code analysis
+
+
+
+
+::  Exploitation  ::
+(  Leveraging what was found in the Vulnerability Analysis  )
+
+[  Countermeasures  ]:    Protection mechanisms --> Anti-virus software,
+                          Humans (like being helpful), Data Execution Protection,
+                          Address space layout randomization, Web Application Firewalls (WAFs)
+
+[  Evasion  ]:            Avoiding detection
+
+[  Precision Strike  ]:   Only use exploits most likely to achieve success
+
+[  Customized Exploitation Avenue   ]:  Customizing exploits
+
+[  Tailored Exploits  ]:    These require development work  --> Basically, it might have worked
+                            on one machine, model, or system but needs change to work on another
+
+[  Zero-day Angle  ]:    Fuzzing / fault injection, source code analysis
+                         (Buffer overflows, structured exception handling or SEH overwrites,
+                         and return-oriented programming),  Traffic analysis, etc
+
+[  Example Avenues of Attack  ]:  This is on the website but attempts to explain various avenues of attack.
+
+[  Overall Objective  ]:   How project objectives should be considered when creating exploit path/process
+
+
+
+
+::  Post Exploitation  ::
+
+Rules of Engagement:      Protects you and protects client
+
+Infrastructure Analysis:  Learning system for pivoting and concluding report
+
+Pillaging:                *Not what it sounds like:  Alll about gathering system
+                           info such as security, programs installed, configuratuions,
+                           security, email, EVERYTHING!!
+
+High Value / Profile Targets
+
+Data Exfil.:  How data can be removed? Finding this out...
+
+Persistence:   Backdoor persistence, credential sniffing, keyloggers, etc.
+
+Pivoting:   Further exploits to other systems
+
+Cleanup:  Remove everything done to system during attack. Config changes, programs, etc.
+
+
+
+::  Reporting  ::
+Executive summery:
+     -- Background
+     -- Overall Posture
+     -- Risk Ranking / Profile of org.
+     -- General Findings
+     -- Recommendations Summary
+     -- Strategic Roadmap for mitigation
+
+Technical Report:
+    -- Introduction:  Outline key facts about the test and results
+    -- Information Gathering:  Should describe intel gathered and how. (Active or Passive means?)
+    -- Vulnerability Assessment:  Risk-ranked list of potential vulnerabilities discovered
+    -- Exploitation:
+    -- Post Exploitation: Describes activities that occurred once access was established
+    -- Risk: Describes and quantifies risks, vulnerabilities, exploitation, and post exploits
+    -- Conclusion: Highlight key finding

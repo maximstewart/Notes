@@ -1,0 +1,33 @@
+Overview:
+    -- Verbose Error Messages
+    -- How to Trigger Error Message
+    -- Demo
+
+
+
+::  Verbose Error Messages  ::
+-- Tool(s)  --
+
+Can find/see source code
+Credentials to the database
+Details of internal implementation (IE, urls, internal API calls, pathing, etc)
+
+
+
+
+::  How to Trigger Error Message  ::
+-- Tool(s)  --
+
+Triggers:
+    Bad data --> strings, ints, bools, files, etc
+    Encoding types
+    Overflows
+
+
+
+
+::  Demo  ::
+-- Tool(s)  --
+
+He just inserts a string instead of int in the URL. We learn it's an ASP app
+Saw that it gave connection info to the db.

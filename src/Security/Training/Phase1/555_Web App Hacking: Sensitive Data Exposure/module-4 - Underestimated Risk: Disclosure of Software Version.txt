@@ -1,0 +1,39 @@
+Overview:
+    -- Disclosure of Software Version
+    -- Exploitation
+    -- Demo
+
+
+::  Disclosure of Software Version  ::
+--  Tool(s)  --
+    Wpscan
+
+Disclosure Methods:
+     Response headers
+     JS versions
+     Config files
+     etc
+
+
+
+
+::  Exploitation  ::
+--  Tool(s)  --
+    Exploit Database:  https://www.exploit-db.com   (Find and download exploit)
+
+Exploitation
+    Apache/2.2.22
+    PHP/5.3.10-1ubuntu3
+
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+    Firebug
+
+Check if response headers disclose software versions.
+Uses Firebug to look at Net tab and then the response headers.
+Sees the version info and  uses https://www.exploit-db.com  to get exploit
+Uses exploit to ls remote directory.
+He the writes to the index.php file trashing the site with "You are hacked".

@@ -1,0 +1,64 @@
+Overview:
+    -- Penetration Testers
+    -- Penetration Testing Tools
+    -- Certifications
+    -- Pluralsight Courses
+
+
+
+::  Penetration Testers  ::
+Curious
+Likes to solve puzzles
+Driven by achievement
+Detail oriented
+Security background:  Info Sec
+Technology education:  Programmers
+
+
+
+
+::  Penetration Testing Tools  ::
+OS:   Kali Linux or maybe macOS
+
+Vulnerability Scanning:    Nmap (swiss-army-knife XD), Metsploit, Open VAS,
+                           Skipfish  (website assessment tool),
+                           WPScan (wordpress scanning tool),
+                           *Commercial: Rapi7 Nexpose, Qualys, Tenable Nessus
+
+Vulnerability Exploitation:  Metasploit, Rapid7's Metasploit, SQLmap (sql injection),
+                             Social Engineering Toolkit, BeEF (browser exploitation framework for)
+
+Password Cracking:   John the Ripper, Hashcat, Ophcrack, rainbow Tables
+
+Documentation tools:   leafpad, KeepNote, Libreoffice, Desktop recording,
+
+
+
+
+::  Certifications (For Pen Testers)  ::
+EC-Council:
+    --  CEH --> Certified Ethical Hacker
+    --  LPT --> Licensed Penetration Tester
+
+Offensive Security:
+    -- OS Certified Professional (OSCP)
+    -- OS Wireless Professional (OSWP)  [Wireless network penetration testing cert.]
+    -- OS Certified Expert (OSCE)       [Higher level]
+    -- OS Exploitation Expert (OSEE)    [Windows focused with practical exam creating exploit]
+    -- OS Web Expert (OSWE)             [web app exploiting]
+
+
+
+
+::  Pluralsight Courses  ::
+Ethical Hacking (CEH Prep)  [From EC-Council]
+
+Other:
+    -- Introductory Courses --
+    See module-4-image-1  image
+
+    -- Advanced Courses --
+    See module-4-image-2  image
+
+    -- Play by Plays --
+    See module-4-image-3  image

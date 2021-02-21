@@ -1,0 +1,18 @@
+NOTE: $(pidof steam) is just an place holder.
+
+valgrind - runs process on a vcpu, analyzes 
+	every memory access. Finds leaks, overruns, and 
+	uninitialized variables, can analyze performance.
+
+strace - trace system calls Samples:
+	strace -p $(pidof steam) Attach to process
+	strace -o out.txt ls Launch process
+
+/proc - easy details on all processes
+	ls /proc/$(pidof steam)
+
+lsof -
+lists all files opened by a particular process:
+	lsof -p $(pidof steam)
+lists all processes that have a file open:
+	lsof /lib/i386-linux-gnu/libc-2.15.so

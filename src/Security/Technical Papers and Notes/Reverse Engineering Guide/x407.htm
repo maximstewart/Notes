@@ -1,0 +1,209 @@
+<HTML
+><HEAD
+><TITLE
+>Writing Standalone Assembly</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"/><LINK
+REL="HOME"
+HREF="t1.htm"/><LINK
+REL="PREVIOUS"
+TITLE="Understanding Assembly"
+HREF="x177.htm"/><LINK
+REL="NEXT"
+TITLE="Working with the ELF Program Format"
+HREF="x430.htm"/></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x177.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x430.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN407"/>7. Writing Standalone Assembly</H1
+><P
+>TODO: Eventually write our own tutorial. These are
+    incomplete.</P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN410"/>7.1. Instructions with side-effects</H2
+><P
+>This is one of the more difficult parts about learning intel
+       assembly. TODO: Mention ret, leave, call, push, absence of pop in gcc
+       code, test.</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN413"/>7.2. Opcode Tables</H2
+><P
+>So in order to write assembly, we have to know the instructions
+       available. <A
+HREF="http://pages.cpsc.ucalgary.ca/~dsb/Intel.html"
+TARGET="_top"
+>&#13;       This table</A
+> provides a list of the most common integer assembly
+       functions. Another table can be found <A
+HREF="http://www.jegerlehner.ch/intel/opcode.html"
+TARGET="_top"
+>&#13;       here</A
+>. It contains more instructions, but less description of
+       operand types. Be mindful that both of these tables are in NASM syntax,
+       where as GNU AS uses AT&amp;T syntax.
+      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN418"/>7.3. Using GNU as</H2
+><P
+><A
+HREF="        http://www.redhat.com/docs/manuals/gnupro/GNUPro-Toolkit-00r1/6_auxtools/a_Using_AS/as.html"
+TARGET="_top"
+>&#13;       The GNU Assembler manual</A
+> describes how to use GNU as to declare
+       symbols, variables, data, and use other features of as.</P
+><P
+>Also, we've already linked <A
+HREF="http://linuxassembly.org/linasm.html"
+TARGET="_top"
+>this tutorial</A
+> but decided to place it here
+       for completeness.</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN424"/>7.4. Conventions on saving registers</H2
+><P
+>&#13;      </P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN427"/>7.5. Using Library Functions</H2
+><P
+>TODO: Writeme. (Use collect2 line from gcc -v)</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"/><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x177.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x430.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Understanding Assembly</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Working with the ELF Program Format</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

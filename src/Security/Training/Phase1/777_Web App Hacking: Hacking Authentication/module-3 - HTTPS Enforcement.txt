@@ -1,0 +1,28 @@
+Overview:
+    -- HTTP vs. HTTPS
+    -- Understanding HTTPS Enforcement
+    -- Demo
+
+
+
+
+::  HTTP vs. HTTPS  ::
+--  Tool(s)  --
+
+Skipped...
+
+
+
+
+::  Understanding HTTPS Enforcement  ::
+--  Tool(s)  --
+
+Setup security certs to automatically have HTTPS
+Redirect all other HTTP traffic to HTTPS version before access
+
+
+
+::  Demo  ::
+--  Tool(s)  --
+
+Skipped...

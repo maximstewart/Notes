@@ -1,0 +1,34 @@
+Overview:
+    -- Browser Dependent Exploitation
+    -- Comma-separated List of Cookies
+    -- Demo
+    -- Fixing the Problem
+
+
+
+
+::  Browser Dependent Exploitation  ::
+--  Tool(s)  --
+
+...
+
+
+
+
+::  Comma-separated List of Cookies  ::
+--  Tool(s)  --
+
+Safari "Issue"
+See  module-5-image-1.png  image
+
+Basically, it overwrites a cookie in the browser to the
+desired thing when there is a cookie.
+
+
+
+
+::  Fixing the Problem  ::
+--  Tool(s)  --
+
+Ensure it's set via server than client? >.> Uhhh, might need to re-watch
+See  module-5-image-2.png  image

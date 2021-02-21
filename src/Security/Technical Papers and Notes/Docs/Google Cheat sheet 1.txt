@@ -1,0 +1,140 @@
+	
+How to use Google for Hacking.
+
+Google serves almost 80 percent of all search queries on the Internet, proving itself as the most popular search engine. However Google makes it possible to reach not only the publicly available information resources, but also gives access to some of the most confidential information that should never have been revealed. In this post I will show how to use Google for exploiting security vulnerabilities within websites. The following are some of the hacks that can be accomplished using Google.
+1. Hacking Security Cameras
+
+There exists many security cameras used for monitoring places like parking lots, college campus, road traffic etc. which can be hacked using Google so that you can view the images captured by those cameras in real time. All you have to do is use the following search query in Google. Type in Google search box exactly as follows and hit enter
+
+inurl:”viewerframe?mode=motion”
+
+Click on any of the search results (Top 5 recommended) and you will gain access to the live camera which has full controls.
+
+you now have access to the Live cameras which work in real-time. You can also move the cameras in all the four directions, perform actions such as zoom in and zoom out. This camera has really a less refresh rate. But there are other search queries through which you can gain access to other cameras which have faster refresh rates. So to access them just use the following search query.
+
+intitle:”Live View / – AXIS”
+
+Click on any of the search results to access a different set of live cameras. Thus you have hacked Security Cameras using Google.
+2. Hacking Personal and Confidential Documents
+
+Using Google it is possible to gain access to an email repository containing CV of hundreds of people which were created when applying for their jobs. The documents containing their Address, Phone, DOB, Education, Work experience etc. can be found just in seconds.
+
+intitle:”curriculum vitae” “phone * * *” “address *” “e-mail”
+
+You can gain access to a list of .xls (excel documents) which contain contact details including email addresses of large group of people. To do so type the following search query and hit enter.
+
+filetype:xls inurl:”email.xls”
+
+Also it’s possible to gain access to documents potentially containing information on bank accounts, financial summaries and credit card numbers using the following search query
+
+intitle:index.of finances.xls
+3. Hacking Google to gain access to Free Stuffs
+
+Ever wondered how to hack Google for free music or ebooks. Well here is a way to do that. To download free music just enter the following query on google search box and hit enter.
+
+“?intitle:index.of?mp3 eminem“
+
+Now you’ll gain access to the whole index of eminem album where in you can download the songs of your choice. Instead of eminem you can subtitute the name of your favorite album. To search for the ebooks all you have to do is replace “eminem” with your favorite book name. Also replace “mp3″ with “pdf” or “zip” or “rar”.
+4. Using Google, and some finely crafted searches we can find a lot of interesting information.
+
+For Example we can find:
+Credit Card Numbers
+Passwords
+Software / MP3′s
+…… (and on and on and on) Presented below is just a sample of interesting searches that we can send to google to obtain info that some people might not want us having.. After you get a taste using some of these, try your own crafted searches to find info that you would be interested in.
+
+Try a few of these searches:
+intitle:”Index of” passwords modified
+allinurl:authuserfile.txt
+“access denied for user” “using password”
+“A syntax error has occurred” filetype:ihtml
+allinurl: admin mdb
+“ORA-00921: unexpected end of SQL command”
+inurl:passlist.txt
+“Index of /backup”
+“Chatologica MetaSearch” “stack tracking:”
+
+Amex Numbers: 300000000000000..399999999999999
+MC Numbers: 5178000000000000..5178999999999999
+visa 4356000000000000..4356999999999999
+
+“parent directory ” /appz/ -xxx -html -htm -php -shtml -opendivx -md5 -md5sums
+“parent directory ” DVDRip -xxx -html -htm -php -shtml -opendivx -md5 -md5sums
+“parent directory “Xvid -xxx -html -htm -php -shtml -opendivx -md5 -md5sums
+“parent directory ” Gamez -xxx -html -htm -php -shtml -opendivx -md5 -md5sums
+“parent directory ” MP3 -xxx -html -htm -php -shtml -opendivx -md5 -md5sums
+“parent directory ” Name of Singer or album -xxx -html -htm -php -shtml -opendivx -md5 -md5sums
+Notice that I am only changing the word after the parent directory, change it to what you want and you will get a lot of stuff.
+METHOD 2
+
+put this string in google search:
+?intitle:index.of? mp3
+You only need add the name of the song/artist/singer.
+Example: ?intitle:index.of? mp3 jackson
+METHOD 3
+
+put this string in google search:
+inurl:microsoft filetype:iso
+You can change the string to watever you want, ex. microsoft to adobe, iso to zip etc…
+
+“# -FrontPage-” inurl:service.pwd
+Frontpage passwords.. very nice clean search results listing !!
+
+
+“AutoCreate=TRUE password=”
+This searches the password for “Website Access Analyzer”, a Japanese software that creates webstatistics. For those who can read Japanese, check out the author’s site at: coara.or.jp/~passy/ [or.jp]
+
+“http://:@www” domainname
+This is a query to get inline passwords from search engines (not just Google), you must type in the query followed with the the domain name without the .com or .net
+
+“http://:@www” bangbus or “http://:*@www”bangbus
+
+Another way is by just typing
+“http://bob:bob@www”
+
+“sets mode: +k”
+This search reveals channel keys (passwords) on IRC as revealed from IRC chat logs.
+
+allinurl: admin mdb
+Not all of these pages are administrator’s access databases containing usernames, passwords and other sensitive information, but many are!
+
+allinurl:authuserfile.txt
+DCForum’s password file. This file gives a list of (crackable) passwords, usernames and email addresses for DCForum and for DCShop (a shopping cart program(!!!). Some lists are bigger than others, all are fun, and all belong to googledorks. =)
+
+intitle:”Index of” config.php
+This search brings up sites with “config.php” files. To skip the technical discussion, this configuration file contains both a username and a password for an SQL database. Most sites with forums run a PHP message base. This file gives you the keys to that forum, including FULL ADMIN access to the database.
+
+eggdrop filetype:user user These are eggdrop config files. Avoiding a full-blown descussion about eggdrops and IRC bots, suffice it to say that this file contains usernames and passwords for IRC users.
+
+intitle:index.of.etc This search gets you access to the etc directory, where many many many types of password files can be found. This link is not as reliable, but crawling etc directories can be really fun!
+
+filetype:bak inurl:”htaccess|passwd|shadow|htusers” This will search for backup files (*.bak) created by some editors or even by the administrator himself (before activating a new version). Every attacker knows that changing the extenstion of a file on a webserver can have ugly consequences.
+
+Let’s pretend you need a serial number for windows xp pro.
+
+In the google search bar type in just like this – “Windows XP Professional” 94FBR
+
+the key is the 94FBR code.. it was included with many MS Office registration codes so this will help you dramatically reduce the amount of ‘fake’ porn sites that trick you.
+
+or if you want to find the serial for winzip 8.1 – “Winzip 8.1″ 94FBR
+
+Credits and More Info http://johnny.ihackstuff.com
+I have shown you this info to let you know that there is a real risk putting your info online. If you do want to buy stuff online make sure the site you are using is secure normally if a site is secure you will see a pop up saying you are now entering a secure part of the site or a symbal of a padlock at the bottom of your browser or just use pay pal, pay pal is very safe to use. But most of the time just use common sense if a site looks cheap it normally hasn’t got the protection to keep your info safe. I am not saying don’t buy stuff online because that is one of the best thing’s about the internet i am just saying be aware of websites that want your bank details and there is no symbal of a padlock at the bottom of your browser
+5.Crash a Computer using Flash and Google.
+
+Open up a new flash document. Open up the Actions panel for the stage of the first frame. If it’s in Actionscript 2, write the following:
+	
+onEnterFrame = function () {
+getURL(“http://www.google.com”, “_blank”);
+}
+
+Or if it’s actionscript 3 write the following:
+	
+function openGoogle(e:Event):void {
+navigateToURL(“http://www.google.com”, “_blank”);
+}
+stage.addEventListener(Event.ENTER_FRAME, openGoogle);
+
+Press Control-Enter when you’re ready to crash your computer. What this does is repeatedly open up new tabs of Google. But it opens so many Google tabs every second that after maybe 20-30 seconds your computer will barely be able to respond to you mouse clicks or even mouse movements. Usually, any attempt to stop it will result in processing overload and cause the computer to freeze. The only real way to stop this is to force-quit BOTH flash.exe and iexplorer.exe. Some teachers may know enough to do this, but might accidentally close explorer.exe
+
+hope you enjoyed this post. Pass your comments. Cheers!

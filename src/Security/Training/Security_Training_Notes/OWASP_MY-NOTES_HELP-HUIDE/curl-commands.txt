@@ -1,0 +1,64 @@
+#admin creation
+curl 'http://127.0.0.1:3000/api/Users/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/json' -H 'Referer: http://127.0.0.1:3000/' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: language=en; cookieconsent_status=dismiss; continueCode=o1o17zpBWv3DENkqXL89JQYOA6gHjhZuyhlkdwM2ZV4jgKnxR5rmyabPle6j; io=YbFOXIvotL-gcWq_AAAW' --data $'{"isAdmin":true,"email":"master@admin.com","password":"master","passwordRepeat":"master","securityQuestion":{"id":5,"question":"Maternal grandmother\'s first name?","createdAt":"2019-05-03T18:35:48.311Z","updatedAt":"2019-05-03T18:35:48.311Z"},"securityAnswer":"master"}' | json_reformat
+
+master@admin.com
+master
+
+
+#general user creation
+curl 'http://127.0.0.1:3000/api/Users/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/json' -H 'Referer: http://127.0.0.1:3000/' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: language=en; cookieconsent_status=dismiss; continueCode=o1o17zpBWv3DENkqXL89JQYOA6gHjhZuyhlkdwM2ZV4jgKnxR5rmyabPle6j; io=YbFOXIvotL-gcWq_AAAW' --data $'{"isAdmin":false,"email":"master@user.com","password":"master","passwordRepeat":"master","securityQuestion":{"id":5,"question":"Maternal grandmother\'s first name?","createdAt":"2019-05-03T18:35:48.311Z","updatedAt":"2019-05-03T18:35:48.311Z"},"securityAnswer":"master"}' | json_reformat
+
+master@user.com
+master
+
+
+
+
+#reviews
+-- Sent
+curl 'http://127.0.0.1:3000/rest/product/reviews' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTQsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAYWRtaW4uY29tIiwicGFzc3dvcmQiOiJlYjBhMTkxNzk3NjI0ZGQzYTQ4ZmE2ODFkMzA2MTIxMiIsImlzQWRtaW4iOnRydWUsImxhc3RMb2dpbklwIjoiMC4wLjAuMCIsInByb2ZpbGVJbWFnZSI6ImRlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImNyZWF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCJ9LCJpYXQiOjE1NTgxMjAwNjksImV4cCI6MTU1ODEzODA2OX0.KSt49lxVcxQKFzHEwJyqwBy5BiAcTZyx49Qf4NwVDS9IkeSXgMJwitXz8cc8b21y8nwQZFmFI9udvPx_pr0pwowWGyX_5e2OWMSB12J6rGRhLtw3u86L3hRdUfIXmaZMt99ymPPTNaqt8M-vWBSSqur7QtwU3iQyBS31CErdmB0' -H 'Content-Type: application/json' -H 'Referer: http://127.0.0.1:3000/' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: language=en; cookieconsent_status=dismiss; continueCode=9ry1QXDO4WLNJRmVldg6HRhZtQsDuJc2unheoIkXC86A857PK2MkgBezEYpo; io=I3Ccx27qgsPuYJu-AAAE; token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTQsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAYWRtaW4uY29tIiwicGFzc3dvcmQiOiJlYjBhMTkxNzk3NjI0ZGQzYTQ4ZmE2ODFkMzA2MTIxMiIsImlzQWRtaW4iOnRydWUsImxhc3RMb2dpbklwIjoiMC4wLjAuMCIsInByb2ZpbGVJbWFnZSI6ImRlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImNyZWF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCJ9LCJpYXQiOjE1NTgxMjAwNjksImV4cCI6MTU1ODEzODA2OX0.KSt49lxVcxQKFzHEwJyqwBy5BiAcTZyx49Qf4NwVDS9IkeSXgMJwitXz8cc8b21y8nwQZFmFI9udvPx_pr0pwowWGyX_5e2OWMSB12J6rGRhLtw3u86L3hRdUfIXmaZMt99ymPPTNaqt8M-vWBSSqur7QtwU3iQyBS31CErdmB0' --data '{"id":"KpbRybMTvP3qEqgJj"}' | json_reformat
+
+-- Returned
+curl 'http://127.0.0.1:3000/rest/product/1/reviews' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTQsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAYWRtaW4uY29tIiwicGFzc3dvcmQiOiJlYjBhMTkxNzk3NjI0ZGQzYTQ4ZmE2ODFkMzA2MTIxMiIsImlzQWRtaW4iOnRydWUsImxhc3RMb2dpbklwIjoiMC4wLjAuMCIsInByb2ZpbGVJbWFnZSI6ImRlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImNyZWF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCJ9LCJpYXQiOjE1NTgxMjAwNjksImV4cCI6MTU1ODEzODA2OX0.KSt49lxVcxQKFzHEwJyqwBy5BiAcTZyx49Qf4NwVDS9IkeSXgMJwitXz8cc8b21y8nwQZFmFI9udvPx_pr0pwowWGyX_5e2OWMSB12J6rGRhLtw3u86L3hRdUfIXmaZMt99ymPPTNaqt8M-vWBSSqur7QtwU3iQyBS31CErdmB0' -H 'Referer: http://127.0.0.1:3000/' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: language=en; cookieconsent_status=dismiss; continueCode=9ry1QXDO4WLNJRmVldg6HRhZtQsDuJc2unheoIkXC86A857PK2MkgBezEYpo; io=I3Ccx27qgsPuYJu-AAAE; token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTQsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAYWRtaW4uY29tIiwicGFzc3dvcmQiOiJlYjBhMTkxNzk3NjI0ZGQzYTQ4ZmE2ODFkMzA2MTIxMiIsImlzQWRtaW4iOnRydWUsImxhc3RMb2dpbklwIjoiMC4wLjAuMCIsInByb2ZpbGVJbWFnZSI6ImRlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImNyZWF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6MDU6MzkuNTMzICswMDowMCJ9LCJpYXQiOjE1NTgxMjAwNjksImV4cCI6MTU1ODEzODA2OX0.KSt49lxVcxQKFzHEwJyqwBy5BiAcTZyx49Qf4NwVDS9IkeSXgMJwitXz8cc8b21y8nwQZFmFI9udvPx_pr0pwowWGyX_5e2OWMSB12J6rGRhLtw3u86L3hRdUfIXmaZMt99ymPPTNaqt8M-vWBSSqur7QtwU3iQyBS31CErdmB0' -H 'If-None-Match: W/"9f-0hJVSzo9AEnImupQjleQxElDeVc"'
+
+
+
+#users
+curl 'http://127.0.0.1:3000/api/Users/13' -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTQsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAYWRtaW4uY29tIiwicGFzc3dvcmQiOiJlYjBhMTkxNzk3NjI0ZGQzYTQ4ZmE2ODFkMzA2MTIxMiIsImlzQWRtaW4iOnRydWUsImxhc3RMb2dpbklwIjoiMTI3LjAuMC4xIiwicHJvZmlsZUltYWdlIjoiZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiY3JlYXRlZEF0IjoiMjAxOS0wNS0xNyAxOTowNTozOS41MzMgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAxOS0wNS0xNyAxOToyNjowMS4yODIgKzAwOjAwIn0sImlhdCI6MTU1ODEzNTc4OCwiZXhwIjoxNTU4MTUzNzg4fQ.DBYkWjB_lNdFLH9SZUIrrF-lo-T08zIvI88eugGtr8n220CsqMmHBmLn2q2QD_bhTqku_iwot8il2NW80h6LAcN8-I_j3Tcq0bRppOX1O5ZHxKyBPjohghXwn_dez7p8nh2nU7Edef-pw2IRX0AWVyZGKD8m0NCjL6aafaogmkA' | json_reformat
+
+
+#feedback real quick
+
+i=0 \
+while [[ $i -lt 12 ]]; do \
+    curl 'http://127.0.0.1:3000/api/Feedbacks/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTgsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAYWRtaW4uY29tIiwicGFzc3dvcmQiOiJlYjBhMTkxNzk3NjI0ZGQzYTQ4ZmE2ODFkMzA2MTIxMiIsImlzQWRtaW4iOnRydWUsImxhc3RMb2dpbklwIjoiMTI3LjAuMC4xIiwicHJvZmlsZUltYWdlIjoiZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiY3JlYXRlZEF0IjoiMjAxOS0wNS0xMiAwNToxOTo1Ni42MzAgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAxOS0wNS0xMiAwNToyMDo0Mi4yMjIgKzAwOjAwIn0sImlhdCI6MTU1NzYzODQ4MCwiZXhwIjoxNTU3NjU2NDgwfQ.q9yCrJxo2npEJKSIgoqP1qqDILCLZS8P6En1NElITxenuPZsRkrgRruN70w48esG8Dy5Boq7o-rTNiybulrwJRYAriPRDPgKZ8UFmreTpM_msXqzLLJb24XC4xl4kivn_KQ45qKRj_qLMsu9yPyTePzmrsJ3E3wEPDf5hMywqXw' -H 'Content-Type: application/json' -H 'Referer: http://127.0.0.1:3000/' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: language=en; cookieconsent_status=dismiss; continueCode=k78OoygKDLrVRwN4jxz2l3d1ZHYhguBhkQIEgGqZMYe6anmE9v1bQ5WJBXPp; io=BavQSpUkIFuHDawXAAAf; token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTgsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAYWRtaW4uY29tIiwicGFzc3dvcmQiOiJlYjBhMTkxNzk3NjI0ZGQzYTQ4ZmE2ODFkMzA2MTIxMiIsImlzQWRtaW4iOnRydWUsImxhc3RMb2dpbklwIjoiMTI3LjAuMC4xIiwicHJvZmlsZUltYWdlIjoiZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiY3JlYXRlZEF0IjoiMjAxOS0wNS0xMiAwNToxOTo1Ni42MzAgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAxOS0wNS0xMiAwNToyMDo0Mi4yMjIgKzAwOjAwIn0sImlhdCI6MTU1NzYzODQ4MCwiZXhwIjoxNTU3NjU2NDgwfQ.q9yCrJxo2npEJKSIgoqP1qqDILCLZS8P6En1NElITxenuPZsRkrgRruN70w48esG8Dy5Boq7o-rTNiybulrwJRYAriPRDPgKZ8UFmreTpM_msXqzLLJb24XC4xl4kivn_KQ45qKRj_qLMsu9yPyTePzmrsJ3E3wEPDf5hMywqXw' --data '{"captchaId":18,"captcha":"-29","comment":"poop","rating":1,"UserId":18}' | json_reformat \
+    let i+=1 \
+done
+
+
+#file upload
+-- actual
+flUl = FileUploader({
+          url: 'http://127.0.0.1:3000/#/file-upload',
+          authToken: 'Bearer ' + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MTUsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJtYXN0ZXJAdXNlci5jb20iLCJwYXNzd29yZCI6ImViMGExOTE3OTc2MjRkZDNhNDhmYTY4MWQzMDYxMjEyIiwiaXNBZG1pbiI6ZmFsc2UsImxhc3RMb2dpbklwIjoiMC4wLjAuMCIsInByb2ZpbGVJbWFnZSI6ImRlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImNyZWF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6Mjk6MTMuMjc1ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMTktMDUtMTcgMTk6Mjk6MTMuMjc1ICswMDowMCJ9LCJpYXQiOjE1NTgxMjEzNzcsImV4cCI6MTU1ODEzOTM3N30.PUNaHmMXIL0cJ4tm27NjgNSM0-D-bo0u_k9GYppqcp4Y8S7a-_czmEKQQb72yVORoS1u_CRGm5awb_R63qFbjZ9O1d1zQ2QjnTNWbykBnkoE7WWYiMsU2YDWkLKK1-3hN2mB2ujmlMLLiP-FroAJq0vm-_h0Z4LiWZXdAgpDc4Y",
+          maxFileSize: 200000
+        });
+
+flUl.queue[0].upload()
+
+
+
+-- reference
+flUl = new kn.FileUploader({
+          url: u.hostServer + '/file-upload',
+          authToken: 'Bearer ' + localStorage.getItem('token'),
+          allowedMimeType: [
+            'application/pdf',
+            'application/xml',
+            'text/xml',
+            'application/zip',
+            'application/x-zip-compressed',
+            'multipart/x-zip'
+          ],
+          maxFileSize: 100000
+        }),

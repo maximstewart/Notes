@@ -1,0 +1,142 @@
+Overview:
+    -- Manual and Automated Testing
+    -- Goal-oriented and Time-limited Testing
+    -- Network Focused Testing
+    -- Application Focused Testing
+    -- Physical Testing
+    -- Social Engineering
+
+
+::    Manual and Automated Testing    ::
+
+--  Manual  --
+Require understanding target
+Create custom queries and inputs
+Configure a tool specifically for the target
+Create custom code
+Interpret output and results
+Consider the internal state and operations
+
+
+[  Low error rate  ]
+    -- Few False Positives
+    -- Few False Negatives
+[  Level of effort  ]
+    -- Exploration: High
+    -- Interpretation: High
+[  Likelihood of detection  ] == Low
+
+
+--  Automated  --
+Requires a target
+Can use default settings
+Must review results
+Adjust settings
+Repeat tests
+
+
+[  High error rate  ]
+    -- More False Positives
+    -- More False Negatives
+[  Level of effort  ]
+    -- Exploration: Low
+    -- Interpretation: Medium
+[  Likelihood of detection  ] == High
+
+
+
+
+::    Goal-oriented and Time-limited Testing    ::
+
+--  Goal-oriented  --  (  Specific targets; Narrows focus  )
+
+Define goal in contract
+Provide proof that goal was achieved
+Get access on specific system
+Place a fake device in an office
+Exfil. a specific type of data
+
+
+--  Time-limited  --
+Cost controlled by client.
+Take a comprehensive buyt focused approach
+Provide valuable actionable data
+Highly targeted due to time frame
+
+
+
+
+::    Network Focused Testing    ::
+Attain unauthorized access
+Evaluate compromised system
+Pivot to the next system
+Repeat
+
+
+--  Org. Network Types
+[  Internal Network  ]:   Informational assets exist, stored, processed, managed, and processed.
+                          (Physical and virtual network wiring)
+
+[  Wireless Network  ]:   (wireless clients, access points, and management systems)
+                          Can act as a perimeter network.
+
+[  Perimeter Network  ]:  Provides access to a portion of a systems network  (eail, web, DNS servers, and VPN)
+                          Third party apps and services go here too.
+
+
+
+
+::    Application Focused Testing    ::
+Commercial-off-the-shelf  (COTS)
+Internally developed
+Third-party developed
+Shadow IT  (Unvetted applications that you're not aware of necessarily.
+            Printer drivers maybe? NIC drivers? Etc...)
+Software-as-a-Service (SaaS)
+
+
+[  Outdated Software  ]
+
+[  Misconfiguration  ]
+
+[  Poor design  ]
+
+[  Poor implementation  ]
+
+
+--  Application Types  --
+Enterprise Apps:  org. wide systems such as enterprise resource planning or ERP apps,
+                  HR systems, customer relationship management or CRM apps, or file
+                  storage and archive systems
+
+Web Sites, Apps, and Services
+
+Mobile Apps:   Sensitive data locally on a device. Easily lost or subject to search.
+
+Thick Clients:  Desktop applications that store data locally or access sensitive data remotely
+
+
+
+::    Physical Testing    ::
+
+
+--  information Gathering  --
+[  Dumpster Diving  ]
+
+[  Surveillance  ]
+    -- Observation
+    -- Photo and Video
+
+[  Satellite Imagery  ]
+    -- Ident. perimeters of facility, locations of physical plant and utilities, points of
+       surveillance and entry, and for measuring distances around the facility.
+
+[  Open Sources  ]
+    -- Client's websites, city, county, and court records, and filings with regulatory agencies.
+
+
+
+
+::    Social Engineering    ::  (  Hacking the human mind  )
+
+--  Pretexting  --
