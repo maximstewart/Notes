@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # By Maxim F. Stewart
 # Contact: [1itdominator.com]
@@ -17,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #---------------------------------------------------------------------------------------#
-#!/bin/bash
 
 # . CONFIG.sh
 # set -o xtrace       ## To debug scripts

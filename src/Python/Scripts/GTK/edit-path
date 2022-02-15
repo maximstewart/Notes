@@ -1,0 +1,213 @@
+#!/usr/sbin/python
+
+# GTK Imports
+import gi, faulthandler, signal
+gi.require_version('Gtk', '3.0')
+
+from gi.repository import Gtk
+from gi.repository import GLib
+
+
+# Python Imports
+import os, threading, time
+
+from setproctitle import setproctitle
+
+
+
+app_name = "PATH Edit Tool"
+
+
+
+def threaded(fn):
+    def wrapper(*args, **kwargs):
+        threading.Thread(target=fn, args=args, kwargs=kwargs).start()
+    return wrapper
+
+
+class Main(Gtk.Window):
+    def __init__(self):
+        super(Main, self).__init__()
+        self._USER_HOME    = os.path.expanduser('~')
+        PREFERED_BASH_PATH = f"{self._USER_HOME}/.bash_paths"
+
+        icon_size           = 16
+        box                 = Gtk.Box()
+        box2                = Gtk.Box()
+        separator           = Gtk.Separator()
+        self._insert_entry  = Gtk.Entry()
+        self.message_widget = Gtk.Popover.new(separator)
+        self.message_label  = Gtk.Label()
+        add_button          = Gtk.Button.new_from_icon_name("gtk-add", icon_size)
+        delete_button       = Gtk.Button.new_from_icon_name("gtk-delete", icon_size)
+        save_button         = Gtk.Button.new_from_icon_name("gtk-save", icon_size)
+
+        scroll_vw, grid, self.store = self._create_treeview_widget(title="PATHs")
+        tree_selection     = grid.get_selection()
+
+        box2.add(self._insert_entry)
+        box2.add(add_button)
+        box2.add(delete_button)
+
+        box.add(separator)
+        box.add(scroll_vw)
+        box.add(box2)
+        box.add(save_button)
+
+        self.message_widget.add(self.message_label)
+        self.add(box)
+        self.add(self.message_widget)
+
+        self.message_widget.set_default_widget(self.message_label)
+        self._insert_entry.set_hexpand(True)
+        self._insert_entry.set_placeholder_text("Path...")
+        save_button.set_label("Save")
+        scroll_vw.set_vexpand(True)
+        box.set_orientation(1)
+        box.set_vexpand(True)
+        self.set_default_size(480, 560)
+        self.set_title(f"{app_name}")
+        self.set_icon_name("applications-accessories")
+
+        add_button.connect("clicked", self.add_entry)
+        delete_button.connect("clicked", self.delete_entry)
+        save_button.connect("clicked", self.save_enteries)
+        tree_selection.connect("changed", self._set_selected)
+
+        self.connect("delete-event", Gtk.main_quit)
+        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, Gtk.main_quit)
+
+        self.success       = "#88cc27"
+        self.warning       = "#ffa800"
+        self.error         = "#ff0000"
+        self.selected      = None
+
+        if os.path.isfile(PREFERED_BASH_PATH):
+            self.bashrc_path = PREFERED_BASH_PATH
+        else:
+            self.bashrc_path = f"{self._USER_HOME}/.bashrc"
+
+        self._load_paths_data()
+
+        self.message_widget.show_all()
+        self.message_widget.popdown()
+        box.show_all()
+        box2.show_all()
+        self.show_all()
+
+
+
+
+    def add_entry(self, widget):
+        path = self._insert_entry.get_text().strip()
+
+        if os.path.isdir(path):
+            self.store.append([path])
+        else:
+            self.display_message(self.warning, "Not a directory!")
+
+    def delete_entry(self, widget):
+        self.store.remove(self.selected)
+
+    def save_enteries(self, widget):
+        try:
+            paths = list()
+            iter  = self.store.get_iter_first()
+            while iter != None:
+                pth = self.store.get_value(iter, 0)
+                pth = pth.replace(self._USER_HOME, "$HOME")
+                paths.append(pth)
+                iter = self.store.iter_next(iter)
+
+
+            toExport = "export PATH=\"" + ':'.join(paths) + "\"\n\n"
+            file     = open(self.bashrc_path, mode='r')
+            for line in file:
+                if "export PATH=" in line:
+                    continue
+                else:
+                    toExport += line
+
+            file.close()
+            file = open(self.bashrc_path, mode='w')
+            file.write(toExport)
+            file.close()
+            self.display_message(self.success, "Successfully saved file!")
+        except Exception as e:
+            self.display_message(self.error, "Opening/Writing to file failed!")
+            print("Opening/Writing to file failed with the following:\n\n")
+            print(e)
+
+
+    def _set_selected(self, user_data):
+        selected = user_data.get_selected()[1]
+        if selected:
+            self.selected = selected
+
+    def _load_paths_data(self):
+        PATH_str = os.getenv("PATH")
+
+        # If path exists in bashrc replace default selection...
+        file = open(self.bashrc_path, mode='r')
+        for line in file:
+            if "export PATH=" in line:
+                part     = line.replace("export PATH=", "")
+                cleaned  = part.replace("\"", "")
+                PATH_str = cleaned.strip()
+
+        # Split string into list/tuple and add parts to store
+        paths = PATH_str.split(":")
+        for path in paths:
+            self.store.append([path])
+
+
+
+
+    def display_message(self, type, text):
+        markup = f"<span foreground='{type}'>{text}</span>"
+        self.message_label.set_markup(markup)
+        self.message_widget.popup()
+        self.hide_message_timed()
+
+    @threaded
+    def hide_message_timed(self):
+        time.sleep(3)
+        GLib.idle_add(self.message_widget.popdown)
+
+
+
+
+    def _create_treeview_widget(self, title = "Not Set"):
+        scroll = Gtk.ScrolledWindow()
+        grid   = Gtk.TreeView()
+        store  = Gtk.ListStore(str)
+        column = Gtk.TreeViewColumn(title)
+        name   = Gtk.CellRendererText()
+        selec  = grid.get_selection()
+
+        grid.set_model(store)
+        selec.set_mode(2)
+
+        column.pack_start(name, True)
+        column.add_attribute(name, "text", 0)
+        column.set_expand(False)
+
+        grid.append_column(column)
+        grid.set_search_column(0)
+        grid.set_headers_visible(True)
+        grid.set_enable_tree_lines(False)
+
+        grid.show_all()
+        scroll.add(grid)
+        grid.columns_autosize()
+        return scroll, grid, store
+
+
+
+
+if __name__ == '__main__':
+    faulthandler.enable()  # For better debug info
+    setproctitle(f"{app_name}")
+
+    main = Main()
+    Gtk.main()

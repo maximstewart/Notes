@@ -7,10 +7,30 @@
 # set -o errunset     ## To exit if a variable is referenced but not set
 
 
+
 function main() {
     SCRIPTPATH="$( cd "$(dirname "")" >/dev/null 2>&1 ; pwd -P )"
+    domain=''
+    path=''
+    verbose='false'
+
     cd "${SCRIPTPATH}"
     echo "Working Dir: " $(pwd)
+
+    while getopts 'dp:v' flag; do
+        case "${flag}" in
+            d) domain="${OPTARG}" ;;
+            p) path="${OPTARG}" ;;
+            v) verbose='true' ;;
+            *) print_usage
+            exit 1 ;;
+        esac
+    done
+
+    if [[ -z "${domain}" || -z "${path}" ]]; then
+        print_usage
+        exit 1
+    fi
 
     wget \
          --recursive \
@@ -19,8 +39,13 @@ function main() {
          --html-extension \
          --convert-links \
          --restrict-file-names=windows \
-         --domains schlechtwetterfront.github.io \
+         --domains "${domain}" \
          --no-parent \
-             "schlechtwetterfront.github.io/ze_filetypes/index.html"
+             "${path}"
 }
+
+print_usage() {
+  printf "Usage: -d for domain and -p for the starting path..."
+}
+
 main $@;
