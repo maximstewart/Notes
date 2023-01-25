@@ -106,6 +106,7 @@ class Settings:
         settings.set_property('enable-accelerated-2d-canvas', True)
         settings.set_property('auto-load-images', True)
         settings.set_property('enable-media-capabilities', True)
+        # settings.set_property('enable-media', True)
         settings.set_property('enable-media-stream', True)
         settings.set_property('enable-mediasource', True)
         settings.set_property('enable-encrypted-media', True)
