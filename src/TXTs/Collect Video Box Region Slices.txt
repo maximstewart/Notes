@@ -1,0 +1,149 @@
+(width - view_rect_width)/2 = lr_padding
+(640-120)/2 = 260
+
+(height - view_rect_height)/2 = tb_padding
+(480-120)/2 = 180
+
+
+[ ------------------------------------ 1D Array ------------------------------------ ]
+
+----  Python  ----
+
+def draw_square(slices):
+    color_style = "background-color: rgba(0, 66, 125, 1.0)";
+
+    # draw top
+    slice = slices[0]
+    i     = slice[0]
+    while i < slice[1]:
+        pixels[i].style = color_style;
+        i += 1
+
+    # draw middle
+    i    = 1
+    size = len(slices) - 1
+    while i < size:
+        slice = slices[i]
+        pixels[ slices[0] ].style     = color_style;
+        pixels[ slices[1] - 1 ].style = color_style;
+        i += 1
+
+    # draw bottom
+    slice = slices[ len(slices) - 1]
+    i     = slice[0]
+    while i < slice[1]:
+        pixels[i].style = color_style;
+        i += 1
+
+
+image_width      = 640
+image_height     = 480
+view_rect_width  = 120
+view_rect_height = view_rect_width
+lr_full_padding  = image_width  - view_rect_width
+tb_full_padding  = image_height - view_rect_height
+lr_padding       = lr_full_padding / 2
+tb_padding       = tb_full_padding / 2
+start_index      = (image_width * tb_padding) + lr_padding
+start_pos        = start_index
+slices           = []
+
+slices.append([start_pos, start_pos + view_rect_width])
+for i in range(view_rect_height - 1):
+    start_pos += (view_rect_width + lr_full_padding)
+    end_pos   = start_pos + view_rect_width
+
+    slices.append([start_pos, end_pos])
+
+for i in range( len(slices) ):
+    j = slices[i][0]
+    while j < slices[i][1]:
+        color_style = "background-color: rgba(0, 0, 0, 1.0)";
+        pixels[j].style = color_style;
+        j += 1
+
+draw_square(slices)
+
+
+
+
+
+----  JavaScript  ----
+
+const draw_square = (slices) => {
+    color_style = "background-color: rgba(0, 66, 125, 1.0)";
+
+    // draw top
+    for (let i = slices[0][0]; i < slices[0][1]; i++) {
+        pixels[i].style = color_style;
+    }
+
+    // draw middle
+    for (let i = 1; i < slices.length - 1; i++) {
+        pixels[slices[i][0]].style = color_style;
+        pixels[slices[i][1] - 1].style = color_style;
+    }
+
+    // draw bottom
+    for (let i = slices[slices.length - 1][0]; i < slices[slices.length - 1][1]; i++) {
+        pixels[i].style = color_style;
+    }
+}
+
+pixels           = document.getElementById("draw-area-body").getElementsByTagName("TD");
+image_width      = 32;
+image_height     = 32;
+view_rect_width  = 16;
+view_rect_height = view_rect_width;
+lr_full_padding  = image_width  - view_rect_width;
+tb_full_padding  = image_height - view_rect_height;
+lr_padding       = lr_full_padding / 2;
+tb_padding       = tb_full_padding / 2;
+start_index      = (image_width * tb_padding) + lr_padding;
+start_pos        = start_index;
+slices           = [];
+
+slices.push([start_pos, start_pos + view_rect_width]);
+for (const i of Array(view_rect_height - 1).keys()) {
+    start_pos += (view_rect_width + lr_full_padding);
+    end_pos   = start_pos + view_rect_width;
+
+    slices.push([start_pos, end_pos]);
+}
+
+for (let i = 0; i < slices.length; i++) {
+    for (let j = slices[i][0]; j < slices[i][1]; j++) {
+        color_style = "background-color: rgba(0, 0, 0, 1.0)";
+        pixels[j].style = color_style;
+    }
+}
+
+draw_square(slices);
+
+
+
+
+
+[ ------------------------------------ 2D Array ------------------------------------ ]
+
+pixels           = document.getElementById("draw-area-body").getElementsByTagName("TD");
+color_style      = "background-color: rgba(0, 66, 125, 1.0)";
+image_width      = 32;
+image_height     = 32;
+view_rect_width  = 16;
+view_rect_height = view_rect_width;
+lr_full_padding  = image_width  - view_rect_width;
+tb_full_padding  = image_height - view_rect_height;
+lr_padding       = lr_full_padding / 2;
+tb_padding       = tb_full_padding / 2;
+start_index      = (image_width * tb_padding) + lr_padding;
+start_pos        = start_index;
+start_y          = start_pos % image_height
+start_x          = start_pos - (start_y * image_width)
+slices           = [];
+
+for (let i = tb_padding; i < tb_padding + view_rect_height; i++) {
+        pixels[i][lr_padding].style = color_style;
+        pixels[i][lr_padding + view_rect_width].style = color_style;
+}
+
