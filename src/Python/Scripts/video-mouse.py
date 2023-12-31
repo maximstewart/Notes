@@ -3,6 +3,7 @@
 # Python imports
 
 # Lib imports
+import numpy as np
 import cv2
 import pyautogui
 
@@ -15,6 +16,7 @@ image_height     = 480
 view_rect_width  = 120
 view_rect_height = view_rect_width
 outine_color     = 0, 0, 255  #   bgr  NOT  rgb
+fill_color       = 55, 0, 0  #   bgr  NOT  rgb
 lr_full_padding  = image_width  - view_rect_width
 tb_full_padding  = image_height - view_rect_height
 lr_padding       = int(lr_full_padding / 2)
@@ -24,6 +26,10 @@ start_pos        = start_index
 start_y          = int(tb_padding)
 start_x          = int(lr_padding)
 slices           = []
+
+
+class SlicesException(Exception):
+    ...
 
 
 
@@ -43,6 +49,8 @@ def generate_slice_info():
 
 def draw_square_on_linear_arry(pixels):
     global slices
+    if not slices:
+        raise SlicesException("Must call generate_slice_info before calling draw_square_on_linear_arry...")
 
     # draw top
     slice = slices[0]
@@ -109,22 +117,89 @@ def draw_square_on_2d_arry(pixels):
         i += 1
 
 
+def flatten_colors_in_change_region(pixels):
+    i = start_y
+    j = start_y + view_rect_height
+
+    while i < j:
+        k = start_x
+        l = start_x + view_rect_width
+
+        while k < l:
+            b, g, r = pixels[i][k]
+
+            if b > 150 and g > 150 and r > 150:
+                pixels[i][k] = 255, 255, 255
+            elif b < 75 and g < 75 and r < 75:
+                pixels[i][k] = 255, 255, 255
+            else:
+                pixels[i][k] = 125, 125, 125
+
+            k += 1
+
+        i += 1
+
+def detect_change_region(pixels):
+    i = start_y
+    j = start_y + view_rect_height
+
+    while i < j:
+        k = start_x
+        l = start_x + view_rect_width
+
+        while k < l:
+            b, g, r = pixels[i][k]
+            if (r > 140 and r < 210) and ((b > 60 and g > 60) and (b < 80 and g < 80)):
+                pixels[i][k] = 255, 255, 255
+            else:
+                pixels[i][k] = 0, 0, 0
+
+            # if r > 100 and (b < 160 and g < 160):
+            #     pixels[i][k] = 255, 255, 255
+            # else:
+            #     pixels[i][k] = 0, 0, 0
+
+            k += 1
+
+        i += 1
+
+def bgr_separated_output_displays(pixels):
+    b = pixels.copy()
+    b[:, :, 1] = 0
+    b[:, :, 2] = 0
+    cv2.imshow('Blue Channel', b)
+
+    g = pixels.copy()
+    g[:, :, 0] = 0
+    g[:, :, 2] = 0
+    cv2.imshow('Green Channel', g)
+
+    r = pixels.copy()
+    r[:, :, 0] = 0
+    r[:, :, 1] = 0
+    cv2.imshow('Red Channel', r)
 
 def process_frame(pixels):
+    flatten_colors_in_change_region(pixels)
+    # detect_change_region(pixels)
+    # draw_square_on_linear_arry(pixels)
     draw_square_on_2d_arry(pixels)
-    cv2.imshow('frame', pixels)
+    cv2.imshow('Track Motion', pixels)
 
 def capture_video(camera):
     while(True):
-        rendered, data = camera.read()
-        frame = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
-        # gray_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+        captured, data = camera.read()
 
         # Use 'q' key to quit
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-        if not rendered: continue
+        if not captured: continue
+
+        frame          = data
+        # frame          = cv2.cvtColor(data, cv2.COLOR_BGR2HSV)
+        # frame          = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
+        # gray_frame     = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
         process_frame(frame)
 
 def process_video():
@@ -132,7 +207,7 @@ def process_video():
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, image_width)
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, image_width)
     
-    # generate_slice_info()
+    # generate_slice_info() # Note: precompute on 1d array the detection region
     capture_video(camera)
 
     camera.release()
