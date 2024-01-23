@@ -47,6 +47,7 @@ def generate_slice_info():
 
         slices.append([start_pos, end_pos])
 
+
 def draw_square_on_linear_arry(pixels):
     global slices
     if not slices:
@@ -91,6 +92,7 @@ def draw_square_on_linear_arry(pixels):
         pixel[0] = 0
 
         i += 1
+
 
 def draw_square_on_2d_arry(pixels):
     # draw top
@@ -139,6 +141,7 @@ def flatten_colors_in_change_region(pixels):
 
         i += 1
 
+
 def detect_change_region(pixels):
     i = start_y
     j = start_y + view_rect_height
@@ -149,19 +152,16 @@ def detect_change_region(pixels):
 
         while k < l:
             b, g, r = pixels[i][k]
-            if (r > 140 and r < 210) and ((b > 60 and g > 60) and (b < 80 and g < 80)):
+
+            if b > 150 and (r < 100 and g < 100):
                 pixels[i][k] = 255, 255, 255
             else:
                 pixels[i][k] = 0, 0, 0
 
-            # if r > 100 and (b < 160 and g < 160):
-            #     pixels[i][k] = 255, 255, 255
-            # else:
-            #     pixels[i][k] = 0, 0, 0
-
             k += 1
 
         i += 1
+
 
 def bgr_separated_output_displays(pixels):
     b = pixels.copy()
@@ -179,12 +179,14 @@ def bgr_separated_output_displays(pixels):
     r[:, :, 1] = 0
     cv2.imshow('Red Channel', r)
 
+
 def process_frame(pixels):
-    flatten_colors_in_change_region(pixels)
-    # detect_change_region(pixels)
+    # flatten_colors_in_change_region(pixels)
+    detect_change_region(pixels)
     # draw_square_on_linear_arry(pixels)
     draw_square_on_2d_arry(pixels)
     cv2.imshow('Track Motion', pixels)
+
 
 def capture_video(camera):
     while(True):
@@ -201,6 +203,7 @@ def capture_video(camera):
         # frame          = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
         # gray_frame     = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
         process_frame(frame)
+
 
 def process_video():
     camera = cv2.VideoCapture(1)

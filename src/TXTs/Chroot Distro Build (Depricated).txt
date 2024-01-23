@@ -99,7 +99,7 @@ export LC_ALL=C
 export DISPLAY=:10
 
 ## GET sourcelist from source list generator [link above]
-nano it to /etc/apt/sources.list
+## nano it to /etc/apt/sources.list
 apt-get upgrade
 
 ## INSTALL AND MOD STUFF

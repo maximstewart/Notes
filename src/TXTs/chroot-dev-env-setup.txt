@@ -1,0 +1,82 @@
+##  Make Chroot Env  ##
+mkdir general-brew/
+sudo debootstrap stable ./general-brew http://deb.debian.org/debian/
+
+
+##  Load Chroot  ##
+cd general-brew/
+sudo mount -t proc proc proc/
+sudo mount -t sysfs sys sys/
+# sudo mount -o bind /dev dev/
+sudo mount --rbind /dev dev/
+
+sudo cp /etc/resolv.conf etc/
+sudo cp /etc/hosts etc/hosts
+
+sudo chroot . bash
+
+
+## FOR GUI CHROOT LIKE ENVIRONMENT
+****  In a seperate terminal from chrooted terminal  ****
+Xnest -ac :10 -geometry 1920x1080          ## Monitor resolution
+                      OR
+Xephyr -resizeable -screen 1920x1080 :10
+
+
+##  IN Chroot  ##
+****  Add to respective user .bashrc (or respective rc shell file)  ****
+export HOME=/root
+        OR
+export HOME=/home/developer
+export LC_ALL=C
+export DISPLAY=:10   # Used to bind output UI to Xnest or Xephyr
+
+apt-get update
+apt-get install sudo curl wget
+
+
+##  Add developer user  ##
+adduser developer
+usermod -aG sudo developer
+passwd developer
+
+
+##  Brew Deps  ##
+****  Debian  ****
+apt-get install build-essential procps curl file git
+
+****  Arch  ****
+pacman -S base-devel procps-ng curl file git
+
+
+##  Install Brew  ##
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+
+##  Post Brew Install  ##
+brew analytics off
+brew install gcc openjdk maven 
+
+
+##  Node Version Manager  ##
+mkdir ~/.nvm
+brew install nvm
+
+nvm install node  # Gets latest version of node
+
+nvm use node      # Sets latest node as active node version to be used
+
+npm install -g pnpm
+
+pnpm setup        # Add output to given bashrc
+
+
+##  Install NX Workspaces  ##
+****  Creates different project setups  ****
+pnpm -g i nx
+
+
+##  Create Workspace  ##
+npx create-nx-workspace@latest <workspace name>
+
+
