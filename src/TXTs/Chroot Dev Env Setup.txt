@@ -76,7 +76,9 @@ pnpm setup        # Add output to given bashrc
 pnpm -g i nx
 
 
-##  Create Workspace  ##
-npx create-nx-workspace@latest <workspace name>
+##  Create Workspace Using NX Workspaces with pnpm Specified as Package Manager  ##
+npx --pm pnpm create-nx-workspace@latest <workspace name>
 
-
+****  CD Into Project  ****
+pnpm i      # Install deps as needed
+nx serve <project-name>
