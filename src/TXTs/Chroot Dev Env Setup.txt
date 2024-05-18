@@ -32,7 +32,7 @@ export LC_ALL=C
 export DISPLAY=:10   # Used to bind output UI to Xnest or Xephyr
 
 apt-get update
-apt-get install sudo curl wget
+apt-get install sudo su less nano wget curl
 
 
 ##  Add developer user  ##
