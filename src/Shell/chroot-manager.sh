@@ -9,6 +9,9 @@
 
 
 CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-dev-envs"
+SCREEN_W=1600
+SCREEN_H=900
+X_PORT=:10
 
 
 
@@ -139,7 +142,7 @@ function _setup_chroot() {
 
     sudo echo $'\nexport HOME=/root' >> "${chroot_env}${root_bashrc_file}"
     sudo echo "export LC_ALL=C" >> "${chroot_env}${root_bashrc_file}"
-    sudo echo "export DISPLAY=:10" >> "${chroot_env}${root_bashrc_file}"
+    sudo echo "export DISPLAY=${X_PORT}" >> "${chroot_env}${root_bashrc_file}"
     sudo echo $'export HOMEBREW_NO_ANALYTICS=1\n' >> "${chroot_env}${root_bashrc_file}"
 
     sudo chroot "${chroot_env}" /bin/chmod 700 "${root_bashrc_file}"
@@ -177,7 +180,7 @@ function load_chroot() {
     sudo cp /etc/resolv.conf etc/resolv.conf
     sudo cp /etc/hosts etc/hosts
 
-    Xephyr -resizeable -screen 800x600 :10 &
+    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
 
     _bind_mounts "${chroot_env}"
     sudo chroot . bash
@@ -197,11 +200,49 @@ function load_chroot_sysd() {
     sudo cp /etc/resolv.conf etc/resolv.conf
     sudo cp /etc/hosts etc/hosts
 
-    Xephyr -resizeable -screen 800x600 :10 &
+    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
 
     sudo systemd-nspawn -D . /sbin/init
 
     killall Xephyr
+}
+
+function poweroff_chroot_sysd() {
+    cd "${CHROOT_FOLDERS_PATH}"
+
+    chroot_env=$(_get_chroot_env " " "Poweroff SysD Chroot Venv:")
+    parentdir="$(dirname "${chroot_env}")"
+    target=$(basename "${chroot_env}")
+    target=`echo "${target}" | sed "s|/||g"`
+
+    if [[ -d "${chroot_env}" && "${parentdir}" == "${CHROOT_FOLDERS_PATH}" ]]; then
+        clear
+        echo "Stopping: ${target}"
+        sudo machinectl poweroff "${target}"
+        clear
+        echo -e "Powered off Chroot Env: ${target}\nPath: ${chroot_env}"
+    else
+        echo -e "Path: ${chroot_env}\nis not a child path of\nParent: ${CHROOT_FOLDERS_PATH}"
+    fi
+}
+
+function kill_chroot_sysd() {
+    cd "${CHROOT_FOLDERS_PATH}"
+
+    chroot_env=$(_get_chroot_env " " "Kill SysD Chroot Venv:")
+    parentdir="$(dirname "${chroot_env}")"
+    target=$(basename "${chroot_env}")
+    target=`echo "${target}" | sed "s|/||g"`
+
+    if [[ -d "${chroot_env}" && "${parentdir}" == "${CHROOT_FOLDERS_PATH}" ]]; then
+        clear
+        echo "Killing: ${target}"
+        sudo machinectl kill "${target}"
+        clear
+        echo -e "Killed Chroot Env: ${target}\nPath: ${chroot_env}"
+    else
+        echo -e "Path: ${chroot_env}\nis not a child path of\nParent: ${CHROOT_FOLDERS_PATH}"
+    fi
 }
 
 function _bind_mounts() {
