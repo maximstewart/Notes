@@ -12,34 +12,32 @@ CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-dev-envs"
 
 
 
-fn_exists() { declare -F "$1" > /dev/null; }
-
-function prompt_chroot_env() {
+function _prompt_chroot_env() {
     target=`\ls -1 -d ./*/ | fzf --prompt "${1}"`
     target=`sed 's|\.\/||g' <<< ${target}`
     chroot_env="${CHROOT_FOLDERS_PATH}/${target}"
     echo "${chroot_env}"
 }
 
-function get_chroot_env() {
+function _get_chroot_env() {
     if [ ! -z "${1}" -a "${1}" != " " ]; then
         chroot_env="${1}"
     else 
-        chroot_env=$(prompt_chroot_env "${2}")
+        chroot_env=$(_prompt_chroot_env "${2}")
     fi
 
     echo "${chroot_env}"
 }
 
-function install_software() {
-    chroot_env=$(get_chroot_env "${1}" "Install Software To Chroot Venv:")
+function _install_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install Software To Chroot Venv:")
 
-    sudo chroot "${chroot_env}" /usr/bin/apt-get install -y    sudo less nano wget curl procps file build-essential git
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install -y    sudo less nano wget curl procps file build-essential git openbox
 }
 
 
 
-function get_chroot_system_type() {
+function _get_chroot_system_type() {
     PS3="Enter system type: "
     select system_type in "stable" "stretch" "sid"; do
         case $system_type in
@@ -61,7 +59,7 @@ function get_chroot_system_type() {
     done
 }
 
-function get_chroot_variant() {
+function _get_chroot_variant() {
     PS3="Enter variant type: "
     select variant in "minbase" "buildd" "fakechroot" "scratchbox"; do
         case $variant in
@@ -87,33 +85,42 @@ function get_chroot_variant() {
     done
 }
 
-function make_chroot_folder() {
+function _make_chroot_folder() {
     read -p 'Chroot Env: ' name
-    name=`sed -e s'|\\s|_|'g <<< "${name}"`
+    name=`sed -e s'| |_|'g <<< "${name}"`
 
-    if [[ -z "{$name}" ]]; then
+    if [[ -z "${name}" ]] || [[ "${name}" == "_" ]]; then
         echo "Need to give a proper Chroot Env value."
         return
     fi
 
     path="${CHROOT_FOLDERS_PATH}/${name}-chroot"
-    mkdir "${path}"
 
-    echo "${path}"
+    if [ ! -d "${path}" ]; then
+        mkdir "${path}"
+        echo "${path}"
+    else
+        _make_chroot_folder
+    fi
 }
 
 function make_chroot() {
     clear
-    system_type=$(get_chroot_system_type)
+    system_type=$(_get_chroot_system_type)
     clear
-    variant=$(get_chroot_variant)
+    variant=$(_get_chroot_variant)
     clear
-    folder=$(make_chroot_folder)
+    folder=$(_make_chroot_folder)
     clear
+
+    if [ ! -d "${folder}" ]; then
+        echo -e "\nChroot Env Path doesn't exists; aborting!"
+        return 1
+    fi
 
     sudo debootstrap --variant="${variant}" --arch amd64 "${system_type}" "${folder}" http://deb.debian.org/debian/
 
-    setup_chroot "${folder}"
+    _setup_chroot "${folder}"
 }
 
 function create_chroot() {
@@ -121,8 +128,8 @@ function create_chroot() {
 }
 
 
-function setup_chroot() {
-    chroot_env=$(get_chroot_env "${1}" "Target Chroot Venv Setup:")
+function _setup_chroot() {
+    chroot_env=$(_get_chroot_env "${1}" "Target Chroot Venv Setup:")
 
     root_bashrc_file="/root/.bashrc"
     dev_bashrc_file="/home/developer/.bashrc"
@@ -138,7 +145,7 @@ function setup_chroot() {
     sudo chroot "${chroot_env}" /bin/chmod 700 "${root_bashrc_file}"
     sudo chroot "${chroot_env}" /bin/chmod 700 "/root"
 
-    install_software "${chroot_env}"
+    _install_software "${chroot_env}"
 
     sudo chroot "${chroot_env}" /usr/sbin/useradd -m -p $(openssl passwd -1 "password") -s /bin/bash developer
     sudo chroot "${chroot_env}" /usr/sbin/usermod -aG sudo developer
@@ -146,7 +153,9 @@ function setup_chroot() {
     sudo echo $'\nexport HOME=/home/developer' >> "${chroot_env}${dev_bashrc_file}"
     sudo echo "export LC_ALL=C" >> "${chroot_env}${dev_bashrc_file}"
     sudo echo "export DISPLAY=:10" >> "${chroot_env}${dev_bashrc_file}"
+    sudo echo "export XAUTHORITY=~/.Xauthority" >> "${chroot_env}${dev_bashrc_file}"
     sudo echo $'export export HOMEBREW_NO_ANALYTICS=1\n' >> "${chroot_env}${dev_bashrc_file}"
+    mkdir "${chroot_env}/home/developer/projects"
 
     _bind_mounts "${chroot_env}"
 
@@ -156,26 +165,47 @@ function setup_chroot() {
     _unbind_mounts "${chroot_env}"
 }
 
+
 function load_chroot() {
     clear
     cd "${CHROOT_FOLDERS_PATH}"
 
-    chroot_env=$(get_chroot_env " " "Load Chroot Venv:")
+    chroot_env=$(_get_chroot_env " " "Load Chroot Venv:")
 
     cd "${chroot_env}"
 
     sudo cp /etc/resolv.conf etc/resolv.conf
     sudo cp /etc/hosts etc/hosts
 
+    Xephyr -resizeable -screen 800x600 :10 &
+
     _bind_mounts "${chroot_env}"
-
     sudo chroot . bash
-
     _unbind_mounts "${chroot_env}"
+
+    killall Xephyr
+}
+
+function load_chroot_sysd() {
+    clear
+    cd "${CHROOT_FOLDERS_PATH}"
+
+    chroot_env=$(_get_chroot_env " " "Load Chroot Venv:")
+
+    cd "${chroot_env}"
+
+    sudo cp /etc/resolv.conf etc/resolv.conf
+    sudo cp /etc/hosts etc/hosts
+
+    Xephyr -resizeable -screen 800x600 :10 &
+
+    sudo systemd-nspawn -D . /sbin/init
+
+    killall Xephyr
 }
 
 function _bind_mounts() {
-    _chroot_env=$(get_chroot_env "${1}" "Bind Chroot Venv Mounts:")
+    _chroot_env=$(_get_chroot_env "${1}" "Bind Chroot Venv Mounts:")
 
     cd "${_chroot_env}"
 
@@ -188,7 +218,7 @@ function _bind_mounts() {
 }
 
 function _unbind_mounts() {
-    _chroot_env=$(get_chroot_env "${1}" "Unbind Chroot Venv Mounts:")
+    _chroot_env=$(_get_chroot_env "${1}" "Unbind Chroot Venv Mounts:")
     _chroot_env=${_chroot_env%/}  # If ends with slash remove
 
     cd "${_chroot_env}"
@@ -204,7 +234,7 @@ function _unbind_mounts() {
 function delete_chroot() {
     cd "${CHROOT_FOLDERS_PATH}"
 
-    chroot_env=$(get_chroot_env " " "Delete Chroot Venv:")
+    chroot_env=$(_get_chroot_env " " "Delete Chroot Venv:")
     parentdir="$(dirname "${chroot_env}")"
 
     if [[ -d "${chroot_env}" && "${parentdir}" == "${CHROOT_FOLDERS_PATH}" ]]; then
@@ -220,6 +250,10 @@ function delete_chroot() {
 
 function remove_chroot() {
     delete_chroot
+}
+
+function help() {
+    declare -F | awk '{ print $3 }' | awk "/^[^_]/" | sort
 }
 
 
