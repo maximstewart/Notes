@@ -33,9 +33,106 @@ function _get_chroot_env() {
 }
 
 function _install_software() {
-    chroot_env=$(_get_chroot_env "${1}" "Install Software To Chroot Venv:")
+    chroot_env=$(_get_chroot_env "${1}" "Install Base Software To Chroot Venv:")
 
-    sudo chroot "${chroot_env}" /usr/bin/apt-get install -y    sudo less nano wget curl procps file build-essential git openbox
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    libgl1 \
+                                    libegl1 \
+                                    libxcb-cursor0 \
+                                    locales \
+                                    sudo \
+                                    less \
+                                    nano \
+                                    wget \
+                                    curl \
+                                    zip \
+                                    7zip \
+                                    procps \
+                                    file \
+                                    jq \
+                                    fzf \
+                                    parallel \
+                                    openbox \
+                                    xterm \
+                                    build-essential \
+                                    python3.11-venv \
+                                    python3-setuptools \
+                                    python3-pip \
+                                    python3-wheel \
+                                    python3-pip-whl \
+                                    python3-setuptools-whl \
+                                    git \
+                                    htop \
+                                    ranger
+}
+
+function install_cpp_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install C/CPP Software To Chroot Venv:")
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    llvm \
+                                    gcc \
+                                    g++ \
+                                    clang \
+                                    ninja-build \
+                                    make \
+                                    gdb \
+                                    gdbserver \
+                                    clang-14-doc \
+                                    llvm-14-dev
+}
+
+function install_java_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install JAVA Software To Chroot Venv:")
+
+    # source "/root/.sdkman/bin/sdkman-init.sh"
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    gradle \
+                                    maven
+
+    sudo chroot "${chroot_env}" /bin/bash -c '/usr/bin/curl -s "https://get.sdkman.io" | bash'
+}
+
+function install_gtk_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install GTK+ Software To Chroot Venv:")
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    terminator \
+                                    gtkmm
+}
+
+function install_qt_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install QT Software To Chroot Venv:")
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    qt6-base-dev \
+                                    qt6-tools-dev \
+                                    qt6-tools-dev-tools \
+                                    qt6-qmltooling-plugins \
+                                    libqt6opengl6-dev \
+                                    qt6-qpa-plugins
+}
+
+function install_other_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install Other Software To Chroot Venv:")
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    xcompmgr \
+                                    engrampa \
+                                    terminator
 }
 
 
@@ -155,7 +252,7 @@ function _setup_chroot() {
 
     sudo echo $'\nexport HOME=/home/developer' >> "${chroot_env}${dev_bashrc_file}"
     sudo echo "export LC_ALL=C" >> "${chroot_env}${dev_bashrc_file}"
-    sudo echo "export DISPLAY=:10" >> "${chroot_env}${dev_bashrc_file}"
+    sudo echo "export DISPLAY=${X_PORT}" >> "${chroot_env}${dev_bashrc_file}"
     sudo echo "export XAUTHORITY=~/.Xauthority" >> "${chroot_env}${dev_bashrc_file}"
     sudo echo $'export export HOMEBREW_NO_ANALYTICS=1\n' >> "${chroot_env}${dev_bashrc_file}"
     mkdir "${chroot_env}/home/developer/projects"
