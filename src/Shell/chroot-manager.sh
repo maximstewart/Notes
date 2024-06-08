@@ -72,6 +72,8 @@ function _install_software() {
 function install_cpp_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install C/CPP Software To Chroot Venv:")
 
+    _bind_mounts "${chroot_env}"
+
     sudo chroot "${chroot_env}" /usr/bin/apt-get install \
                                     --no-install-recommends \
                                     --no-install-suggests -y \
@@ -85,10 +87,14 @@ function install_cpp_software() {
                                     gdbserver \
                                     clang-14-doc \
                                     llvm-14-dev
+
+    _unbind_mounts "${chroot_env}"
 }
 
 function install_java_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install JAVA Software To Chroot Venv:")
+
+    _bind_mounts "${chroot_env}"
 
     sudo chroot "${chroot_env}" /usr/bin/apt-get install \
                                     --no-install-recommends \
@@ -98,23 +104,34 @@ function install_java_software() {
 
     cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
     . /home/developer/.bashrc
-    /usr/bin/curl -s "https://get.sdkman.io" | bash
-    echo 'source ~/.sdkman/bin/sdkman-init.sh' >> /home/developer/.bashrc
+    cd
+    curl -s "https://get.sdkman.io" | bash
+    echo 'source ~/.sdkman/bin/sdkman-init.sh' >> ~/.bashrc
+    . ~/.bashrc
+    sdk install java
 EOF
+
+    _unbind_mounts "${chroot_env}"
 }
 
 function install_gtk_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install GTK+ Software To Chroot Venv:")
+
+    _bind_mounts "${chroot_env}"
 
     sudo chroot "${chroot_env}" /usr/bin/apt-get install \
                                     --no-install-recommends \
                                     --no-install-suggests -y \
                                     terminator \
                                     gtkmm
+
+    _unbind_mounts "${chroot_env}"
 }
 
 function install_qt_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install QT Software To Chroot Venv:")
+
+    _bind_mounts "${chroot_env}"
 
     sudo chroot "${chroot_env}" /usr/bin/apt-get install \
                                     --no-install-recommends \
@@ -125,6 +142,8 @@ function install_qt_software() {
                                     qt6-qmltooling-plugins \
                                     libqt6opengl6-dev \
                                     qt6-qpa-plugins
+
+    _unbind_mounts "${chroot_env}"
 }
 
 function install_homebrew_software() {
@@ -150,7 +169,7 @@ function install_pnpm_software() {
     echo 'export NVM_DIR="/home/developer/.nvm"' >> ~/.bashrc
     echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm' >> ~/.bashrc
     echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >> ~/.bashrc
-    . /home/developer/.bashrc
+    . ~/.bashrc
     nvm install node
     nvm use node
     npm install -g pnpm
@@ -163,12 +182,16 @@ EOF
 function install_other_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install Other Software To Chroot Venv:")
 
+    _bind_mounts "${chroot_env}"
+
     sudo chroot "${chroot_env}" /usr/bin/apt-get install \
                                     --no-install-recommends \
                                     --no-install-suggests -y \
                                     xcompmgr \
                                     engrampa \
                                     terminator
+
+    _unbind_mounts "${chroot_env}"
 }
 
 
@@ -283,8 +306,8 @@ EOF
     sudo chroot "${chroot_env}" /usr/sbin/usermod -aG sudo developer
 
     cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
-    HOME=/home/developer
-    echo $'\nexport HOME=${HOME}' >> ~/.bashrc
+    export HOME=/home/developer
+    echo $'\nexport HOME=/home/developer' >> ~/.bashrc  # Cannot use \$HOME because it's $HOME  instead of  /home/developer
     echo "export LC_ALL=C" >> ~/.bashrc
     echo "export DISPLAY=${X_PORT}" >> ~/.bashrc
     echo "export XAUTHORITY=~/.Xauthority" >> ~/.bashrc
@@ -306,12 +329,15 @@ function load_chroot() {
     sudo cp /etc/hosts etc/hosts
 
     Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
+    XEPHYR_PID=$!
 
     _bind_mounts "${chroot_env}"
+
     sudo chroot . bash
+
     _unbind_mounts "${chroot_env}"
 
-    killall Xephyr
+    kill -2 ${XEPHYR_PID}
 }
 
 function load_chroot_sysd() {
