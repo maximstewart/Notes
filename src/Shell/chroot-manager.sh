@@ -9,6 +9,7 @@
 
 
 CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-dev-envs"
+DEV_BASHRC_FILE="/home/developer/.bashrc"
 SCREEN_W=1600
 SCREEN_H=900
 X_PORT=:10
@@ -89,15 +90,17 @@ function install_cpp_software() {
 function install_java_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install JAVA Software To Chroot Venv:")
 
-    # source "/root/.sdkman/bin/sdkman-init.sh"
-
     sudo chroot "${chroot_env}" /usr/bin/apt-get install \
                                     --no-install-recommends \
                                     --no-install-suggests -y \
                                     gradle \
                                     maven
 
-    sudo chroot "${chroot_env}" /bin/bash -c '/usr/bin/curl -s "https://get.sdkman.io" | bash'
+    cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
+    . /home/developer/.bashrc
+    /usr/bin/curl -s "https://get.sdkman.io" | bash
+    echo 'source ~/.sdkman/bin/sdkman-init.sh' >> /home/developer/.bashrc
+EOF
 }
 
 function install_gtk_software() {
@@ -130,7 +133,29 @@ function install_homebrew_software() {
     _bind_mounts "${chroot_env}"
 
     sudo chroot "${chroot_env}" /bin/su - developer -c "/bin/echo password | /bin/sudo -S /bin/bash -c $(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
-    sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}" /bin/bash -c "/home/linuxbrew/.linuxbrew/bin/brew shellenv | xargs -n 2 >> /home/developer/.bashrc"
+    sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}" /bin/bash -c "/home/linuxbrew/.linuxbrew/bin/brew shellenv | xargs -n 2 >> ${DEV_BASHRC_FILE}"
+
+    _unbind_mounts "${chroot_env}"
+}
+
+function install_pnpm_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install PNPM Software To Chroot Venv:")
+
+    _bind_mounts "${chroot_env}"
+
+    cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
+    . /home/developer/.bashrc
+    mkdir -p ~/.nvm
+    brew install nvm
+    echo 'export NVM_DIR="/home/developer/.nvm"' >> ~/.bashrc
+    echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm' >> ~/.bashrc
+    echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >> ~/.bashrc
+    . /home/developer/.bashrc
+    nvm install node
+    nvm use node
+    npm install -g pnpm
+    pnpm setup
+EOF
 
     _unbind_mounts "${chroot_env}"
 }
@@ -242,31 +267,30 @@ function create_chroot() {
 function _setup_chroot() {
     chroot_env=$(_get_chroot_env "${1}" "Target Chroot Venv Setup:")
 
-    root_bashrc_file="/root/.bashrc"
-    dev_bashrc_file="/home/developer/.bashrc"
-
-    sudo chroot "${chroot_env}" /bin/chmod 777 "/root"
-    sudo chroot "${chroot_env}" /bin/chmod 777 "${root_bashrc_file}"
-
-    sudo echo $'\nexport HOME=/root' >> "${chroot_env}${root_bashrc_file}"
-    sudo echo "export LC_ALL=C" >> "${chroot_env}${root_bashrc_file}"
-    sudo echo "export DISPLAY=${X_PORT}" >> "${chroot_env}${root_bashrc_file}"
-    sudo echo $'export HOMEBREW_NO_ANALYTICS=1\n' >> "${chroot_env}${root_bashrc_file}"
-
-    sudo chroot "${chroot_env}" /bin/chmod 700 "${root_bashrc_file}"
-    sudo chroot "${chroot_env}" /bin/chmod 700 "/root"
+    cat << EOF | sudo chroot "${chroot_env}"
+    . /root/.bashrc
+    cd
+    echo $'\nexport HOME=/root' >> ~/.bashrc
+    echo "export LC_ALL=C" >> ~/.bashrc
+    echo "export DISPLAY=${X_PORT}" >> ~/.bashrc
+    echo "export XAUTHORITY=~/.Xauthority" >> ~/.bashrc
+    echo $'export HOMEBREW_NO_ANALYTICS=1\n' >> ~/.bashrc
+EOF
 
     _install_software "${chroot_env}"
 
     sudo chroot "${chroot_env}" /usr/sbin/useradd -m -p $(openssl passwd -1 "password") -s /bin/bash developer
     sudo chroot "${chroot_env}" /usr/sbin/usermod -aG sudo developer
 
-    sudo echo $'\nexport HOME=/home/developer' >> "${chroot_env}${dev_bashrc_file}"
-    sudo echo "export LC_ALL=C" >> "${chroot_env}${dev_bashrc_file}"
-    sudo echo "export DISPLAY=${X_PORT}" >> "${chroot_env}${dev_bashrc_file}"
-    sudo echo "export XAUTHORITY=~/.Xauthority" >> "${chroot_env}${dev_bashrc_file}"
-    sudo echo $'export export HOMEBREW_NO_ANALYTICS=1\n' >> "${chroot_env}${dev_bashrc_file}"
-    mkdir "${chroot_env}/home/developer/projects"
+    cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
+    HOME=/home/developer
+    echo $'\nexport HOME=${HOME}' >> ~/.bashrc
+    echo "export LC_ALL=C" >> ~/.bashrc
+    echo "export DISPLAY=${X_PORT}" >> ~/.bashrc
+    echo "export XAUTHORITY=~/.Xauthority" >> ~/.bashrc
+    echo $'export HOMEBREW_NO_ANALYTICS=1\n' >> ~/.bashrc
+    mkdir -p ~/projects
+EOF
 }
 
 
