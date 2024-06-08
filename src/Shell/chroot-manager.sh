@@ -124,6 +124,17 @@ function install_qt_software() {
                                     qt6-qpa-plugins
 }
 
+function install_homebrew_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install Homebrew Software To Chroot Venv:")
+
+    _bind_mounts "${chroot_env}"
+
+    sudo chroot "${chroot_env}" /bin/su - developer -c "/bin/echo password | /bin/sudo -S /bin/bash -c $(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
+    sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}" /bin/bash -c "/home/linuxbrew/.linuxbrew/bin/brew shellenv | xargs -n 2 >> /home/developer/.bashrc"
+
+    _unbind_mounts "${chroot_env}"
+}
+
 function install_other_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install Other Software To Chroot Venv:")
 
@@ -256,13 +267,6 @@ function _setup_chroot() {
     sudo echo "export XAUTHORITY=~/.Xauthority" >> "${chroot_env}${dev_bashrc_file}"
     sudo echo $'export export HOMEBREW_NO_ANALYTICS=1\n' >> "${chroot_env}${dev_bashrc_file}"
     mkdir "${chroot_env}/home/developer/projects"
-
-    _bind_mounts "${chroot_env}"
-
-    sudo chroot "${chroot_env}" /bin/su - developer -c "/bin/echo password | /bin/sudo -S /bin/bash -c $(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
-    sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}" /bin/bash -c "/home/linuxbrew/.linuxbrew/bin/brew shellenv | xargs -n 2 >> /home/developer/.bashrc"
-
-    _unbind_mounts "${chroot_env}"
 }
 
 
