@@ -8,8 +8,10 @@
 
 
 
+PREMAKE_URL="https://github.com/premake/premake-core/releases/download/v5.0.0-beta2/premake-5.0.0-beta2-linux.tar.gz"
 CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-dev-envs"
 DEV_BASHRC_FILE="/home/developer/.bashrc"
+DEV_PASSWORD="password"
 SCREEN_W=1600
 SCREEN_H=900
 X_PORT=:10
@@ -88,6 +90,17 @@ function install_cpp_software() {
                                     clang-14-doc \
                                     llvm-14-dev
 
+    cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
+    . /home/developer/.bashrc
+    cd
+    mkdir -p premake
+    cd premake
+    wget -O premake.tar.gz $PREMAKE_URL
+    tar xvf *.tar.gz
+    rm *.tar.gz
+    echo ${DEV_PASSWORD} | /bin/sudo -S ln -s ~/premake/premake5 /bin/premake
+EOF
+
     _unbind_mounts "${chroot_env}"
 }
 
@@ -151,7 +164,7 @@ function install_homebrew_software() {
 
     _bind_mounts "${chroot_env}"
 
-    sudo chroot "${chroot_env}" /bin/su - developer -c "/bin/echo password | /bin/sudo -S /bin/bash -c $(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
+    sudo chroot "${chroot_env}" /bin/su - developer -c "/bin/echo ${DEV_PASSWORD} | /bin/sudo -S /bin/bash -c $(curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh')"
     sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}" /bin/bash -c "/home/linuxbrew/.linuxbrew/bin/brew shellenv | xargs -n 2 >> ${DEV_BASHRC_FILE}"
 
     _unbind_mounts "${chroot_env}"
@@ -302,7 +315,7 @@ EOF
 
     _install_software "${chroot_env}"
 
-    sudo chroot "${chroot_env}" /usr/sbin/useradd -m -p $(openssl passwd -1 "password") -s /bin/bash developer
+    sudo chroot "${chroot_env}" /usr/sbin/useradd -m -p $(openssl passwd -1 "${DEV_PASSWORD}") -s /bin/bash developer
     sudo chroot "${chroot_env}" /usr/sbin/usermod -aG sudo developer
 
     cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
@@ -445,8 +458,21 @@ function remove_chroot() {
 }
 
 function help() {
+    clear
     declare -F | awk '{ print $3 }' | awk "/^[^_]/" | sort
 }
 
+function _menu() {
+    command=`declare -F | awk '{ print $3 }' | awk "/^[^_]/" | sort | fzf --prompt "Command: "`
+    $command
+}
 
-f_call=$1; shift; $f_call "$@"
+
+f_call=$1
+shift
+
+if [[ -z "${name}" ]]; then
+    _menu
+else
+    $f_call "$@"
+fi
