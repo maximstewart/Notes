@@ -9,6 +9,8 @@
 
 
 PREMAKE_URL="https://github.com/premake/premake-core/releases/download/v5.0.0-beta2/premake-5.0.0-beta2-linux.tar.gz"
+BAZELISK_URL="https://github.com/bazelbuild/bazelisk/releases/download/v1.20.0/bazelisk-linux-arm64"
+
 CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-dev-envs"
 DEV_BASHRC_FILE="/home/developer/.bashrc"
 DEV_PASSWORD="password"
@@ -73,6 +75,9 @@ function _install_software() {
 
 function install_cpp_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install C/CPP Software To Chroot Venv:")
+    # Note: To get link paths and package names for Gtk4 for use in premake run the following...
+    #       pkg-config gtk4 --cflags <-- premake includedirs { ... }
+    #       pkg-config gtk4 --libs   <-- premake links { ... }
 
     _bind_mounts "${chroot_env}"
 
@@ -84,11 +89,16 @@ function install_cpp_software() {
                                     g++ \
                                     clang \
                                     ninja-build \
+                                    meson \
                                     make \
+                                    pkg-config \
                                     gdb \
                                     gdbserver \
                                     clang-14-doc \
-                                    llvm-14-dev
+                                    llvm-14-dev \
+                                    libgtk-4-1 \
+                                    libgtk-4-dev \
+                                    libgtkmm-4.0-dev
 
     cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
     . /home/developer/.bashrc
@@ -99,6 +109,10 @@ function install_cpp_software() {
     tar xvf *.tar.gz
     rm *.tar.gz
     echo ${DEV_PASSWORD} | /bin/sudo -S ln -s ~/premake/premake5 /bin/premake
+    wget -O bazelisk ${BAZELISK_URL}
+    chmod +x bazelisk
+    chown root:root bazelisk
+    echo ${DEV_PASSWORD} | /bin/sudo -S mv bazelisk /bin
 EOF
 
     _unbind_mounts "${chroot_env}"
@@ -136,7 +150,10 @@ function install_gtk_software() {
                                     --no-install-recommends \
                                     --no-install-suggests -y \
                                     terminator \
-                                    gtkmm
+                                    ghex \
+                                    galculator \
+                                    gpick \
+                                    mousepad
 
     _unbind_mounts "${chroot_env}"
 }
