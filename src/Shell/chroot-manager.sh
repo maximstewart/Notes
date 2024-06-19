@@ -10,6 +10,7 @@
 
 PREMAKE_URL="https://github.com/premake/premake-core/releases/download/v5.0.0-beta2/premake-5.0.0-beta2-linux.tar.gz"
 BAZELISK_URL="https://github.com/bazelbuild/bazelisk/releases/download/v1.20.0/bazelisk-linux-arm64"
+BOOST_URL="https://archives.boost.io/release/1.82.0/source/boost_1_82_0.zip"
 
 CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-dev-envs"
 DEV_BASHRC_FILE="/home/developer/.bashrc"
@@ -53,6 +54,7 @@ function _install_software() {
                                     wget \
                                     curl \
                                     zip \
+                                    unzip \
                                     7zip \
                                     procps \
                                     file \
@@ -103,12 +105,14 @@ function install_cpp_software() {
     cat << EOF | sudo chroot --userspec=developer:developer --groups=sudo,developer "${chroot_env}"
     . /home/developer/.bashrc
     cd
-    mkdir -p premake
-    cd premake
+    mkdir -p apps/premake
+    cd apps/premake
     wget -O premake.tar.gz $PREMAKE_URL
-    tar xvf *.tar.gz
-    rm *.tar.gz
-    echo ${DEV_PASSWORD} | /bin/sudo -S ln -s ~/premake/premake5 /bin/premake
+    tar xvf *.tar.gz && rm *.tar.gz
+    echo ${DEV_PASSWORD} | /bin/sudo -S ln -s `pwd`/premake5 /bin/premake
+    cd ~/apps
+    wget -O boost.zip ${BOOST_URL}
+    unzip boost.zip
     wget -O bazelisk ${BAZELISK_URL}
     chmod +x bazelisk
     chown root:root bazelisk
@@ -343,6 +347,8 @@ EOF
     echo "export XAUTHORITY=~/.Xauthority" >> ~/.bashrc
     echo $'export HOMEBREW_NO_ANALYTICS=1\n' >> ~/.bashrc
     mkdir -p ~/projects
+    mkdir -p ~/apps
+    mkdir -p ~/includes
 EOF
 }
 
@@ -370,6 +376,28 @@ function load_chroot() {
     kill -2 ${XEPHYR_PID}
 }
 
+function load_chroot_arch() {
+    clear
+    cd "${CHROOT_FOLDERS_PATH}"
+
+    chroot_env=$(_get_chroot_env " " "Load Chroot Venv:")
+
+    cd "${chroot_env}"
+
+    sudo cp /etc/resolv.conf etc/resolv.conf
+    sudo cp /etc/hosts etc/hosts
+
+    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
+    XEPHYR_PID=$!
+
+    sudo arch-chroot . bash
+    # Note: Run in unshare mode. This will use unshare(1) to create a new mount
+    # and user namespace, allowing regular users to create new system installations.
+    # sudo arch-chroot -N . bash
+
+    kill -2 ${XEPHYR_PID}
+}
+
 function load_chroot_sysd() {
     clear
     cd "${CHROOT_FOLDERS_PATH}"
@@ -382,10 +410,11 @@ function load_chroot_sysd() {
     sudo cp /etc/hosts etc/hosts
 
     Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
+    XEPHYR_PID=$!
 
     sudo systemd-nspawn -D . /sbin/init
 
-    killall Xephyr
+    kill -2 ${XEPHYR_PID}
 }
 
 function poweroff_chroot_sysd() {
