@@ -12,12 +12,13 @@ PREMAKE_URL="https://github.com/premake/premake-core/releases/download/v5.0.0-be
 BAZELISK_URL="https://github.com/bazelbuild/bazelisk/releases/download/v1.20.0/bazelisk-linux-arm64"
 BOOST_URL="https://archives.boost.io/release/1.82.0/source/boost_1_82_0.zip"
 
-CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-dev-envs"
+CHROOT_FOLDERS_PATH="/home/abaddon/Portable_Apps/chroot-envs"
 DEV_BASHRC_FILE="/home/developer/.bashrc"
 DEV_PASSWORD="password"
 SCREEN_W=1600
 SCREEN_H=900
 X_PORT=:10
+#X_PORT=:11
 
 
 
@@ -47,6 +48,7 @@ function _install_software() {
                                     libgl1 \
                                     libegl1 \
                                     libxcb-cursor0 \
+                                    x11-xserver-utils \
                                     locales \
                                     sudo \
                                     less \
@@ -62,6 +64,7 @@ function _install_software() {
                                     fzf \
                                     parallel \
                                     openbox \
+                                    obconf \
                                     xterm \
                                     build-essential \
                                     python3.11-venv \
@@ -153,6 +156,13 @@ function install_gtk_software() {
     sudo chroot "${chroot_env}" /usr/bin/apt-get install \
                                     --no-install-recommends \
                                     --no-install-suggests -y \
+                                    libcairo2-dev \
+                                    libgtk-3-dev \
+                                    libgirepository1.0-dev \
+                                    libjpeg-dev \
+                                    zlib1g-dev \
+                                    python3-dev \
+                                    lxappearance \
                                     terminator \
                                     ghex \
                                     galculator \
@@ -222,6 +232,7 @@ function install_other_software() {
                                     --no-install-recommends \
                                     --no-install-suggests -y \
                                     xcompmgr \
+                                    devilspie \
                                     engrampa \
                                     terminator
 
@@ -363,6 +374,7 @@ function load_chroot() {
 
     sudo cp /etc/resolv.conf etc/resolv.conf
     sudo cp /etc/hosts etc/hosts
+    sudo cp /etc/machine-id etc/machine-id
 
     Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
     XEPHYR_PID=$!
@@ -386,6 +398,7 @@ function load_chroot_arch() {
 
     sudo cp /etc/resolv.conf etc/resolv.conf
     sudo cp /etc/hosts etc/hosts
+    sudo cp /etc/machine-id etc/machine-id
 
     Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
     XEPHYR_PID=$!
@@ -403,11 +416,13 @@ function load_chroot_sysd() {
     cd "${CHROOT_FOLDERS_PATH}"
 
     chroot_env=$(_get_chroot_env " " "Load Chroot Venv:")
+    chroot_env=${chroot_env%/}  # If ends with slash remove
 
     cd "${chroot_env}"
 
     sudo cp /etc/resolv.conf etc/resolv.conf
     sudo cp /etc/hosts etc/hosts
+    sudo cp /etc/machine-id etc/machine-id
 
     Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
     XEPHYR_PID=$!
