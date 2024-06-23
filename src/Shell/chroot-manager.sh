@@ -19,6 +19,7 @@ SCREEN_W=1600
 SCREEN_H=900
 X_PORT=:10
 #X_PORT=:11
+#X_PORT=:12
 
 
 
@@ -63,11 +64,10 @@ function _install_software() {
                                     jq \
                                     fzf \
                                     parallel \
-                                    openbox \
-                                    obconf \
                                     xterm \
                                     build-essential \
                                     python3.11-venv \
+                                    python3-dev \
                                     python3-setuptools \
                                     python3-pip \
                                     python3-wheel \
@@ -148,7 +148,45 @@ EOF
     _unbind_mounts "${chroot_env}"
 }
 
-function install_gtk_software() {
+function install_lua_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install JAVA Software To Chroot Venv:")
+
+    _bind_mounts "${chroot_env}"
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    lua5.4 \
+                                    lua-lgi
+
+    _unbind_mounts "${chroot_env}"
+}
+
+function install_desktop_software() {
+    chroot_env=$(_get_chroot_env "${1}" "Install JAVA Software To Chroot Venv:")
+
+    _bind_mounts "${chroot_env}"
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    openbox \
+                                    obconf \
+                                    lxappearance \
+                                    xcompmgr \
+                                    devilspie \
+                                    nitrogen \
+                                    engrampa \
+                                    terminator \
+                                    mousepad \
+                                    ghex \
+                                    galculator \
+                                    gpick
+
+    _unbind_mounts "${chroot_env}"
+}
+
+function install_gtk_dev_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install GTK+ Software To Chroot Venv:")
 
     _bind_mounts "${chroot_env}"
@@ -160,19 +198,12 @@ function install_gtk_software() {
                                     libgtk-3-dev \
                                     libgirepository1.0-dev \
                                     libjpeg-dev \
-                                    zlib1g-dev \
-                                    python3-dev \
-                                    lxappearance \
-                                    terminator \
-                                    ghex \
-                                    galculator \
-                                    gpick \
-                                    mousepad
+                                    zlib1g-dev
 
     _unbind_mounts "${chroot_env}"
 }
 
-function install_qt_software() {
+function install_qt_dev_software() {
     chroot_env=$(_get_chroot_env "${1}" "Install QT Software To Chroot Venv:")
 
     _bind_mounts "${chroot_env}"
@@ -222,23 +253,6 @@ EOF
 
     _unbind_mounts "${chroot_env}"
 }
-
-function install_other_software() {
-    chroot_env=$(_get_chroot_env "${1}" "Install Other Software To Chroot Venv:")
-
-    _bind_mounts "${chroot_env}"
-
-    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
-                                    --no-install-recommends \
-                                    --no-install-suggests -y \
-                                    xcompmgr \
-                                    devilspie \
-                                    engrampa \
-                                    terminator
-
-    _unbind_mounts "${chroot_env}"
-}
-
 
 
 function _get_chroot_system_type() {
