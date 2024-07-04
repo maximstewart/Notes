@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <link rel="shortcut icon" href="fave_icon.png"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <style media="screen">
+        body {
+            overflow: hidden;
+            background-color: rgba(44, 44, 44, 1.0);
+        }
+
+        h3 {
+            color: #FFFFFF64;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        #draw-area,
+        #draw-area-preview {
+            border-spacing: 0px;
+            aspect-ratio: 4/3;
+        }
+
+        #draw-area {
+            width: 100%;
+        }
+
+        #draw-area > tbody > tr > td {
+            border: 1px solid rgba(64, 64, 64, 1.0);
+            border-collapse: collapse;
+        }
+
+        #draw-area-preview {
+            border: 1px solid rgba(88, 88, 88, 1.0);
+        }
+
+        #palette-list {
+            height: 40vh;
+            overflow: auto;
+        }
+
+        .selected-color {
+            border: 2px solid rgb(0, 232, 255);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid m-3">
+        <div class="row">
+            <div class="col">
+                <div class="row vh-50 mt-3">
+                    <div id="previewScrollDetector" class="col">
+                        <table id="draw-area-preview" class="mx-auto" style="height: 25vh;" ondragstart="return false;" ondrop="return false;">
+                            <tbody id="draw-area-preview-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row">
+                    <div class="col text-center">
+                        <button id="h-mirror" type="button" class="btn btn-secondary">H-Mirror</button>
+                        <button id="v-mirror" type="button" class="btn btn-secondary">V-Mirror</button>
+                        <button id="bucket-fill" type="button" class="btn btn-secondary">Bucket</button>
+                        <button id="eraser" type="button" class="btn btn-secondary">Erase</button>
+                        <button id="save" type="button" class="btn btn-secondary">Save</button>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col vh-100">
+                        <table id="draw-area" class="vh-50" ondragstart="return false;" ondrop="return false;">
+                            <tbody id="draw-area-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <!-- Add animation tracks here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row">
+
+                    <div class="col">
+                        <h3>Color Palette</h3>
+                        <input type="file" id="colorPaletteFile" class="btn btn-dark" name="colorPaletteFile"/>
+                        <div id="palette-list" class="row mt-3 mb-3">
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <input id="color" type="color">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript">
+        const drawArea    = document.getElementById("draw-area");
+        const drawPreview = document.getElementById("draw-area-preview");
+        const colrPalFile = document.getElementById("colorPaletteFile");
+
+        const prevScroll  = document.getElementById("previewScrollDetector");
+        const palette      = document.getElementById("palette-list");
+
+        const tbody       = document.querySelector('#draw-area tbody');
+        const pTbody      = document.querySelector('#draw-area-preview tbody');
+
+        const hmirror     = document.getElementById("h-mirror");
+        const vmirror     = document.getElementById("v-mirror");
+        const bucketFill  = document.getElementById("bucket-fill");
+        const eraser      = document.getElementById("eraser");
+        const save        = document.getElementById("save");
+
+        const isLogging   = false;
+        let isHMirror     = false;
+        let isVMirror     = false;
+        let isBucketFill  = false;
+        let isErasing     = false;
+
+
+        const update_pixel = (cell = null, isEraseCall = false) => {
+            const color        = document.getElementById("color");
+            const colorStyle   = (!isErasing && !isEraseCall) ? "background-color: " + color.value : "";
+
+            const row          = cell.parentElement;
+            const pCell        = drawPreview.rows[row.rowIndex].cells[cell.cellIndex];
+
+            const hRowIndex    = drawArea.rows.length - row.rowIndex - 1;
+            const vRowIndex    = drawArea.rows[row.rowIndex].cells.length - cell.cellIndex - 1;
+            const vhRowIndex   = drawArea.rows[hRowIndex].cells.length - cell.cellIndex - 1;
+
+            const hCell        = drawArea.rows[hRowIndex].cells[cell.cellIndex];
+            const pHCell       = drawPreview.rows[hRowIndex].cells[cell.cellIndex];
+
+            const vCell        = drawArea.rows[row.rowIndex].cells[vRowIndex];
+            const pVCell       = drawPreview.rows[row.rowIndex].cells[vRowIndex];
+
+            const vhCell       = drawArea.rows[hRowIndex].cells[vRowIndex];
+            const pVHCell      = drawPreview.rows[hRowIndex].cells[vhRowIndex];
+
+            let cellCollection = [];
+            cellCollection.push(cell);
+            cellCollection.push(pCell);
+
+            if (isHMirror) {
+                cellCollection.push(hCell);
+                cellCollection.push(pHCell);
+            }
+
+            if (isVMirror) {
+                cellCollection.push(vCell);
+                cellCollection.push(pVCell);
+            }
+
+            if (isHMirror && isVMirror) {
+                cellCollection.push(vhCell);
+                cellCollection.push(pVHCell);
+            }
+
+            set_pixel_color(cellCollection, colorStyle);
+
+            if (isLogging) {
+                console.log(cell.innerHTML, row.rowIndex, cell.cellIndex);
+            }
+        }
+
+        const set_pixel_color = (cellCollection = [], colorStyle = "") => {
+            for (var i = 0; i < cellCollection.length; i++) {
+                cellCollection[i].style = colorStyle;
+            }
+        }
+
+        const fill_action = (cell = null) => {
+            if (!cell) { return; }
+
+            const color    = document.getElementById("color");
+            const colorVal = (isBucketFill && !isErasing) ? "background-color: " + color.value : "";
+
+            for (let i = 0; i < drawPreview.rows.length; i++) {
+                let row  = drawArea.rows[i];
+                let row2 = drawPreview.rows[i];
+
+                for (let j = 0; j < drawPreview.rows[0].cells.length; j++) {
+                    row.cells[j].style  = colorVal;
+                    row2.cells[j].style = colorVal;
+                }
+            }
+        }
+
+        const load_pixel_grid = (rowi = 32, coli = 32) => {
+            for (let i = 0; i < rowi; i++) {
+                let row  = drawArea.insertRow(-1);
+                let row2 = drawPreview.insertRow(-1);
+
+                for (let j = 0; j < coli; j++) {
+                    row.insertCell(-1);
+                    row2.insertCell(-1);
+                }
+            }
+        }
+        
+        const toggle_button = (elm = null, isTrue = false) => {
+            if (!elm) { return; }
+
+            if (isTrue) {
+                elm.classList.remove("btn-secondary");
+                elm.classList.add("btn-primary");
+            } else {
+                elm.classList.remove("btn-primary");
+                elm.classList.add("btn-secondary");
+            }
+        }
+
+        const save_image = () => {
+            const rowi = drawPreview.rows.length;
+            const coli = drawPreview.rows[0].cells.length;
+            let imageData = new ImageData(coli, rowi);
+            let colors    = [];
+
+
+            for (let i = 0; i < drawPreview.rows.length; i++) {
+                let row = drawPreview.rows[i];
+
+                for (let j = 0; j < row.cells.length; j++) {
+                    let style    = row.cells[j].style;
+                    let colorVal = style["background-color"].replace("rgb", "")
+                                                            .replace("(", "")
+                                                            .replace(")", "")
+                                                            .split(",");
+                    let l        = row.cells.length * i + j
+                    let rgba     = []
+
+                    for (let k = 0; k < colorVal.length; k++) {
+                        try {
+                            rgba.push( parseInt(colorVal[k], 10) );
+                        } catch (e) {
+                            rgba.push(null);
+                        }
+                    }
+
+                    const isTransparent = (rgba.length == 3 && rgba == [null, null, null])
+                    rgba.push( isTransparent ? null : 255 );
+
+                    colors.push(rgba);
+                }
+            }
+
+            let k = 0;
+            for (let i = 0; i < imageData.data.length; i+=4) {
+                imageData.data[i + 0] = (colors[k][0] == null) ? 0 : colors[k][0];  // R value
+                imageData.data[i + 1] = (colors[k][1] == null) ? 0 : colors[k][1];  // G value
+                imageData.data[i + 2] = (colors[k][2] == null) ? 0 : colors[k][2];  // B value
+                imageData.data[i + 3] = (colors[k][3] == null) ? 0 : colors[k][3];  // A value
+
+                k += 1;
+            }
+
+            return imageData;
+        }
+
+        const imagedata_to_uri = (imageData = null) => {
+            if (!imageData) { return; }
+
+            const canvas  = document.createElement('canvas');
+            const ctx     = canvas.getContext('2d');
+
+            canvas.width  = imageData.width;
+            canvas.height = imageData.height;
+            ctx.putImageData(imageData, 0, 0);
+
+            return canvas.toDataURL();
+        }
+
+        const download_uri = (uri = null, name = "pixilate_image.png") => {
+            if (!uri) { return; }
+
+            const link    = document.createElement("a");
+            link.download = name;
+            link.href     = uri;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            delete link;
+        }
+
+        const load_from_data_url = (dataUrl = null) => {
+            if (!dataUrl) { return; }
+
+            let image    = new Image();
+            image.onload = (data) => {
+                let canvas    = document.createElement('canvas');
+                let context   = canvas.getContext('2d');
+                canvas.width  = image.width;
+                canvas.height = image.height;
+                context.drawImage(image, 0, 0 );
+
+                const imageData = context.getImageData(0, 0, image.width, image.height).data;
+                delete canvas;
+
+                clearChildNodes(palette);
+                let colors = {};
+                for (let i = 0; i < imageData.length; i+=4) {
+                    let red   = imageData[i + 0];
+                    let green = imageData[i + 1];
+                    let blue  = imageData[i + 2];
+                    let alpha = imageData[i + 3];
+                    let key   = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+
+                    if (colors[key]) { continue; }
+                    colors[key] = [red, green, blue, alpha];
+                }
+
+                let keys = Object.keys(colors);
+                for (let i = 0; i < keys.length; i++) {
+                    let liElm   = document.createElement("LI");
+                    let color   = keys[i];
+                    liElm.style = `background-color: ${color}; width: 32px; height: 32px`;
+                    liElm.class = "col";
+                    palette.appendChild(liElm);
+                }
+
+            };
+
+            image.src = dataUrl;
+        }
+
+        const decode_array_buffer = async (buffer = null) => {
+            if (!buffer) { return; }
+
+            let mime;
+            let a = new Uint8Array(buffer);
+            let nb = a.length;
+            if (nb < 4) { return null; }
+
+            let b0 = a[0];
+            let b1 = a[1];
+            let b2 = a[2];
+            let b3 = a[3];
+
+            if (b0 == 0x89 && b1 == 0x50 && b2 == 0x4E && b3 == 0x47) {
+                mime = 'image/png';
+            } else if (b0 == 0xff && b1 == 0xd8) {
+                mime = 'image/jpeg';
+            } else if (b0 == 0x47 && b1 == 0x49 && b2 == 0x46) {
+                mime = 'image/gif';
+            } else {
+                return null;
+            }
+
+            let binary = "";
+            for (var i = 0; i < nb; i++){
+                binary += String.fromCharCode(a[i]);
+            }
+
+            let base64 = window.btoa(binary);
+            return 'data:' + mime + ';base64,' + base64;
+        }
+
+        const clearChildNodes = (parent = null) => {
+            if (!parent) { return; }
+
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+        }
+
+        const rgb2hex = (r = 0, g = 0, b = 0) => {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+
+
+
+        const start = () => {
+            load_pixel_grid();
+        }
+
+
+
+        prevScroll.addEventListener("wheel", function (e) {
+            let size = parseInt( drawPreview.style.height.replace("vh", "") );
+
+            size += (e.deltaY < 0) ? 5 : -5;
+            if (size >= 10 && size <= 75) {
+                drawPreview.style.height = size + "vh";
+            }
+        });
+
+        tbody.addEventListener("mousemove", function (e) {
+            const cell  = e.target.closest('td');
+            if (!cell) { return; }
+
+            if (e.buttons == 1) { update_pixel(cell); }
+            if (e.buttons == 4) { update_pixel(cell, true); }
+        });
+
+        tbody.addEventListener("mousedown", function (e) {
+            const cell  = e.target.closest('td');
+            if (!cell) { return; }
+
+            if ((e.buttons == 1 || e.buttons == 4) && isBucketFill) {
+                fill_action(cell);
+            }
+
+            if (e.buttons == 1) { update_pixel(cell); }
+            if (e.buttons == 4) { update_pixel(cell, true); }
+        });
+
+        bucketFill.addEventListener("mouseup", function (e) {
+            if (e.buttons == 0) {
+                isBucketFill = !isBucketFill;
+                toggle_button(bucketFill, isBucketFill);
+            }
+        });
+
+        save.addEventListener("mouseup", function (e) {
+            if (e.buttons == 0) {
+                download_uri( imagedata_to_uri( save_image() ) );
+            }
+        });
+
+        palette.addEventListener("mouseup", function (e) {
+            const cell  = e.target.closest('li');
+            if (!cell) { return; }
+
+            try {
+                const elm = document.getElementsByClassName('selected-color')[0];
+                elm.classList.remove("selected-color");
+            } catch (e) { }
+
+            let color = cell.style["background-color"].replace("rgb", "")
+                                                        .replace("(", "")
+                                                        .replace(")", "")
+                                                        .split(",");
+            let hex   = rgb2hex( parseInt(color[0]), parseInt(color[1]), parseInt(color[2]))
+
+            const colorElm = document.getElementById("color");
+            cell.classList.add("selected-color");
+            colorElm.value = hex;
+        });
+
+        colrPalFile.addEventListener("change", function (e) {
+            const file   = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.readAsArrayBuffer(file,'UTF-8');
+
+            reader.onload = readerEvent => {
+                const content = readerEvent.target.result;
+
+                decode_array_buffer(content).then((dataUrl) => {
+                    if (!dataUrl) { return ; }
+                    load_from_data_url(dataUrl);
+                });
+
+            }
+
+        });
+
+        eraser.addEventListener("mouseup", function (e) {
+            if (e.buttons == 0) {
+                isErasing = !isErasing;
+                toggle_button(eraser, isErasing);
+            }
+        });
+
+        hmirror.addEventListener("mouseup", function (e) {
+            if (e.buttons == 0) {
+                isHMirror = !isHMirror;
+                toggle_button(hmirror, isHMirror);
+            }
+        });
+
+        vmirror.addEventListener("mouseup", function (e) {
+            if (e.buttons == 0) {
+                isVMirror = !isVMirror;
+                toggle_button(vmirror, isVMirror);
+            }
+        });
+
+
+        start();
+    </script>
+
+</body>
+</html>
