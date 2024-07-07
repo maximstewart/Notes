@@ -30,6 +30,18 @@ function _prompt_chroot_env() {
     echo "${chroot_env}"
 }
 
+function _select_chroot_folder() {
+    read -p 'Chroot Env: ' name
+    name=`sed -e s'| |_|'g <<< "${name}"`
+
+    if [[ -z "${name}" ]] || [[ "${name}" == "_" ]]; then
+        echo "Need to give a proper Chroot Env value."
+        return
+    fi
+
+    echo "${CHROOT_FOLDERS_PATH}/${name}-chroot"
+}
+
 function _get_chroot_env() {
     if [ ! -z "${1}" -a "${1}" != " " ]; then
         chroot_env="${1}"
@@ -320,6 +332,13 @@ function _make_chroot_folder() {
     else
         _make_chroot_folder
     fi
+}
+
+
+function extract_compressed_chroot() {
+    folder=$(_select_chroot_folder)
+    echo "${folder}"
+    7z x "cloneable-chroot.7z" -o"${folder}"
 }
 
 function make_chroot() {
