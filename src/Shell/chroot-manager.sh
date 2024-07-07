@@ -133,9 +133,10 @@ function install_cpp_software() {
     cd ~/apps
     wget -O boost.zip ${BOOST_URL}
     unzip boost.zip
+    rm boost.zip
     wget -O bazelisk ${BAZELISK_URL}
     chmod +x bazelisk
-    chown root:root bazelisk
+    echo ${DEV_PASSWORD} | /bin/sudo -S chown root:root bazelisk
     echo ${DEV_PASSWORD} | /bin/sudo -S mv bazelisk /bin
 EOF
 
