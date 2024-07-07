@@ -22,7 +22,7 @@ X_PORT=10
 
 
 function _prompt_chroot_env() {
-    target=`\ls -1 -d ./*/ | fzf --prompt "${1}"`
+    target=$(\ls -1 -d ./*/ | fzf --prompt "${1}")
     target=`sed 's|\.\/||g' <<< ${target}`
     chroot_env="${CHROOT_FOLDERS_PATH}/${target}"
     echo "${chroot_env}"
@@ -481,39 +481,21 @@ function load_chroot_sysd() {
 function poweroff_chroot_sysd() {
     cd "${CHROOT_FOLDERS_PATH}"
 
-    chroot_env=$(_get_chroot_env " " "Poweroff SysD Chroot Venv:")
-    parentdir="$(dirname "${chroot_env}")"
-    target=$(basename "${chroot_env}")
-    target=`echo "${target}" | sed "s|/||g"`
-
-    if [[ -d "${chroot_env}" && "${parentdir}" == "${CHROOT_FOLDERS_PATH}" ]]; then
-        clear
-        echo "Stopping: ${target}"
-        sudo machinectl poweroff "${target}"
-        clear
-        echo -e "Powered off Chroot Env: ${target}\nPath: ${chroot_env}"
-    else
-        echo -e "Path: ${chroot_env}\nis not a child path of\nParent: ${CHROOT_FOLDERS_PATH}"
-    fi
+    target=$(sudo machinectl list | awk '{print $1}' | head -n -2 | tail -n +2 | fzf --prompt "Stop:")
+    clear
+    echo "Stopping: ${target}"
+    sudo machinectl poweroff "${target}"
+    echo -e "Powered off Chroot Env: ${target}"
 }
 
 function kill_chroot_sysd() {
     cd "${CHROOT_FOLDERS_PATH}"
 
-    chroot_env=$(_get_chroot_env " " "Kill SysD Chroot Venv:")
-    parentdir="$(dirname "${chroot_env}")"
-    target=$(basename "${chroot_env}")
-    target=`echo "${target}" | sed "s|/||g"`
-
-    if [[ -d "${chroot_env}" && "${parentdir}" == "${CHROOT_FOLDERS_PATH}" ]]; then
-        clear
-        echo "Killing: ${target}"
-        sudo machinectl kill "${target}"
-        clear
-        echo -e "Killed Chroot Env: ${target}\nPath: ${chroot_env}"
-    else
-        echo -e "Path: ${chroot_env}\nis not a child path of\nParent: ${CHROOT_FOLDERS_PATH}"
-    fi
+    target=$(sudo machinectl list | awk '{print $1}' | head -n -2 | tail -n +2 | fzf --prompt "Kill:")
+    clear
+    echo "Killing: ${target}"
+    sudo machinectl kill "${target}"
+    echo -e "Killed Chroot Env: ${target}"
 }
 
 function _bind_mounts() {
