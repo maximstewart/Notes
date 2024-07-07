@@ -17,9 +17,7 @@ DEV_BASHRC_FILE="/home/developer/.bashrc"
 DEV_PASSWORD="password"
 SCREEN_W=1600
 SCREEN_H=900
-X_PORT=:10
-#X_PORT=:11
-#X_PORT=:12
+X_PORT=10
 
 
 
@@ -40,6 +38,13 @@ function _select_chroot_folder() {
     fi
 
     echo "${CHROOT_FOLDERS_PATH}/${name}-chroot"
+}
+
+function _get_x_port() {
+    read -p 'X Server Port: ' name
+    port=`sed -e s'| |10|'g <<< "${name}"`
+
+    echo "${port}"
 }
 
 function _get_chroot_env() {
@@ -402,6 +407,8 @@ function load_chroot() {
     cd "${CHROOT_FOLDERS_PATH}"
 
     chroot_env=$(_get_chroot_env " " "Load Chroot Venv:")
+    chroot_env=${chroot_env%/}  # If ends with slash remove
+    X_PORT=$(_get_x_port)
 
     cd "${chroot_env}"
 
@@ -409,7 +416,8 @@ function load_chroot() {
     sudo cp /etc/hosts etc/hosts
     sudo cp /etc/machine-id etc/machine-id
 
-    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
+    sed -i "/DISPLAY=/c\export DISPLAY=:${X_PORT}" "${chroot_env}"/home/developer/.bashrc
+    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" ":${X_PORT}" &
     XEPHYR_PID=$!
 
     _bind_mounts "${chroot_env}"
@@ -426,6 +434,8 @@ function load_chroot_arch() {
     cd "${CHROOT_FOLDERS_PATH}"
 
     chroot_env=$(_get_chroot_env " " "Load Chroot Venv:")
+    chroot_env=${chroot_env%/}  # If ends with slash remove
+    X_PORT=$(_get_x_port)
 
     cd "${chroot_env}"
 
@@ -433,7 +443,8 @@ function load_chroot_arch() {
     sudo cp /etc/hosts etc/hosts
     sudo cp /etc/machine-id etc/machine-id
 
-    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
+    sed -i "/DISPLAY=/c\export DISPLAY=:${X_PORT}" "${chroot_env}"/home/developer/.bashrc
+    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" ":${X_PORT}" &
     XEPHYR_PID=$!
 
     sudo arch-chroot . bash
@@ -450,6 +461,7 @@ function load_chroot_sysd() {
 
     chroot_env=$(_get_chroot_env " " "Load Chroot Venv:")
     chroot_env=${chroot_env%/}  # If ends with slash remove
+    X_PORT=$(_get_x_port)
 
     cd "${chroot_env}"
 
@@ -457,7 +469,8 @@ function load_chroot_sysd() {
     sudo cp /etc/hosts etc/hosts
     sudo cp /etc/machine-id etc/machine-id
 
-    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" "${X_PORT}" &
+    sed -i "/DISPLAY=/c\export DISPLAY=:${X_PORT}" "${chroot_env}"/home/developer/.bashrc
+    Xephyr -resizeable -screen "${SCREEN_W}"x"${SCREEN_H}" ":${X_PORT}" &
     XEPHYR_PID=$!
 
     sudo systemd-nspawn -D . /sbin/init
