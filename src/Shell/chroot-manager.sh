@@ -50,11 +50,20 @@ function _get_x_port() {
 function _get_chroot_env() {
     if [ ! -z "${1}" -a "${1}" != " " ]; then
         chroot_env="${1}"
-    else 
+    else
         chroot_env=$(_prompt_chroot_env "${2}")
     fi
 
     echo "${chroot_env}"
+}
+
+function _get_input_apps_list() {
+    read -p "To Install: " apps
+    if [ ! -z "${apps}" -a "${apps}" != " " ]; then
+        echo "${apps}"
+    else
+        exit 1
+    fi
 }
 
 function _install_software() {
@@ -69,6 +78,7 @@ function _install_software() {
                                     x11-xserver-utils \
                                     locales \
                                     sudo \
+                                    moreutils \
                                     less \
                                     nano \
                                     wget \
@@ -197,6 +207,7 @@ function install_desktop_software() {
                                     engrampa \
                                     terminator \
                                     mousepad \
+                                    sqlitebrowser \
                                     ghex \
                                     galculator \
                                     gpick
@@ -272,6 +283,20 @@ EOF
     _unbind_mounts "${chroot_env}"
 }
 
+function install_custom_software() {
+    clear
+    chroot_env=$(_get_chroot_env "${1}" "Install Custom Software To Chroot Venv:")
+    apps=$(_get_input_apps_list)
+
+    _bind_mounts "${chroot_env}"
+
+    sudo chroot "${chroot_env}" /usr/bin/apt-get install \
+                                    --no-install-recommends \
+                                    --no-install-suggests -y \
+                                    "${apps}"
+
+    _unbind_mounts "${chroot_env}"
+}
 
 function _get_chroot_system_type() {
     PS3="Enter system type: "
@@ -289,7 +314,7 @@ function _get_chroot_system_type() {
                 echo "${system_type}"
                 break
               ;;
-            *) 
+            *)
               ;;
           esac
     done
@@ -315,7 +340,7 @@ function _get_chroot_variant() {
                 echo "${variant}"
                 break
               ;;
-            *) 
+            *)
               ;;
           esac
     done

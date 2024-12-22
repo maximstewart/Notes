@@ -1,0 +1,15 @@
+Make the directory our chroot would be in and the bin folder.
+
+    mkdir -p MyChroot/bin
+
+Now, we need to download a shell. (For this example, use Ash from Busybox 1.26.)
+
+    wget https://busybox.net/downloads/binaries/1.26.2-i686/busybox_ASH -O MyChroot/bin/ash
+
+Next, make the binary executable.
+
+    chmod +x MyChroot/bin/ash
+
+To run chroot do;
+
+chroot path/to/<shell>
