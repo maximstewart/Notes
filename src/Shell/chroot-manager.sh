@@ -586,7 +586,7 @@ function _menu() {
 f_call=$1
 shift
 
-if [[ -z "${name}" ]]; then
+if [[ -z "${f_call}" ]]; then
     _menu
 else
     $f_call "$@"
