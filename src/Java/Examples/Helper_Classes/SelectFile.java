@@ -6,7 +6,7 @@ import java.io.File;
 
 public class SelectFile {
     private final Stage fileOpenerStage = new Stage();
-    private FileChooser fileChooser = new FileChooser();
+    private FileChooser fileChooser     = new FileChooser();
     private File selectedFile;
 
 

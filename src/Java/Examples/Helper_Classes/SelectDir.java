@@ -4,8 +4,8 @@ import java.io.File;
 
 
 public class SelectDir {
-    private final Stage dirOpenerStage = new Stage();
-	 		private DirectoryChooser folderChooser = new DirectoryChooser();
+    private final Stage dirOpenerStage     = new Stage();
+	private DirectoryChooser folderChooser = new DirectoryChooser();
     private File selectedDir;
 
 
